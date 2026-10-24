@@ -1,0 +1,11 @@
+{
+  "id": "s04",
+  "source": "s04-clinic.mp4",
+  "frames": 30,
+  "fps": 12,
+  "width": 1280,
+  "height": 720,
+  "duration_s": 2.5,
+  "pattern": "f_%03d.webp",
+  "bytes": 818100
+}

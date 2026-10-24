@@ -1,0 +1,298 @@
+@import "tailwindcss";
+
+/* Brand tokens (prompt §5). Logo colours sampled from public/brand/logo-source.png. */
+:root {
+  --blue-500: #3690d5; /* logo cat. Decorative only: white on it is 3.44:1 */
+  --blue-600: #1f6fb8; /* primary action/links; white on it 5.22:1 */
+  --blue-800: #03508a; /* logo heart. Headings; white on it 8.34:1 */
+  --blue-100: #dcebfa;
+  --orange-500: #ff993d; /* logo "for". CTA bg; ink on it 6.88:1, never white */
+  --orange-700: #c2410c; /* orange text on cream */
+  --peach-200: #fdd7b5; /* light tint for surfaces */
+  --peach-300: #ffc18d; /* logo arm/house */
+  --cream-50: #fff6ee; /* page bg */
+  --white: #ffffff;
+  --ink: #0f2a44;
+  --muted: #51606f;
+  --navy-900: #0b1f33; /* dark landing chapters only */
+  --border: #e6d9cc;
+  --danger: #dc2626; /* 4.52:1 on cream: keep text ≥ 16px bold or use on white */
+  --success: #15803d;
+  --warning: #b45309;
+  --ring: #1f6fb8;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --shadow-soft: 0 1px 2px rgb(15 42 68 / 0.06), 0 8px 24px -6px rgb(15 42 68 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(15 42 68 / 0.08), 0 16px 40px -8px rgb(15 42 68 / 0.18);
+}
+
+/* Landing scroll story: `anim:` = Full/Lite mode (canvas behind, pins on),
+   `still:` = Static or not-yet-detected mode (no canvas, normal flow). */
+@custom-variant anim (&:where([data-mode="full"] *, [data-mode="lite"] *));
+@custom-variant still (&:where([data-mode="static"] *, [data-mode="pending"] *));
+
+/* Replace Tailwind's palette entirely so only brand tokens can be used. */
+@theme inline {
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-blue-100: var(--blue-100);
+  --color-blue-500: var(--blue-500);
+  --color-blue-600: var(--blue-600);
+  --color-blue-800: var(--blue-800);
+  --color-orange-500: var(--orange-500);
+  --color-orange-700: var(--orange-700);
+  --color-peach-200: var(--peach-200);
+  --color-peach-300: var(--peach-300);
+  --color-cream-50: var(--cream-50);
+  --color-white: var(--white);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-navy-900: var(--navy-900);
+  --color-border: var(--border);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-ring: var(--ring);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --shadow-soft: var(--shadow-soft);
+  --shadow-lift: var(--shadow-lift);
+
+  --font-heading: var(--font-baloo), ui-rounded, system-ui, sans-serif;
+  --font-body: var(--font-nunito), system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    /* WCAG 2.2 focus-not-obscured: keep focused controls clear of the sticky
+       header (72px) and the fixed "Reduce effects" button at the bottom. */
+    scroll-padding-top: 96px;
+    scroll-padding-bottom: 88px;
+  }
+  body {
+    background: var(--cream-50);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  a {
+    color: var(--blue-600);
+  }
+  :focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+/* Headings that sit over the 3D canvas: a soft cream halo keeps 4.5:1 even
+   when a model passes behind the text. */
+.on-canvas {
+  text-shadow:
+    0 0 2px var(--cream-50),
+    0 0 12px var(--cream-50),
+    0 0 28px var(--cream-50);
+}
+
+/* ─── City map markers (Leaflet divIcons: real <button>s) ─────────────────── */
+.hfa-marker-wrap {
+  background: none;
+  border: 0;
+}
+.hfa-marker,
+.hfa-cluster {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  border: 3px solid var(--white);
+  box-shadow: 0 1px 4px rgb(15 42 68 / 0.35);
+  cursor: pointer;
+  font: 800 12px/1 var(--font-body);
+}
+.hfa-marker:focus-visible,
+.hfa-cluster:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+.hfa-marker.is-selected {
+  box-shadow:
+    0 0 0 4px var(--ink),
+    0 1px 4px rgb(15 42 68 / 0.35);
+}
+.hfa-rescue { --dot: var(--orange-500); background: var(--dot); }
+.hfa-vet { --dot: var(--blue-600); background: var(--dot); }
+.hfa-state { --dot: var(--blue-800); background: var(--dot); }
+.hfa-foster { --dot: var(--peach-300); background: var(--dot); color: var(--ink); }
+
+/* Spots: a ~16 px filled circle with a white ring inside a 30 px hit area; grows on hover/focus. */
+.hfa-marker-wrap .hfa-marker {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.hfa-marker::before {
+  content: "";
+  grid-area: 1 / 1;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--dot);
+  box-shadow:
+    0 0 0 2.5px var(--white),
+    0 1px 4px 1px rgb(15 42 68 / 0.4);
+  transition: transform 150ms ease-out;
+}
+.hfa-marker > * {
+  grid-area: 1 / 1;
+  position: relative;
+}
+.hfa-marker.hfa-foster::before {
+  width: 24px;
+  height: 24px;
+}
+.hfa-marker:hover::before,
+.hfa-marker:focus-visible::before,
+.hfa-marker.is-selected::before {
+  transform: scale(1.4);
+}
+.hfa-marker-wrap .hfa-marker.is-selected {
+  box-shadow: none;
+}
+.hfa-marker.is-selected::before {
+  box-shadow:
+    0 0 0 2.5px var(--white),
+    0 0 0 5px var(--ink);
+}
+.hfa-marker.hfa-district::before {
+  opacity: 0.8;
+}
+.hfa-cluster {
+  background: var(--white);
+  color: var(--blue-800);
+  border-color: var(--blue-600);
+  font-size: 14px;
+}
+.hfa-pin {
+  display: block;
+  width: 34px;
+  height: 44px;
+  background: var(--danger);
+  clip-path: path("M17 44C17 44 0 26 0 17A17 17 0 0 1 34 17C34 26 17 44 17 44Z");
+}
+.hfa-zone-label {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: var(--orange-700);
+  font: 800 13px var(--font-body);
+  text-shadow: 0 0 3px var(--white), 0 0 6px var(--white);
+}
+.hfa-zone-label::before {
+  display: none;
+}
+.leaflet-container {
+  font-family: var(--font-body);
+}
+.leaflet-container a {
+  color: var(--blue-600);
+}
+
+/* Dialogs scale+fade in from the centre; exits are faster than entries. */
+dialog {
+  opacity: 0;
+  transform: scale(0.96) translateY(8px);
+  transition:
+    opacity 140ms ease-in,
+    transform 140ms ease-in,
+    overlay 140ms allow-discrete,
+    display 140ms allow-discrete;
+}
+dialog[open] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 220ms ease-out,
+    transform 220ms cubic-bezier(0.2, 0.9, 0.3, 1.1),
+    overlay 220ms allow-discrete,
+    display 220ms allow-discrete;
+}
+@starting-style {
+  dialog[open] {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+}
+dialog::backdrop {
+  transition: background-color 200ms ease-out;
+}
+
+/* The emergency route and anything opted out stay still (principle 5). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+[data-motion="none"] *,
+[data-motion="none"] *::before,
+[data-motion="none"] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Leaflet popups built from our own data (network map) */
+.hfa-popup p {
+  margin: 0 0 4px;
+}
+.hfa-popup-kind {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.hfa-popup-name {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--ink);
+}
+.hfa-popup-line {
+  font-size: 12px;
+  color: var(--muted);
+}
+.hfa-popup-dir {
+  font-weight: 800;
+  text-decoration: underline;
+}
+.hfa-chip {
+  display: inline-block;
+  margin-inline-start: 4px;
+  padding: 0 6px;
+  border-radius: 6px;
+  background: var(--navy-900);
+  color: var(--white);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}

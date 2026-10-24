@@ -1,0 +1,935 @@
+{
+  "meta": {
+    "title": "HomeForAll · From rescue to forever home",
+    "description": "A verified network connecting rescue groups, vet clinics, volunteers, foster homes and adopters of dogs and cats in Ho Chi Minh City."
+  },
+  "a11y": {
+    "skipToContent": "Skip to main content",
+    "mainNav": "Main navigation",
+    "languageSwitch": "Choose language",
+    "currentLanguage": "Viewing: English",
+    "homeLink": "HomeForAll, home"
+  },
+  "nav": {
+    "adopt": "Adopt",
+    "fosterVolunteer": "Foster & Volunteer",
+    "care": "Care",
+    "partners": "Partners",
+    "about": "About",
+    "login": "Log in",
+    "dashboard": "Dashboard",
+    "logout": "Log out",
+    "menu": "Menu",
+    "report": "Found a stray?"
+  },
+  "footer": {
+    "tagline": "Bringing every pet home, together.",
+    "pilot": "Pilot in Diên Hồng ward, Phú Mỹ ward and Thủ Đức, Ho Chi Minh City, from 16 November 2026.",
+    "nonprofit": "A nonprofit project. HomeForAll will never ask you to pay a deposit to adopt.",
+    "help": "Bitten or found an animal?",
+    "privacy": "Privacy (in preparation)",
+    "copyright": "© 2026 HomeForAll",
+    "network": "Network map",
+    "prototypeNotice": "HomeForAll is an academic project (SDG 15 & 17). Some animal profiles, map points, contact details and partner content are sample data or proposals, with no agreement in place."
+  },
+  "home": {
+    "title": "From rescue to forever home",
+    "lead": "A verified network connecting rescue groups, vet clinics, volunteers, foster homes and adopters in Ho Chi Minh City.",
+    "ctaFind": "Find a pet",
+    "ctaJoin": "Join the network",
+    "trust": "Piloting in Ho Chi Minh City · Verified partners only",
+    "buildNote": "You are viewing an early build. The 3D scroll story arrives before 1 February 2027.",
+    "ctaReport": "Found a stray?"
+  },
+  "help": {
+    "title": "What do you need help with right now?",
+    "intro": "No login needed. Choose your situation.",
+    "biteTile": "I or someone else was bitten by a dog or cat",
+    "biteTileHint": "What to do now and where to get rabies shots",
+    "foundTile": "I found an animal",
+    "foundTileHint": "How to stay safe and reach a rescue group",
+    "biteHeading": "Bitten or scratched by a dog or cat",
+    "emergencyCall": "If the wound is severe or bleeding heavily, call 115 (emergency).",
+    "pendingReview": "Detailed first-aid guidance is awaiting medical review and will be quoted word for word from an official source. Meanwhile, read the World Health Organization guidance and go to the nearest health facility as soon as possible.",
+    "whoLink": "World Health Organization (WHO): Rabies",
+    "clinicsPending": "List of post-exposure rabies vaccination sites: being updated.",
+    "hotlinePending": "Support hotline: being verified.",
+    "foundHeading": "Found a dog or cat",
+    "foundPending": "Do not try to catch a frightened or sick-looking animal; keep a safe distance. The Found a stray page shows the nearest rescue points and vets.",
+    "sourceLabel": "Source",
+    "toReport": "See rescue points and vets near you"
+  },
+  "comingSoon": {
+    "title": "This page is being built",
+    "body": "We are finishing this section for the pilot. Meanwhile, you can go back to the home page.",
+    "back": "Back to home"
+  },
+  "login": {
+    "title": "Log in",
+    "intro": "Enter your email and we will send you a sign-in link. No password needed.",
+    "email": "Email",
+    "emailInvalid": "Please enter a valid email, for example name@gmail.com",
+    "submit": "Send sign-in link",
+    "sending": "Sending…",
+    "sent": "Sent. Open the email on this device and tap the link. Can't find it? Check your Spam folder.",
+    "error": "We couldn't send it. Please try again in a few minutes.",
+    "notConfigured": "Sign-in is not connected in this environment.",
+    "linkInvalid": "This sign-in link has expired or was already used. Please request a new one."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "signedInAs": "Signed in as {email}",
+    "rolesLabel": "Your roles",
+    "open": "Open",
+    "accessDeniedTitle": "You don't have access to this page",
+    "accessDeniedBody": "This page belongs to a different role. If you think this is a mistake, contact an administrator.",
+    "backToDashboard": "Back to dashboard",
+    "placeholder": "This area will be built in the next milestones.",
+    "inboxEmpty": "Your report inbox appears here once your account is linked to a rescue point."
+  },
+  "roles": {
+    "admin": "Administrator",
+    "rescue_partner": "Rescue partner",
+    "vet_partner": "Vet clinic",
+    "foster": "Foster home",
+    "volunteer": "Volunteer",
+    "adopter": "Adopter",
+    "sponsor": "Sponsor"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The link may have changed or the listing was removed."
+  },
+  "pets": {
+    "title": "Find a friend",
+    "lead": "Every animal is cared for by a verified partner. Listings are reconfirmed every week.",
+    "resultCount": "{count, plural, =1 {# match} other {# matches}}",
+    "filters": {
+      "title": "Filters",
+      "species": "Species",
+      "cat": "Cat",
+      "dog": "Dog",
+      "ward": "Area",
+      "age": "Age",
+      "baby": "Under 6 months",
+      "young": "6 months – 2 years",
+      "adult": "2 – 7 years",
+      "senior": "Over 7 years",
+      "size": "Size",
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large",
+      "sex": "Sex",
+      "male": "Male",
+      "female": "Female",
+      "health": "Health",
+      "vaccinated": "Vaccinated",
+      "sterilized": "Sterilised",
+      "goodWith": "Good with",
+      "kids": "Children",
+      "cats": "Other cats",
+      "dogs": "Other dogs",
+      "partner": "Partner",
+      "anyPartner": "All partners",
+      "apply": "Apply filters",
+      "clear": "Clear filters ({count})"
+    },
+    "sort": {
+      "label": "Sort by",
+      "updated": "Recently confirmed",
+      "newest": "Newest"
+    },
+    "card": {
+      "updated": "Updated {time}",
+      "stale": "Not reconfirmed for 14+ days",
+      "view": "View {name}’s profile"
+    },
+    "status": {
+      "available": "Waiting for a home",
+      "in_foster": "In foster care",
+      "adoption_pending": "Application under review",
+      "adopted": "Adopted",
+      "paused": "Paused",
+      "draft": "Draft",
+      "withdrawn": "Withdrawn"
+    },
+    "badges": {
+      "vaccinated": "Vaccinated",
+      "sterilized": "Sterilised",
+      "kids": "Good with children"
+    },
+    "save": {
+      "save": "Save {name}",
+      "saved": "Saved {name}",
+      "prompt": "Log in to keep your saved list on every device.",
+      "promptCta": "Log in",
+      "dismiss": "Not now"
+    },
+    "empty": {
+      "title": "No animals match these filters",
+      "body": "Try removing a few options, or see every animal waiting for a home.",
+      "cta": "See all"
+    },
+    "photoAlt": "Photo of {name}"
+  },
+  "petProfile": {
+    "breadcrumb": "Breadcrumb",
+    "home": "Home",
+    "gallery": "Pictures of {name}",
+    "imageAlt": "Illustration of {name}, frame {n}",
+    "openImage": "Enlarge frame {n}",
+    "prev": "Previous image",
+    "next": "Next image",
+    "close": "Close",
+    "imageOf": "{n} / {total}",
+    "code": "Pet code",
+    "facts": {
+      "species": "Species",
+      "age": "Age",
+      "sex": "Sex",
+      "size": "Size",
+      "ward": "Area"
+    },
+    "story": "Story",
+    "temperament": "Personality",
+    "idealHome": "Ideal home",
+    "goodWith": "Lives well with",
+    "goodWithNone": "Best as the only pet at home",
+    "health": "Health",
+    "healthProgress": "{done} of {total} basic care steps done",
+    "healthNote": "This is information for you, not a score.",
+    "healthEvents": {
+      "checkup": "General check-up",
+      "vaccine_core": "Core vaccination",
+      "rabies": "Rabies vaccination",
+      "deworming": "Deworming",
+      "sterilization": "Sterilisation"
+    },
+    "done": "Done · {date}",
+    "planned": "Planned",
+    "caredBy": "Cared for by",
+    "verified": "Verified",
+    "verifiedWhy": "Why this badge?",
+    "verifiedExplain": "A HomeForAll administrator reviewed this partner’s details before allowing them to publish. Verified on {date}. The detailed verification process is being finalised.",
+    "staySafe": {
+      "title": "Stay safe when adopting",
+      "noDeposit": "Never pay a deposit into a personal account. HomeForAll will never ask you to.",
+      "meet": "Meet the animal at the rescue partner’s location.",
+      "report": "Something feels wrong? Use “Report this listing”."
+    },
+    "lastConfirmed": "Confirmed still available {time}",
+    "staleWarning": "This listing has not been reconfirmed for over 14 days. The animal may already have a home.",
+    "adoptCta": "I want to adopt",
+    "fosterCta": "I can foster",
+    "pendingNote": "The partner is reviewing an application for this animal. You can still express interest in case it does not work out.",
+    "share": "Share",
+    "copyLink": "Copy link",
+    "copied": "Link copied",
+    "shareFacebook": "Share on Facebook",
+    "shareZaloHint": "Send via Zalo: copy the link and paste it into the chat.",
+    "report": "Report this listing",
+    "reportTitle": "Report a listing",
+    "reportIntro": "Tell us what is wrong. An administrator will review it.",
+    "reportReasons": {
+      "scam": "Looks like a scam or asks for money",
+      "wrong": "Information is incorrect",
+      "adopted": "Already adopted",
+      "other": "Something else"
+    },
+    "reportSubmit": "Send report",
+    "reportDone": "Thank you. The report is noted on this device; the team will review it once moderation is running.",
+    "photoAlt": "Photo of {name}, {n}"
+  },
+  "interest": {
+    "title": "Express interest in adopting {name}",
+    "intro": "About a minute. {partner} will review it and invite you to complete an application if it is a good fit.",
+    "name": "Full name",
+    "contactMethod": "How should they contact you?",
+    "zalo": "Zalo",
+    "phone": "Phone",
+    "email": "Email",
+    "contactValue": {
+      "zalo": "Phone number used for Zalo",
+      "phone": "Phone number",
+      "email": "Email address"
+    },
+    "ward": "Which ward or commune do you live in?",
+    "experience": "Have you had a dog or cat before?",
+    "expNone": "Never",
+    "expPast": "In the past",
+    "expNow": "I have one now",
+    "motivation": "What makes you want to adopt? (optional)",
+    "consent": "I agree that HomeForAll may share my contact details with {partner} to discuss this adoption.",
+    "submit": "Send interest",
+    "sending": "Sending…",
+    "cancel": "Cancel",
+    "errorSummary": "Please check {count, plural, =1 {# field} other {# fields}} below.",
+    "errors": {
+      "required": "Please fill this in.",
+      "phone": "Phone number looks wrong, for example 0901234567.",
+      "email": "Please enter a valid email, for example name@gmail.com.",
+      "consent": "We need your consent so the partner can contact you."
+    },
+    "successTitle": "We’ve noted your interest",
+    "successDemo": "Nothing was passed to the partner yet: matching opens when the pilot starts.",
+    "successNext": "Once the pilot starts, you will follow your application through these steps:",
+    "steps": {
+      "sent": "Sent",
+      "reviewing": "Being reviewed",
+      "interview": "Interview",
+      "approved": "Approved",
+      "handover": "Handover"
+    },
+    "close": "Close",
+    "consentLabel": "Consent to share contact details",
+    "requiredHint": "Every field is required unless marked “optional”."
+  },
+  "landing": {
+    "sceneNav": "Story scenes",
+    "reduceEffects": "Reduce effects",
+    "scenes": {
+      "hero": "Start",
+      "doors": "What you can do",
+      "pets": "Meet the pets",
+      "journey": "The journey",
+      "trust": "Why trust us",
+      "facts": "Why it matters",
+      "network": "One network",
+      "stories": "Stories",
+      "partners": "Partners",
+      "final": "Get started"
+    },
+    "doors": {
+      "title": "What would you like to do today?",
+      "adopt": {
+        "title": "Adopt",
+        "body": "Find an animal waiting for a home, from a verified partner."
+      },
+      "foster": {
+        "title": "Foster / Volunteer",
+        "body": "Give an animal a temporary home, or give a rescue group a few hours."
+      },
+      "care": {
+        "title": "Pet care",
+        "body": "Vaccination, registration, sterilisation and the first week at home."
+      },
+      "partner": {
+        "title": "Partner with us",
+        "body": "Rescue groups, clinics, sponsors: build the network together."
+      },
+      "report": {
+        "title": "I found a stray",
+        "body": "See the nearest rescue points and vets right away, then tell them."
+      }
+    },
+    "pets": {
+      "title": "Meet the pets",
+      "lead": "They are waiting for a home. Keep scrolling to see more.",
+      "seeAll": "See every animal",
+      "seeAllBody": "Filter by species, area, age and health."
+    },
+    "journey": {
+      "title": "One animal's journey",
+      "lead": "From rescue to forever home. Someone owns every step.",
+      "stepLabel": "Step {n} of 6",
+      "who": "Who does it",
+      "steps": {
+        "rescue": {
+          "title": "Rescue",
+          "who": "Rescue group",
+          "body": "The animal is picked up from the street or after a tip-off and brought somewhere safe."
+        },
+        "vet": {
+          "title": "Vet care",
+          "who": "Vet clinic",
+          "body": "Check-up, vaccinations, deworming, sterilisation. Each visit is added to the animal's record."
+        },
+        "foster": {
+          "title": "Foster",
+          "who": "Foster home",
+          "body": "The animal lives with a family while it waits and gets used to life indoors."
+        },
+        "match": {
+          "title": "Match",
+          "who": "Adopter and partner",
+          "body": "You express interest; the partner reviews it and invites you to complete an application."
+        },
+        "adopt": {
+          "title": "Adoption",
+          "who": "New family",
+          "body": "Sign the agreement and meet the animal at the partner's location."
+        },
+        "follow": {
+          "title": "Follow-up",
+          "who": "Family and partner",
+          "body": "Check-ins at day 7, 30 and 90; reminders for vaccination and registration."
+        }
+      },
+      "spineLabel": "The six steps of the journey",
+      "goFeature": "Go to the feature",
+      "prev": "Previous step",
+      "next": "Next step",
+      "cta": {
+        "rescue": "Report a stray",
+        "vet": "Find a clinic",
+        "foster": "I can foster",
+        "match": "See who is waiting",
+        "adopt": "Start adopting",
+        "follow": "See the follow-up plan"
+      }
+    },
+    "trust": {
+      "title": "Why you can trust it",
+      "verified": {
+        "title": "Verified partners",
+        "body": "Only partners checked by an administrator can publish animals."
+      },
+      "screening": {
+        "title": "Screened adoptions",
+        "body": "Two stages: express interest, then a full application when the partner invites you."
+      },
+      "safe": {
+        "title": "Stay safe",
+        "body": "No deposits to personal accounts; meet the animal at the partner's location."
+      },
+      "privacy": {
+        "title": "Your data is protected",
+        "body": "Phone numbers and addresses are never public; shared only with your consent."
+      }
+    },
+    "facts": {
+      "title": "Why it matters",
+      "sourceLabel": "Source",
+      "owned": {
+        "value": "~305,000",
+        "label": "dogs and cats kept as pets in Ho Chi Minh City",
+        "source": "HCMC veterinary authority, via Báo Nông nghiệp và Môi trường (24 May 2026)"
+      },
+      "bites": {
+        "value": "~10,000",
+        "label": "people a month needed rabies vaccination after a dog or cat bite (2024)",
+        "source": "HCDC, via SGGP (2 Dec 2025)"
+      },
+      "deaths": {
+        "value": "5",
+        "label": "rabies deaths in the first half of 2026; none had received vaccine or serum after the bite",
+        "source": "VOV"
+      }
+    },
+    "network": {
+      "title": "One network",
+      "lead": "Everyone does one part of the work to bring each animal home.",
+      "rescue": {
+        "title": "Rescue groups",
+        "body": "Take animals in and care for them first."
+      },
+      "vet": {
+        "title": "Vet clinics",
+        "body": "Keep them healthy and record every visit."
+      },
+      "foster": {
+        "title": "Volunteers & foster homes",
+        "body": "A temporary home and a few helping hours."
+      },
+      "adopter": {
+        "title": "Adopters",
+        "body": "A forever home."
+      },
+      "sponsor": {
+        "title": "Sponsors",
+        "body": "Help the network go further."
+      }
+    },
+    "stories": {
+      "title": "Stories of coming home",
+      "empty": "Real stories will appear here once the first pilot animals reach their new homes, with the families' consent."
+    },
+    "partners": {
+      "title": "Partners",
+      "empty": "Partners will be listed here once they are verified.",
+      "cta": "Become a partner"
+    },
+    "final": {
+      "title": "Ready to bring an animal home, or help one find a home?",
+      "adopt": "Adopt",
+      "foster": "Foster / Volunteer",
+      "partner": "Become a partner"
+    }
+  },
+  "world": {
+    "chipStep": "Step {n} of 6 · {title}",
+    "chipNetwork": "Whole network",
+    "chipHelp": "Help now",
+    "spineTitle": "Miu's journey",
+    "spineHint": "You are at this step. Pick a step to revisit the story.",
+    "backToStory": "Back to the journey",
+    "current": "Current step",
+    "promise": {
+      "pets": "Every animal is cared for by a verified partner.",
+      "foster": "Give an animal a safe place to wait for a new home.",
+      "volunteer": "A few hours of yours help an animal get home.",
+      "learn": "Vaccination, registration, sterilisation: step by step.",
+      "map": "Verified partners around you.",
+      "partners": "Everyone does one part of the work.",
+      "events": "Meet, help out and get to know the animals.",
+      "stories": "The first homes.",
+      "about": "From rescue to forever home.",
+      "login": "Step through the door.",
+      "donate": "Every contribution, explained.",
+      "report": "Just a photo and a place; the nearest rescue group takes it from there."
+    }
+  },
+  "pages": {
+    "volunteer": "Volunteer",
+    "map": "Network map",
+    "events": "Events",
+    "stories": "Stories of coming home",
+    "donate": "Support the project",
+    "network": "Network map"
+  },
+  "about": {
+    "why": {
+      "title": "Why HomeForAll",
+      "body": "Rescue, fostering and adoption of dogs and cats in Ho Chi Minh City are scattered across Facebook and Zalo posts: it is hard to know who to trust or whether an animal is still waiting. HomeForAll brings verified partners together so every animal can make the whole journey from rescue to a forever home."
+    },
+    "sdg": {
+      "title": "Sustainable Development Goals",
+      "sdg15": "SDG 15 · Life on land: fewer abandoned animals, more responsible ownership.",
+      "sdg17": "SDG 17 · Partnerships: connecting rescue groups, clinics, volunteers, adopters and sponsors."
+    },
+    "pilot": {
+      "title": "Pilot",
+      "body": "Closed pilot from 16 November 2026 in Diên Hồng ward, Phú Mỹ ward and Thủ Đức; opening wider from 1 February 2027."
+    },
+    "art": {
+      "title": "About the illustrations",
+      "body": "The clay scenes on this site (the neighbourhood, the clinic, Miu the cat and the dog) were created with an AI tool (Google's Gemini video model). They are illustrations, not photographs.",
+      "mascots": "Miu and the dog are the project's characters, not animals waiting for adoption. Photos of animals waiting for a home are always real photos supplied by the rescue partner, with consent."
+    },
+    "review": "The content of this page is awaiting review by the project team."
+  },
+  "foster": {
+    "whatTitle": "What fostering involves",
+    "what": [
+      "An animal stays with you while it waits for a new family, from a few days to a few months.",
+      "The rescue partner explains up front what the animal needs, who covers vet costs and how long it lasts.",
+      "You can decline a proposal at any time. HomeForAll never charges you."
+    ],
+    "stepsTitle": "How it works",
+    "steps": [
+      "Send \"I can foster\" (about a minute).",
+      "A partner proposes an animal that fits your situation.",
+      "Accept or decline in one tap.",
+      "Get a care checklist and a list of what the animal needs.",
+      "You get a reminder near the end; if you like, you can adopt."
+    ],
+    "formTitle": "I can foster",
+    "formIntro": "About a minute. A partner will contact you when there is a good match.",
+    "species": "You can foster",
+    "speciesCat": "Cats",
+    "speciesDog": "Dogs",
+    "speciesAny": "Dogs or cats",
+    "size": "Suitable size",
+    "sizeSmall": "Small",
+    "sizeMedium": "Medium",
+    "sizeLarge": "Large",
+    "duration": "For how long",
+    "d1": "Under 2 weeks",
+    "d2": "2 – 8 weeks",
+    "d3": "Over 2 months",
+    "ward": "Which ward or commune do you live in?",
+    "from": "Available from",
+    "contact": "Contact via",
+    "contactValue": "Zalo phone number or email",
+    "consent": "I agree that HomeForAll may share my contact details with a rescue partner to arrange fostering.",
+    "submit": "Send",
+    "sending": "Sending…",
+    "successTitle": "Thank you for offering to foster",
+    "successDemo": "Nothing was passed to a partner yet: matching opens when the pilot starts.",
+    "cantFoster": "Can't foster? You can still help with a few volunteer hours.",
+    "goVolunteer": "See volunteer tasks",
+    "faqTitle": "Frequently asked",
+    "faq": [
+      {
+        "q": "Do I have to pay?",
+        "a": "HomeForAll never charges. Care costs are agreed with the rescue partner before you accept."
+      },
+      {
+        "q": "What if the animal doesn't fit my home?",
+        "a": "Tell the partner with the \"I need help\" button; they will rearrange."
+      }
+    ]
+  },
+  "volunteer": {
+    "title": "Tasks that need a hand",
+    "filters": "Filter tasks",
+    "all": "All",
+    "short": "Under 2 hours",
+    "weekend": "Weekend",
+    "online": "Online",
+    "duration": "Duration",
+    "ward": "Area",
+    "date": "Date",
+    "partner": "Partner",
+    "signUp": "I can help",
+    "signedUp": "Noted (not sent to the group yet)",
+    "empty": "No tasks match these filters. Try removing one.",
+    "types": {
+      "transport": "Drive an animal to the vet",
+      "photo": "Photograph the animals",
+      "event": "Help at an adoption day",
+      "online": "Answer messages online"
+    }
+  },
+  "learn": {
+    "intro": "Pick what you need to do. Every guide names its sources and is reviewed by a vet before it is published.",
+    "pending": "The detailed guide is being prepared and awaits review by a vet.",
+    "sourceLabel": "Source",
+    "officialPending": "Link to the official procedure: being verified.",
+    "topics": {
+      "vaccination": "Vaccination",
+      "registration": "Registering your dog or cat with the local authority",
+      "sterilization": "Sterilisation",
+      "firstWeek": "The first week at home",
+      "found": "Found an animal",
+      "bitten": "Bitten by a dog or cat"
+    },
+    "goHelp": "Open the help-now page",
+    "vetTitle": "Find a vet clinic",
+    "vetBody": "Verified partner clinics will appear on the network map when the pilot starts.",
+    "vetCta": "See the network map"
+  },
+  "storiesPage": {
+    "empty": "No stories yet. Real stories will be published once the first pilot animals reach their new homes.",
+    "consentTitle": "When is a story published?",
+    "consent": "Only with the adopting family's written consent. Addresses and contact details are never published.",
+    "cta": "See who is waiting"
+  },
+  "fanh": {
+    "launcher": "Ask Fanh the vet",
+    "title": "Fanh the vet",
+    "subtitle": "AI assistant · in development",
+    "disclaimer": "Fanh is an AI assistant and does not replace a vet. If an animal is in danger or you were bitten, go to the Help now page.",
+    "greeting": "Hi, I'm Fanh! I can help you learn about pet care, vaccinations and adopting. What would you like to ask?",
+    "suggestions": [
+      "What do I need for a new pet at home?",
+      "When should a kitten be vaccinated?",
+      "How does adopting on HomeForAll work?"
+    ],
+    "suggestionsLabel": "Suggested questions",
+    "placeholder": "Type your question…",
+    "inputLabel": "Question for Fanh",
+    "send": "Send",
+    "close": "Close chat",
+    "typing": "Fanh is replying…",
+    "reply": "Thanks for asking! Fanh is still being built and can't answer this yet. Meanwhile, see the Care page or contact your nearest vet clinic.",
+    "linkLearn": "Care page",
+    "linkHelp": "Help now",
+    "you": "You"
+  },
+  "proposedPartners": {
+    "title": "Proposed partners",
+    "badge": "Proposed",
+    "proposalLabel": "Proposed contribution:",
+    "sourceLabel": "Source",
+    "logoAlt": "{brand} logo",
+    "verifiedTitle": "Verified partners",
+    "verifiedEmpty": "No partners have been verified yet. The list will be published when the pilot starts.",
+    "cocoon": {
+      "about": "Cocoon is a Vietnamese vegan cosmetics brand, on the market since 2013, using local ingredients such as winter melon, Đắk Lắk coffee, Cao Bằng rose and Hậu Giang lotus; its products are not tested on animals. From 2023 to 2025 the brand ran a stray dog and cat rescue programme with Animals Asia Foundation.",
+      "proposal": "co-run communication on responsible adoption and support sterilisation and vaccination costs for rescued animals."
+    },
+    "farmina-pet-foods": {
+      "about": "Farmina Pet Foods is a family-owned and family-run pet nutrition company founded in 1965, making dry and wet food for dogs and cats (including the N&D and Vet Life lines), present in more than 75 countries. The company says it runs independent research and non-invasive clinical trials.",
+      "proposal": "sponsor food for foster families and newly rescued animals."
+    },
+    "msd-animal-health": {
+      "about": "MSD Animal Health is the name of Merck Animal Health outside the United States and Canada. The company has more than 130 years of scientific innovation, operates in more than 150 countries and develops medicines, vaccines and technology for animals, including vaccine solutions for pets.",
+      "proposal": "support educational material on vaccination (especially rabies) for owners and partner clinics."
+    }
+  },
+  "network": {
+    "title": "Network map",
+    "layers": "Map layers",
+    "rescue": "Rescue",
+    "vet": "Vets",
+    "state": "State vet stations",
+    "foster": "Foster homes",
+    "pilot": "Pilot areas",
+    "ward": "Ward",
+    "allWards": "All wards",
+    "listTitle": "List ({count})",
+    "listOnly": "List only (no map position yet)",
+    "mapRegion": "Map of rescue and vet services in Ho Chi Minh City",
+    "cluster": "{count} places, press to zoom in",
+    "kinds": {
+      "rescue": "Rescue point",
+      "vet_hospital": "Vet hospital",
+      "vet_clinic": "Vet clinic",
+      "state_station": "State vet station",
+      "foster_zone": "Foster homes",
+      "rescue_station": "Rescue organisation"
+    },
+    "realOrg": "Rescue group",
+    "lines": {
+      "realOrg": "Rescue organisation; contact them through their official channels.",
+      "vet": "Compiled by the project team and not verified; call to confirm before you go.",
+      "foster": "About {count} foster homes in this ward (count only).",
+      "district": "District-level position; no street address yet.",
+      "chain": "A chain with several branches; branches are not listed yet.",
+      "rescue": "Rescue point in the network."
+    },
+    "unverifiedNote": "Vet data was compiled by the project team and is not verified; call to confirm before you go.",
+    "notSeeded": "Map positions are being updated. The list below is complete.",
+    "privacy": "The map never shows found-animal reports, foster homes or volunteers. Rescue points are shown at ward level only.",
+    "sponsorsTitle": "Proposed partners",
+    "openMap": "Open the network map",
+    "previewLabel": "Network map preview; press to open the full map",
+    "empty": "No places match these filters.",
+    "directions": "Directions"
+  },
+  "report": {
+    "title": "Found a stray?",
+    "intro": "See the nearest rescue points and vets right now. No account needed.",
+    "bitten": "Bitten or scratched? See the emergency guide",
+    "steps": {
+      "photo": "Photo and details",
+      "location": "Location",
+      "send": "Send"
+    },
+    "stepOf": "Step {n} of 3",
+    "next": "Continue",
+    "back": "Back",
+    "errorSummary": "Please check {count, plural, =1 {# field} other {# fields}} below.",
+    "errors": {
+      "photos": "Add at least one photo.",
+      "species": "Choose the species.",
+      "location": "Pick a spot on the map or choose a ward.",
+      "seenAt": "Tell us when you saw the animal.",
+      "consent": "We need your consent to send the report.",
+      "contact": "Enter a contact and tick the sharing consent.",
+      "photoTooLarge": "The photo is larger than 10 MB.",
+      "photoType": "Only JPG, PNG, WebP or HEIC photos.",
+      "photoUnreadable": "This photo cannot be read (HEIC in this browser?). Retake it or choose a JPG.",
+      "rateLimited": "You have sent several reports in the last hour. Please try again in a few minutes.",
+      "generic": "We could not send it. Please try again."
+    },
+    "photo": {
+      "label": "Photos of the animal (up to 3)",
+      "add": "Take or choose a photo",
+      "retake": "Retake",
+      "remove": "Remove",
+      "privacy": "Avoid clear faces of people and number plates.",
+      "alt": "Your photo {n}"
+    },
+    "type": {
+      "label": "Situation",
+      "sighting": "The animal is still there",
+      "found": "I have the animal with me"
+    },
+    "species": {
+      "label": "Species",
+      "cat": "Cat",
+      "dog": "Dog",
+      "other": "Other"
+    },
+    "condition": {
+      "label": "Condition",
+      "healthy": "Healthy",
+      "thin": "Thin / weak",
+      "injured": "Injured",
+      "aggressive": "Aggressive",
+      "unknown": "Not sure"
+    },
+    "bittenLabel": "I or someone else was bitten / scratched",
+    "collar": {
+      "label": "Wearing a collar?",
+      "yes": "Yes",
+      "no": "No",
+      "unknown": "Not sure"
+    },
+    "note": {
+      "label": "Note (optional)",
+      "hint": "{left} characters left"
+    },
+    "location": {
+      "explain": "Press the button below and your browser will ask for your location. The exact location goes only to the rescue groups you choose and is never public.",
+      "useMine": "Use my current location",
+      "locating": "Getting your location…",
+      "accuracy": "Accurate to about {m} m",
+      "denied": "We could not get your location. Drag the pin on the map, or choose a ward below.",
+      "drag": "Drag the pin or click the map to adjust.",
+      "ward": "Ward",
+      "wardApprox": "{ward} (approximate)",
+      "wardChoose": "Choose a ward",
+      "wardManual": "Or type the ward name",
+      "landmark": "Landmark (optional)",
+      "landmarkHint": "For example: by the market gate, in front of a corner shop",
+      "seenAt": "When did you see the animal?",
+      "pin": "Where you saw the animal",
+      "noMap": "No map needed: a ward and a landmark are enough."
+    },
+    "groups": {
+      "intro": "Your report goes to the inbox of the groups you choose.",
+      "none": "No rescue point near you accepts reports yet. The report is still saved and an administrator will forward it.",
+      "band": {
+        "lt1": "under 1 km",
+        "1to2": "about 1–2 km",
+        "2to4": "about 2–4 km",
+        "4to8": "about 4–8 km",
+        "gt8": "over 8 km"
+      },
+      "contactToggle": "Let the rescue groups contact me (optional)",
+      "contact": "Phone / Zalo / email",
+      "contactConsent": "I agree to share this contact only with the groups selected above.",
+      "title": "Send to"
+    },
+    "confirm": {
+      "summary": "Check your report",
+      "photos": "{count, plural, =1 {# photo} other {# photos}}",
+      "where": "Where",
+      "when": "When",
+      "to": "Sending to",
+      "consent": "I agree that HomeForAll stores these photos, location and description and passes them to the selected rescue groups, only to help the animal. The exact location goes only to those groups and is deleted 30 days after the report is closed.",
+      "legalReview": "(Consent wording awaiting legal review under Personal Data Protection Law 91/2025/QH15.)",
+      "submit": "Send report",
+      "sending": "Sending…"
+    },
+    "result": {
+      "title": "Report {code} sent",
+      "saveLink": "Save this tracking link. It is shown only once and is the only way to view or update your report.",
+      "copy": "Copy link",
+      "copied": "Copied",
+      "open": "Open the tracking page",
+      "duplicate": "Someone may have reported an animal nearby in the last 24 hours. Your report was still sent; rescue groups will merge duplicates.",
+      "back": "Back to the journey",
+      "draftRestored": "Your draft was restored.",
+      "clearDraft": "Clear draft",
+      "honest": "Your report has been recorded. If the animal is injured or in danger, contact the nearest point above directly.",
+      "timeline": "Status"
+    },
+    "track": {
+      "title": "Report {code}",
+      "invalid": "This link is not valid, or the report was deleted.",
+      "status": "Status",
+      "timeline": "Timeline",
+      "recipients": "Groups that received it",
+      "update": "Add information",
+      "updateText": "Your update",
+      "updatePhoto": "Add a photo (optional)",
+      "send": "Send update",
+      "left": "The animal has left that place",
+      "delete": "Delete report",
+      "deleteConfirm": "Permanently delete the report and its photos? This cannot be undone.",
+      "deleted": "Report deleted.",
+      "states": {
+        "pending": "Not yet claimed",
+        "claimed": "Claimed",
+        "declined": "Declined"
+      },
+      "events": {
+        "submitted": "You sent the report",
+        "sent": "Sent to {spot}",
+        "claimed": "{spot} took the case",
+        "declined": "{spot} could not take this case",
+        "status": "Status updated",
+        "escalated": "No group yet: also sent to {spot}",
+        "reporter_update": "You added information",
+        "animal_left": "You said the animal has left",
+        "message": "Message from {spot}",
+        "closed": "Report closed"
+      }
+    },
+    "statuses": {
+      "submitted": "Sent",
+      "sent_to_groups": "Forwarded to rescue groups",
+      "claimed": "A group took the case",
+      "on_the_way": "On the way",
+      "animal_secured": "Animal is safe",
+      "treated_or_fostered": "Treated / in foster care",
+      "closed": "Closed"
+    },
+    "closeReasons": {
+      "reunited": "Back with the owner",
+      "rehomed": "New home found",
+      "not_found": "Animal not found",
+      "duplicate": "Duplicate report",
+      "spam": "Not valid"
+    },
+    "locBar": {
+      "title": "Where are you?",
+      "useMine": "Use my location",
+      "locating": "Getting your location…",
+      "accuracy": "Accurate to about {m} m",
+      "denied": "We could not get your location. Choose a ward, or click the map.",
+      "ward": "Or choose a ward",
+      "wardChoose": "Choose a ward",
+      "wardManual": "Type the ward name",
+      "wardApprox": "Near {ward}",
+      "privacy": "Your location is only used to find nearby points and is never made public."
+    },
+    "help": {
+      "title": "Nearest to you",
+      "rescueTitle": "Rescue points",
+      "vetTitle": "Vets and state vet stations",
+      "needLocation": "Choose a location above to see points near you.",
+      "noneNear": "Nothing within 8 km; these are the closest points.",
+      "directions": "Directions",
+      "notify": "Report to this group",
+      "call": "Call",
+      "message": "Message",
+      "facebook": "Facebook",
+      "website": "Website",
+      "vetNote": "Vet list compiled by the project team, not verified. Call before you go.",
+      "unseeded": "Map positions are being updated, so the vets below are not sorted by distance yet. Directions opens a map to the address.",
+      "mapRegion": "Map of rescue points and vets near you",
+      "you": "Your location",
+      "kinds": {
+        "rescue": "Rescue point",
+        "vet_hospital": "Vet hospital",
+        "vet_clinic": "Vet clinic",
+        "state_station": "State vet station",
+        "rescue_station": "Rescue organisation"
+      }
+    },
+    "now": {
+      "title": "What to do right now",
+      "s1": "Keep a safe distance; do not chase the animal.",
+      "s2": "Photograph from afar and note the exact place.",
+      "s3": "Bring it to, or contact, the nearest point above."
+    },
+    "bite": {
+      "title": "Bitten or scratched?",
+      "body": "Go to the nearest health facility as soon as possible. If the wound is serious, call 115.",
+      "link": "See the Help now page",
+      "who": "World Health Organization (WHO): Rabies"
+    },
+    "quick": {
+      "title": "Send a quick report",
+      "lead": "Send a photo and location to the nearest rescue groups. About a minute.",
+      "open": "Open the report form",
+      "close": "Collapse"
+    }
+  },
+  "inbox": {
+    "title": "Report inbox: {spot}",
+    "empty": "No reports have been sent to this point yet.",
+    "yourState": "Your group",
+    "exact": "Exact location (only the selected groups see it)",
+    "contact": "Reporter contact (consented)",
+    "claim": "Take this case",
+    "decline": "Decline",
+    "declineReason": "Reason for declining (required)",
+    "setStatus": "Update status",
+    "closeReason": "Reason for closing",
+    "save": "Save",
+    "message": "Message the reporter (shown on their tracking page)",
+    "send": "Send",
+    "errors": {
+      "forbidden": "You do not have access to this report.",
+      "reason_required": "A reason is required.",
+      "bad_transition": "That status change is not allowed.",
+      "invalid": "Please check the input."
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "s02",
+  "source": "s02-alley-night.mp4",
+  "frames": 39,
+  "fps": 12,
+  "width": 1280,
+  "height": 720,
+  "duration_s": 3.208,
+  "pattern": "f_%03d.webp",
+  "bytes": 1275438
+}

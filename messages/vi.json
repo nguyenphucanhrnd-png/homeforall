@@ -1,0 +1,935 @@
+{
+  "meta": {
+    "title": "HomeForAll · Từ cứu hộ đến mái ấm trọn đời",
+    "description": "Mạng lưới đã xác minh kết nối nhóm cứu hộ, phòng khám thú y, tình nguyện viên, nhà nuôi tạm và người nhận nuôi chó mèo tại TP.HCM."
+  },
+  "a11y": {
+    "skipToContent": "Bỏ qua, đến nội dung chính",
+    "mainNav": "Điều hướng chính",
+    "languageSwitch": "Chọn ngôn ngữ",
+    "currentLanguage": "Đang xem: Tiếng Việt",
+    "homeLink": "HomeForAll, về trang chủ"
+  },
+  "nav": {
+    "adopt": "Nhận nuôi",
+    "fosterVolunteer": "Nuôi tạm & Tình nguyện",
+    "care": "Chăm sóc",
+    "partners": "Đối tác",
+    "about": "Về dự án",
+    "login": "Đăng nhập",
+    "dashboard": "Bảng điều khiển",
+    "logout": "Đăng xuất",
+    "menu": "Menu",
+    "report": "Phát hiện 1 bé đi lạc"
+  },
+  "footer": {
+    "tagline": "Chung tay đưa thú cưng về mái ấm.",
+    "pilot": "Thí điểm tại phường Diên Hồng, phường Phú Mỹ và Thủ Đức, TP.HCM, từ ngày 16/11/2026.",
+    "nonprofit": "Dự án phi lợi nhuận. HomeForAll không bao giờ yêu cầu bạn chuyển tiền đặt cọc để nhận nuôi.",
+    "help": "Bị cắn hoặc nhặt được thú?",
+    "privacy": "Quyền riêng tư (đang soạn)",
+    "copyright": "© 2026 HomeForAll",
+    "network": "Bản đồ mạng lưới",
+    "prototypeNotice": "HomeForAll là sản phẩm của dự án học thuật (SDG 15 & 17). Một số hồ sơ thú, điểm trên bản đồ, thông tin liên hệ và nội dung đối tác là dữ liệu mẫu hoặc đề xuất, chưa có thỏa thuận."
+  },
+  "home": {
+    "title": "Từ cứu hộ đến mái ấm trọn đời",
+    "lead": "Mạng lưới kết nối nhóm cứu hộ, phòng khám thú y, tình nguyện viên, nhà nuôi tạm và người nhận nuôi đã được xác minh tại TP.HCM.",
+    "ctaFind": "Tìm thú cưng",
+    "ctaJoin": "Tham gia mạng lưới",
+    "trust": "Thí điểm tại TP.HCM · Chỉ đối tác đã xác minh",
+    "buildNote": "Bạn đang xem bản dựng sớm. Câu chuyện cuộn 3D sẽ có mặt trước ngày 1/2/2027.",
+    "ctaReport": "Thấy bé đi lạc?"
+  },
+  "help": {
+    "title": "Bạn cần giúp gì ngay bây giờ?",
+    "intro": "Trang này không cần đăng nhập. Chọn tình huống của bạn.",
+    "biteTile": "Tôi hoặc ai đó bị chó, mèo cắn",
+    "biteTileHint": "Việc cần làm ngay và nơi tiêm phòng dại",
+    "foundTile": "Tôi nhặt được một bé",
+    "foundTileHint": "Cách giữ an toàn và liên hệ nhóm cứu hộ",
+    "biteHeading": "Bị chó, mèo cắn hoặc cào",
+    "emergencyCall": "Nếu vết thương nặng hoặc chảy máu nhiều, gọi 115 (cấp cứu).",
+    "pendingReview": "Hướng dẫn sơ cứu chi tiết đang chờ bác sĩ thẩm định và sẽ được trích nguyên văn từ nguồn chính thức. Trong lúc chờ, hãy đọc hướng dẫn của Tổ chức Y tế Thế giới và đến cơ sở y tế gần nhất càng sớm càng tốt.",
+    "whoLink": "Tổ chức Y tế Thế giới (WHO): Bệnh dại (tiếng Anh)",
+    "clinicsPending": "Danh sách điểm tiêm phòng dại sau phơi nhiễm: đang cập nhật.",
+    "hotlinePending": "Đường dây hỗ trợ: đang xác minh.",
+    "foundHeading": "Nhặt được chó, mèo",
+    "foundPending": "Đừng tự bắt thú đang hoảng sợ hoặc có dấu hiệu bệnh; giữ khoảng cách an toàn. Trang Phát hiện 1 bé đi lạc chỉ cho bạn điểm cứu hộ và thú y gần nhất.",
+    "sourceLabel": "Nguồn",
+    "toReport": "Xem điểm cứu hộ và thú y gần bạn"
+  },
+  "comingSoon": {
+    "title": "Trang này đang được xây dựng",
+    "body": "Chúng tôi đang hoàn thiện phần này cho đợt thí điểm. Trong lúc chờ, bạn có thể quay về trang chủ.",
+    "back": "Về trang chủ"
+  },
+  "login": {
+    "title": "Đăng nhập",
+    "intro": "Nhập email, chúng tôi sẽ gửi một đường dẫn đăng nhập. Không cần mật khẩu.",
+    "email": "Email",
+    "emailInvalid": "Email chưa đúng định dạng, ví dụ: ten@gmail.com",
+    "submit": "Gửi đường dẫn đăng nhập",
+    "sending": "Đang gửi…",
+    "sent": "Đã gửi. Hãy mở email trên thiết bị này và bấm vào đường dẫn. Không thấy thư? Kiểm tra mục Spam.",
+    "error": "Chưa gửi được. Vui lòng thử lại sau ít phút.",
+    "notConfigured": "Chức năng đăng nhập chưa được kết nối trên môi trường này.",
+    "linkInvalid": "Đường dẫn đăng nhập đã hết hạn hoặc đã được dùng. Hãy yêu cầu đường dẫn mới."
+  },
+  "dashboard": {
+    "title": "Bảng điều khiển",
+    "signedInAs": "Đang đăng nhập: {email}",
+    "rolesLabel": "Vai trò của bạn",
+    "open": "Mở",
+    "accessDeniedTitle": "Bạn chưa có quyền xem trang này",
+    "accessDeniedBody": "Trang này dành cho vai trò khác. Nếu bạn nghĩ đây là nhầm lẫn, hãy liên hệ quản trị viên.",
+    "backToDashboard": "Về bảng điều khiển",
+    "placeholder": "Khu vực này sẽ được xây dựng ở các giai đoạn tiếp theo.",
+    "inboxEmpty": "Hộp thư báo cáo sẽ hiện ở đây khi tài khoản của bạn được liên kết với một điểm cứu hộ."
+  },
+  "roles": {
+    "admin": "Quản trị viên",
+    "rescue_partner": "Đối tác cứu hộ",
+    "vet_partner": "Phòng khám thú y",
+    "foster": "Nhà nuôi tạm",
+    "volunteer": "Tình nguyện viên",
+    "adopter": "Người nhận nuôi",
+    "sponsor": "Nhà tài trợ"
+  },
+  "notFound": {
+    "title": "Không tìm thấy trang",
+    "body": "Đường dẫn có thể đã thay đổi hoặc tin đăng đã được gỡ."
+  },
+  "pets": {
+    "title": "Tìm một người bạn",
+    "lead": "Mỗi bé đều do một đối tác đã xác minh chăm sóc. Tin đăng được xác nhận lại hằng tuần.",
+    "resultCount": "{count} bé phù hợp",
+    "filters": {
+      "title": "Bộ lọc",
+      "species": "Loài",
+      "cat": "Mèo",
+      "dog": "Chó",
+      "ward": "Khu vực",
+      "age": "Độ tuổi",
+      "baby": "Dưới 6 tháng",
+      "young": "6 tháng – 2 tuổi",
+      "adult": "2 – 7 tuổi",
+      "senior": "Trên 7 tuổi",
+      "size": "Kích cỡ",
+      "small": "Nhỏ",
+      "medium": "Vừa",
+      "large": "Lớn",
+      "sex": "Giới tính",
+      "male": "Đực",
+      "female": "Cái",
+      "health": "Sức khoẻ",
+      "vaccinated": "Đã tiêm phòng",
+      "sterilized": "Đã triệt sản",
+      "goodWith": "Hợp với",
+      "kids": "Trẻ nhỏ",
+      "cats": "Mèo khác",
+      "dogs": "Chó khác",
+      "partner": "Đối tác",
+      "anyPartner": "Tất cả đối tác",
+      "apply": "Áp dụng bộ lọc",
+      "clear": "Xoá bộ lọc ({count})"
+    },
+    "sort": {
+      "label": "Sắp xếp",
+      "updated": "Mới xác nhận",
+      "newest": "Mới đăng"
+    },
+    "card": {
+      "updated": "Cập nhật {time}",
+      "stale": "Chưa xác nhận lại hơn 14 ngày",
+      "view": "Xem hồ sơ {name}"
+    },
+    "status": {
+      "available": "Đang chờ nhận nuôi",
+      "in_foster": "Đang nuôi tạm",
+      "adoption_pending": "Đang xét hồ sơ",
+      "adopted": "Đã có gia đình",
+      "paused": "Tạm dừng",
+      "draft": "Bản nháp",
+      "withdrawn": "Đã gỡ"
+    },
+    "badges": {
+      "vaccinated": "Đã tiêm phòng",
+      "sterilized": "Đã triệt sản",
+      "kids": "Hợp với trẻ nhỏ"
+    },
+    "save": {
+      "save": "Lưu {name}",
+      "saved": "Đã lưu {name}",
+      "prompt": "Đăng nhập để giữ danh sách đã lưu trên mọi thiết bị.",
+      "promptCta": "Đăng nhập",
+      "dismiss": "Để sau"
+    },
+    "empty": {
+      "title": "Chưa có bé nào khớp bộ lọc",
+      "body": "Thử bỏ bớt vài lựa chọn, hoặc xem tất cả các bé đang chờ nhà.",
+      "cta": "Xem tất cả"
+    },
+    "photoAlt": "Ảnh bé {name}"
+  },
+  "petProfile": {
+    "breadcrumb": "Đường dẫn",
+    "home": "Trang chủ",
+    "gallery": "Ảnh của {name}",
+    "imageAlt": "Hình minh hoạ {name}, khung {n}",
+    "openImage": "Phóng to khung {n}",
+    "prev": "Ảnh trước",
+    "next": "Ảnh sau",
+    "close": "Đóng",
+    "imageOf": "{n} / {total}",
+    "code": "Mã bé",
+    "facts": {
+      "species": "Loài",
+      "age": "Tuổi",
+      "sex": "Giới tính",
+      "size": "Kích cỡ",
+      "ward": "Khu vực"
+    },
+    "story": "Câu chuyện",
+    "temperament": "Tính cách",
+    "idealHome": "Mái ấm phù hợp",
+    "goodWith": "Sống tốt cùng",
+    "goodWithNone": "Nên là thú cưng duy nhất trong nhà",
+    "health": "Sức khoẻ",
+    "healthProgress": "{done}/{total} bước chăm sóc cơ bản đã xong",
+    "healthNote": "Đây là thông tin để bạn tham khảo, không phải điểm đánh giá.",
+    "healthEvents": {
+      "checkup": "Khám tổng quát",
+      "vaccine_core": "Tiêm phòng cơ bản",
+      "rabies": "Tiêm phòng dại",
+      "deworming": "Tẩy giun",
+      "sterilization": "Triệt sản"
+    },
+    "done": "Đã xong · {date}",
+    "planned": "Dự kiến",
+    "caredBy": "Đang được chăm sóc bởi",
+    "verified": "Đã xác minh",
+    "verifiedWhy": "Vì sao có huy hiệu này?",
+    "verifiedExplain": "Quản trị viên HomeForAll đã kiểm tra hồ sơ của đối tác này trước khi cho phép đăng tin. Ngày xác minh: {date}. Quy trình xác minh chi tiết đang được hoàn thiện.",
+    "staySafe": {
+      "title": "Giữ an toàn khi nhận nuôi",
+      "noDeposit": "Không chuyển tiền đặt cọc vào tài khoản cá nhân. HomeForAll không bao giờ yêu cầu điều này.",
+      "meet": "Gặp bé tại địa điểm của đối tác cứu hộ.",
+      "report": "Thấy dấu hiệu đáng ngờ? Bấm “Báo cáo tin này”."
+    },
+    "lastConfirmed": "Xác nhận còn chờ nhà {time}",
+    "staleWarning": "Tin này chưa được xác nhận lại hơn 14 ngày. Bé có thể đã có nhà.",
+    "adoptCta": "Tôi muốn nhận nuôi bé",
+    "fosterCta": "Tôi có thể nuôi tạm",
+    "pendingNote": "Đối tác đang xét một hồ sơ cho bé. Bạn vẫn có thể bày tỏ mong muốn để được liên hệ nếu hồ sơ đó không thành.",
+    "share": "Chia sẻ",
+    "copyLink": "Sao chép liên kết",
+    "copied": "Đã sao chép liên kết",
+    "shareFacebook": "Chia sẻ lên Facebook",
+    "shareZaloHint": "Gửi qua Zalo: sao chép liên kết rồi dán vào cuộc trò chuyện.",
+    "report": "Báo cáo tin này",
+    "reportTitle": "Báo cáo tin đăng",
+    "reportIntro": "Cho chúng tôi biết vấn đề. Quản trị viên sẽ xem xét.",
+    "reportReasons": {
+      "scam": "Có dấu hiệu lừa đảo hoặc đòi tiền",
+      "wrong": "Thông tin không đúng",
+      "adopted": "Bé đã có nhà",
+      "other": "Lý do khác"
+    },
+    "reportSubmit": "Gửi báo cáo",
+    "reportDone": "Cảm ơn bạn. Báo cáo đã được ghi nhận trên thiết bị này; đội ngũ sẽ kiểm tra khi hệ thống kiểm duyệt hoạt động.",
+    "photoAlt": "Ảnh bé {name}, tấm {n}"
+  },
+  "interest": {
+    "title": "Bày tỏ mong muốn nhận nuôi {name}",
+    "intro": "Khoảng 1 phút. {partner} sẽ xem và mời bạn hoàn thiện hồ sơ nếu phù hợp.",
+    "name": "Họ và tên",
+    "contactMethod": "Bạn muốn được liên lạc qua",
+    "zalo": "Zalo",
+    "phone": "Điện thoại",
+    "email": "Email",
+    "contactValue": {
+      "zalo": "Số điện thoại dùng Zalo",
+      "phone": "Số điện thoại",
+      "email": "Địa chỉ email"
+    },
+    "ward": "Bạn sống ở phường/xã nào?",
+    "experience": "Bạn đã từng nuôi chó, mèo chưa?",
+    "expNone": "Chưa từng",
+    "expPast": "Đã từng nuôi",
+    "expNow": "Đang nuôi",
+    "motivation": "Điều gì khiến bạn muốn nhận nuôi bé? (không bắt buộc)",
+    "consent": "Tôi đồng ý để HomeForAll chia sẻ thông tin liên lạc của tôi với {partner} để trao đổi về việc nhận nuôi bé.",
+    "submit": "Gửi mong muốn",
+    "sending": "Đang gửi…",
+    "cancel": "Huỷ",
+    "errorSummary": "Vui lòng kiểm tra {count} mục bên dưới.",
+    "errors": {
+      "required": "Vui lòng điền mục này.",
+      "phone": "Số điện thoại chưa đúng, ví dụ: 0901234567.",
+      "email": "Email chưa đúng định dạng, ví dụ: ten@gmail.com.",
+      "consent": "Cần sự đồng ý của bạn để đối tác có thể liên lạc."
+    },
+    "successTitle": "Đã ghi nhận mong muốn của bạn",
+    "successDemo": "Thông tin chưa được chuyển tới đối tác: tính năng kết nối sẽ mở khi thí điểm bắt đầu.",
+    "successNext": "Khi thí điểm bắt đầu, bạn sẽ theo dõi hồ sơ qua các bước:",
+    "steps": {
+      "sent": "Đã gửi",
+      "reviewing": "Đang xem",
+      "interview": "Phỏng vấn",
+      "approved": "Được duyệt",
+      "handover": "Bàn giao"
+    },
+    "close": "Đóng",
+    "consentLabel": "Đồng ý chia sẻ thông tin",
+    "requiredHint": "Mọi mục đều bắt buộc, trừ mục ghi “không bắt buộc”."
+  },
+  "landing": {
+    "sceneNav": "Các cảnh trong câu chuyện",
+    "reduceEffects": "Giảm hiệu ứng",
+    "scenes": {
+      "hero": "Mở đầu",
+      "doors": "Bạn muốn làm gì",
+      "pets": "Gặp các bé",
+      "journey": "Hành trình",
+      "trust": "Vì sao tin tưởng",
+      "facts": "Vì sao quan trọng",
+      "network": "Một mạng lưới",
+      "stories": "Câu chuyện",
+      "partners": "Đối tác",
+      "final": "Bắt đầu"
+    },
+    "doors": {
+      "title": "Bạn muốn làm gì hôm nay?",
+      "adopt": {
+        "title": "Nhận nuôi",
+        "body": "Tìm một bé đang chờ nhà, từ đối tác đã xác minh."
+      },
+      "foster": {
+        "title": "Nuôi tạm / Tình nguyện",
+        "body": "Cho một bé chỗ ở tạm, hoặc góp vài giờ giúp nhóm cứu hộ."
+      },
+      "care": {
+        "title": "Chăm sóc thú cưng",
+        "body": "Tiêm phòng, đăng ký, triệt sản và tuần đầu tiên ở nhà mới."
+      },
+      "partner": {
+        "title": "Hợp tác",
+        "body": "Nhóm cứu hộ, phòng khám, nhà tài trợ: cùng xây mạng lưới."
+      },
+      "report": {
+        "title": "Thấy bé lạc",
+        "body": "Xem ngay điểm cứu hộ và thú y gần bạn, rồi báo cho họ."
+      }
+    },
+    "pets": {
+      "title": "Gặp các bé",
+      "lead": "Các bé đang chờ một mái ấm. Cuộn để xem thêm.",
+      "seeAll": "Xem tất cả các bé",
+      "seeAllBody": "Lọc theo loài, khu vực, độ tuổi và sức khoẻ."
+    },
+    "journey": {
+      "title": "Hành trình của một bé",
+      "lead": "Từ cứu hộ đến mái ấm trọn đời. Mỗi bước đều có người chịu trách nhiệm.",
+      "stepLabel": "Bước {n}/6",
+      "who": "Người thực hiện",
+      "steps": {
+        "rescue": {
+          "title": "Cứu hộ",
+          "who": "Nhóm cứu hộ",
+          "body": "Đón bé từ đường phố hoặc từ người báo tin, đưa về nơi an toàn."
+        },
+        "vet": {
+          "title": "Chăm sóc thú y",
+          "who": "Phòng khám thú y",
+          "body": "Khám, tiêm phòng, tẩy giun, triệt sản. Mỗi lần đều được ghi vào hồ sơ của bé."
+        },
+        "foster": {
+          "title": "Nuôi tạm",
+          "who": "Nhà nuôi tạm",
+          "body": "Bé sống cùng một gia đình trong lúc chờ và làm quen với cuộc sống trong nhà."
+        },
+        "match": {
+          "title": "Kết nối",
+          "who": "Người nhận nuôi và đối tác",
+          "body": "Bạn bày tỏ mong muốn; đối tác xem và mời bạn hoàn thiện hồ sơ."
+        },
+        "adopt": {
+          "title": "Nhận nuôi",
+          "who": "Gia đình mới",
+          "body": "Ký thoả thuận và đón bé tại địa điểm của đối tác."
+        },
+        "follow": {
+          "title": "Theo dõi",
+          "who": "Gia đình và đối tác",
+          "body": "Hỏi thăm ở ngày 7, 30 và 90; nhắc tiêm phòng và đăng ký."
+        }
+      },
+      "spineLabel": "Sáu bước của hành trình",
+      "goFeature": "Đi tới tính năng",
+      "prev": "Bước trước",
+      "next": "Bước tiếp",
+      "cta": {
+        "rescue": "Báo một bé lạc",
+        "vet": "Tìm phòng khám",
+        "foster": "Tôi có thể nuôi tạm",
+        "match": "Xem các bé đang chờ",
+        "adopt": "Bắt đầu nhận nuôi",
+        "follow": "Xem lịch theo dõi"
+      }
+    },
+    "trust": {
+      "title": "Vì sao bạn có thể tin",
+      "verified": {
+        "title": "Đối tác đã xác minh",
+        "body": "Chỉ đối tác đã được quản trị viên kiểm tra mới được đăng tin."
+      },
+      "screening": {
+        "title": "Nhận nuôi có sàng lọc",
+        "body": "Hai bước: bày tỏ mong muốn, rồi hoàn thiện hồ sơ khi đối tác mời."
+      },
+      "safe": {
+        "title": "Giữ an toàn",
+        "body": "Không đặt cọc vào tài khoản cá nhân; gặp bé tại địa điểm của đối tác."
+      },
+      "privacy": {
+        "title": "Bảo vệ dữ liệu",
+        "body": "Số điện thoại và địa chỉ không bao giờ công khai; chỉ chia sẻ khi bạn đồng ý."
+      }
+    },
+    "facts": {
+      "title": "Vì sao điều này quan trọng",
+      "sourceLabel": "Nguồn",
+      "owned": {
+        "value": "~305.000",
+        "label": "chó, mèo được nuôi tại TP.HCM",
+        "source": "Cơ quan thú y TP.HCM, theo Báo Nông nghiệp và Môi trường (24/5/2026)"
+      },
+      "bites": {
+        "value": "~10.000",
+        "label": "người mỗi tháng phải tiêm phòng dại sau khi bị chó, mèo cắn (năm 2024)",
+        "source": "HCDC, theo báo SGGP (2/12/2025)"
+      },
+      "deaths": {
+        "value": "5",
+        "label": "người tử vong vì bệnh dại trong 6 tháng đầu năm 2026; không ai được tiêm vắc xin hoặc huyết thanh sau khi bị cắn",
+        "source": "Báo VOV"
+      }
+    },
+    "network": {
+      "title": "Một mạng lưới",
+      "lead": "Mỗi bên làm một phần việc, cùng đưa bé về nhà.",
+      "rescue": {
+        "title": "Nhóm cứu hộ",
+        "body": "Đón bé và chăm sóc những ngày đầu."
+      },
+      "vet": {
+        "title": "Phòng khám thú y",
+        "body": "Giữ cho bé khoẻ mạnh và ghi lại từng lần chăm sóc."
+      },
+      "foster": {
+        "title": "Tình nguyện viên & nhà nuôi tạm",
+        "body": "Cho bé một mái nhà tạm và những giờ giúp sức."
+      },
+      "adopter": {
+        "title": "Người nhận nuôi",
+        "body": "Trao cho bé mái ấm trọn đời."
+      },
+      "sponsor": {
+        "title": "Nhà tài trợ",
+        "body": "Giúp mạng lưới đi xa hơn."
+      }
+    },
+    "stories": {
+      "title": "Câu chuyện về nhà",
+      "empty": "Những câu chuyện thật sẽ xuất hiện ở đây khi các bé đầu tiên trong đợt thí điểm về nhà mới, với sự đồng ý của gia đình."
+    },
+    "partners": {
+      "title": "Đối tác",
+      "empty": "Danh sách đối tác sẽ được công bố sau khi được xác minh.",
+      "cta": "Trở thành đối tác"
+    },
+    "final": {
+      "title": "Sẵn sàng đưa một bé về nhà, hoặc giúp một bé tìm được nhà?",
+      "adopt": "Nhận nuôi",
+      "foster": "Nuôi tạm / Tình nguyện",
+      "partner": "Trở thành đối tác"
+    }
+  },
+  "world": {
+    "chipStep": "Bước {n}/6 · {title}",
+    "chipNetwork": "Toàn mạng lưới",
+    "chipHelp": "Cần giúp ngay",
+    "spineTitle": "Hành trình của Miu",
+    "spineHint": "Bạn đang ở bước này. Chọn một bước để xem lại câu chuyện.",
+    "backToStory": "Quay lại hành trình",
+    "current": "Bước hiện tại",
+    "promise": {
+      "pets": "Mỗi bé đều do một đối tác đã xác minh chăm sóc.",
+      "foster": "Cho một bé chỗ ở tạm trong lúc chờ nhà mới.",
+      "volunteer": "Vài giờ của bạn giúp một bé về nhà.",
+      "learn": "Tiêm phòng, đăng ký, triệt sản: làm đúng từng bước.",
+      "map": "Đối tác đã xác minh quanh bạn.",
+      "partners": "Mỗi bên làm một phần việc.",
+      "events": "Gặp gỡ, giúp sức và làm quen với các bé.",
+      "stories": "Những mái ấm đầu tiên.",
+      "about": "Từ cứu hộ đến mái ấm trọn đời.",
+      "login": "Bước qua cánh cửa.",
+      "donate": "Minh bạch từng khoản đóng góp.",
+      "report": "Bạn chỉ cần chụp ảnh và chỉ chỗ; nhóm cứu hộ gần nhất sẽ nhận."
+    }
+  },
+  "pages": {
+    "volunteer": "Tình nguyện",
+    "map": "Bản đồ mạng lưới",
+    "events": "Sự kiện",
+    "stories": "Câu chuyện về nhà",
+    "donate": "Ủng hộ dự án",
+    "network": "Bản đồ mạng lưới"
+  },
+  "about": {
+    "why": {
+      "title": "Vì sao có HomeForAll",
+      "body": "Việc cứu hộ, nuôi tạm và nhận nuôi chó mèo ở TP.HCM hiện rải rác trên nhiều bài đăng Facebook và Zalo: khó biết ai đáng tin, bé nào còn chờ nhà. HomeForAll gom các đối tác đã xác minh về một nơi, để mỗi bé đi trọn hành trình từ cứu hộ đến mái ấm."
+    },
+    "sdg": {
+      "title": "Mục tiêu phát triển bền vững",
+      "sdg15": "SDG 15 · Sự sống trên cạn: giảm thú bị bỏ rơi, khuyến khích nuôi có trách nhiệm.",
+      "sdg17": "SDG 17 · Quan hệ đối tác: kết nối nhóm cứu hộ, phòng khám, tình nguyện viên, người nhận nuôi và nhà tài trợ."
+    },
+    "pilot": {
+      "title": "Thí điểm",
+      "body": "Thí điểm khép kín từ 16/11/2026 tại phường Diên Hồng, phường Phú Mỹ và Thủ Đức; mở rộng từ 1/2/2027."
+    },
+    "art": {
+      "title": "Về hình minh hoạ",
+      "body": "Các cảnh đất sét trên trang (khu phố, phòng khám, mèo Miu và chú chó) được tạo bằng công cụ AI (mô hình video Gemini của Google). Đây là hình minh hoạ, không phải ảnh thật.",
+      "mascots": "Miu và chú chó là nhân vật của dự án, không phải thú cưng đang chờ nhận nuôi. Ảnh các bé đang chờ nhà luôn là ảnh thật do đối tác cứu hộ cung cấp, có sự đồng ý."
+    },
+    "review": "Nội dung trang này đang chờ nhóm dự án duyệt."
+  },
+  "foster": {
+    "whatTitle": "Nuôi tạm gồm những gì",
+    "what": [
+      "Bạn cho một bé ở cùng trong lúc bé chờ gia đình mới, từ vài ngày đến vài tháng.",
+      "Đối tác cứu hộ nói rõ trước: bé cần gì, ai lo chi phí thú y, và kéo dài bao lâu.",
+      "Bạn có thể từ chối một đề xuất bất cứ lúc nào. HomeForAll không bao giờ thu tiền của bạn."
+    ],
+    "stepsTitle": "Các bước",
+    "steps": [
+      "Gửi \"Tôi có thể nuôi tạm\" (khoảng 1 phút).",
+      "Đối tác đề xuất một bé phù hợp với điều kiện của bạn.",
+      "Bạn đồng ý hoặc từ chối chỉ với một lần bấm.",
+      "Nhận danh sách chăm sóc và những thứ bé cần.",
+      "Gần ngày kết thúc, bạn được nhắc; nếu muốn, bạn có thể nhận nuôi luôn."
+    ],
+    "formTitle": "Tôi có thể nuôi tạm",
+    "formIntro": "Khoảng 1 phút. Đối tác sẽ liên hệ khi có bé phù hợp.",
+    "species": "Bạn có thể nuôi tạm",
+    "speciesCat": "Mèo",
+    "speciesDog": "Chó",
+    "speciesAny": "Chó hoặc mèo",
+    "size": "Kích cỡ phù hợp",
+    "sizeSmall": "Nhỏ",
+    "sizeMedium": "Vừa",
+    "sizeLarge": "Lớn",
+    "duration": "Trong bao lâu",
+    "d1": "Dưới 2 tuần",
+    "d2": "2 – 8 tuần",
+    "d3": "Trên 2 tháng",
+    "ward": "Bạn ở phường/xã nào?",
+    "from": "Bắt đầu từ ngày",
+    "contact": "Liên hệ qua",
+    "contactValue": "Số điện thoại dùng Zalo hoặc email",
+    "consent": "Tôi đồng ý để HomeForAll chia sẻ thông tin liên lạc với đối tác cứu hộ để sắp xếp nuôi tạm.",
+    "submit": "Gửi",
+    "sending": "Đang gửi…",
+    "successTitle": "Cảm ơn bạn đã sẵn lòng nuôi tạm",
+    "successDemo": "Thông tin chưa được chuyển tới đối tác: tính năng kết nối sẽ mở khi thí điểm bắt đầu.",
+    "cantFoster": "Không thể nuôi tạm? Bạn vẫn có thể giúp bằng vài giờ tình nguyện.",
+    "goVolunteer": "Xem việc tình nguyện",
+    "faqTitle": "Câu hỏi thường gặp",
+    "faq": [
+      {
+        "q": "Tôi có phải trả tiền không?",
+        "a": "HomeForAll không thu tiền. Chi phí chăm sóc do đối tác cứu hộ thoả thuận rõ với bạn trước khi bạn đồng ý."
+      },
+      {
+        "q": "Nếu bé không hợp với nhà tôi?",
+        "a": "Bạn báo cho đối tác qua nút \"Cần hỗ trợ\"; đối tác sẽ sắp xếp lại."
+      }
+    ]
+  },
+  "volunteer": {
+    "title": "Việc đang cần người giúp",
+    "filters": "Lọc việc",
+    "all": "Tất cả",
+    "short": "Dưới 2 giờ",
+    "weekend": "Cuối tuần",
+    "online": "Làm online",
+    "duration": "Thời lượng",
+    "ward": "Khu vực",
+    "date": "Ngày",
+    "partner": "Đối tác",
+    "signUp": "Tôi giúp được",
+    "signedUp": "Đã ghi nhận (chưa gửi tới nhóm)",
+    "empty": "Không có việc nào khớp bộ lọc. Thử bỏ bớt lựa chọn.",
+    "types": {
+      "transport": "Chở bé đi khám",
+      "photo": "Chụp ảnh các bé",
+      "event": "Hỗ trợ ngày hội nhận nuôi",
+      "online": "Trực tin nhắn"
+    }
+  },
+  "learn": {
+    "intro": "Chọn việc bạn cần làm. Mỗi hướng dẫn đều ghi nguồn và được bác sĩ thú y thẩm định trước khi đăng.",
+    "pending": "Hướng dẫn chi tiết đang được chuẩn bị và chờ bác sĩ thú y thẩm định.",
+    "sourceLabel": "Nguồn",
+    "officialPending": "Đường dẫn thủ tục chính thức: đang xác minh.",
+    "topics": {
+      "vaccination": "Tiêm phòng",
+      "registration": "Đăng ký chó, mèo với chính quyền địa phương",
+      "sterilization": "Triệt sản",
+      "firstWeek": "Tuần đầu ở nhà mới",
+      "found": "Nhặt được một bé",
+      "bitten": "Bị chó, mèo cắn"
+    },
+    "goHelp": "Mở trang cần giúp ngay",
+    "vetTitle": "Tìm phòng khám thú y",
+    "vetBody": "Danh sách phòng khám đối tác đã xác minh sẽ có trên bản đồ mạng lưới khi thí điểm bắt đầu.",
+    "vetCta": "Xem bản đồ mạng lưới"
+  },
+  "storiesPage": {
+    "empty": "Chưa có câu chuyện nào. Những câu chuyện thật sẽ được đăng khi các bé đầu tiên trong đợt thí điểm về nhà mới.",
+    "consentTitle": "Câu chuyện được đăng khi nào?",
+    "consent": "Chỉ khi gia đình nhận nuôi đồng ý bằng văn bản. Không đăng địa chỉ hay thông tin liên lạc.",
+    "cta": "Xem các bé đang chờ nhà"
+  },
+  "fanh": {
+    "launcher": "Hỏi Fanh the vet",
+    "title": "Fanh the vet",
+    "subtitle": "Trợ lý AI · đang phát triển",
+    "disclaimer": "Fanh là trợ lý AI, không thay thế bác sĩ thú y. Nếu bé gặp nguy hiểm hoặc bạn bị cắn, hãy vào trang Cần giúp ngay.",
+    "greeting": "Chào bạn, mình là Fanh! Mình có thể giúp bạn tìm hiểu về chăm sóc, tiêm phòng và nhận nuôi các bé. Bạn muốn hỏi gì?",
+    "suggestions": [
+      "Bé mới về nhà cần chuẩn bị gì?",
+      "Khi nào nên tiêm phòng cho mèo con?",
+      "Nhận nuôi trên HomeForAll thế nào?"
+    ],
+    "suggestionsLabel": "Gợi ý câu hỏi",
+    "placeholder": "Nhập câu hỏi của bạn…",
+    "inputLabel": "Câu hỏi cho Fanh",
+    "send": "Gửi",
+    "close": "Đóng trò chuyện",
+    "typing": "Fanh đang trả lời…",
+    "reply": "Cảm ơn bạn đã hỏi! Fanh đang được hoàn thiện nên chưa trả lời được câu hỏi này. Trong lúc chờ, bạn có thể xem trang Chăm sóc hoặc liên hệ phòng khám thú y gần nhất.",
+    "linkLearn": "Trang Chăm sóc",
+    "linkHelp": "Cần giúp ngay",
+    "you": "Bạn"
+  },
+  "proposedPartners": {
+    "title": "Đối tác đề xuất",
+    "badge": "Đề xuất",
+    "proposalLabel": "Đóng góp đề xuất:",
+    "sourceLabel": "Nguồn",
+    "logoAlt": "Logo {brand}",
+    "verifiedTitle": "Đối tác đã xác minh",
+    "verifiedEmpty": "Chưa có đối tác nào được xác minh. Danh sách sẽ được công bố khi thí điểm bắt đầu.",
+    "cocoon": {
+      "about": "Cocoon là thương hiệu mỹ phẩm thuần chay của Việt Nam, có mặt từ năm 2013, dùng nguyên liệu bản địa như bí đao, cà phê Đắk Lắk, hoa hồng Cao Bằng, sen Hậu Giang; sản phẩm không thử nghiệm trên động vật. Giai đoạn 2023–2025, thương hiệu có chương trình cứu hộ chó mèo hoang cùng Animals Asia Foundation.",
+      "proposal": "đồng hành truyền thông về nhận nuôi có trách nhiệm và hỗ trợ chi phí triệt sản, tiêm phòng cho thú được cứu hộ."
+    },
+    "farmina-pet-foods": {
+      "about": "Farmina Pet Foods là công ty dinh dưỡng thú cưng do gia đình sở hữu và điều hành từ năm 1965, sản xuất thức ăn khô và ướt cho chó mèo (gồm dòng N&D và Vet Life), có mặt tại hơn 75 quốc gia. Công ty cho biết có nghiên cứu độc lập và thử nghiệm lâm sàng không gây hại cho động vật.",
+      "proposal": "tài trợ thức ăn cho gia đình nuôi tạm và thú vừa được cứu hộ."
+    },
+    "msd-animal-health": {
+      "about": "MSD Animal Health là tên gọi của Merck Animal Health ngoài Hoa Kỳ và Canada. Công ty có hơn 130 năm lịch sử đổi mới khoa học, hoạt động tại hơn 150 quốc gia, phát triển thuốc, vắc-xin và công nghệ cho vật nuôi, gồm giải pháp vắc-xin cho thú cưng.",
+      "proposal": "hỗ trợ tài liệu giáo dục về tiêm phòng (đặc biệt phòng dại) cho người nuôi và phòng khám đối tác."
+    }
+  },
+  "network": {
+    "title": "Bản đồ mạng lưới",
+    "layers": "Lớp bản đồ",
+    "rescue": "Cứu hộ",
+    "vet": "Thú y",
+    "state": "Trạm thú y nhà nước",
+    "foster": "Nơi nuôi tạm",
+    "pilot": "Khu vực thí điểm",
+    "ward": "Phường",
+    "allWards": "Tất cả phường",
+    "listTitle": "Danh sách ({count})",
+    "listOnly": "Chỉ có trong danh sách (chưa có vị trí trên bản đồ)",
+    "mapRegion": "Bản đồ mạng lưới cứu hộ và thú y TP.HCM",
+    "cluster": "{count} điểm, bấm để phóng to",
+    "kinds": {
+      "rescue": "Điểm cứu hộ",
+      "vet_hospital": "Bệnh viện thú y",
+      "vet_clinic": "Phòng khám thú y",
+      "state_station": "Trạm thú y nhà nước",
+      "foster_zone": "Nơi nuôi tạm",
+      "rescue_station": "Tổ chức cứu hộ"
+    },
+    "realOrg": "Nhóm cứu hộ",
+    "lines": {
+      "realOrg": "Tổ chức cứu hộ; liên hệ trực tiếp qua kênh chính thức của họ.",
+      "vet": "Dữ liệu do nhóm dự án tổng hợp, chưa kiểm chứng; hãy gọi xác nhận trước khi đến.",
+      "foster": "Khoảng {count} nhà nuôi tạm trong phường (chỉ hiện số lượng).",
+      "district": "Vị trí ở cấp quận, chưa có địa chỉ cụ thể.",
+      "chain": "Chuỗi nhiều chi nhánh: chưa có danh sách chi nhánh.",
+      "rescue": "Điểm cứu hộ trong mạng lưới."
+    },
+    "unverifiedNote": "Dữ liệu thú y do nhóm dự án tổng hợp, chưa kiểm chứng; hãy gọi xác nhận trước khi đến.",
+    "notSeeded": "Vị trí trên bản đồ đang được cập nhật. Danh sách bên dưới vẫn đầy đủ.",
+    "privacy": "Bản đồ không bao giờ hiện báo cáo thú lạc, nhà nuôi tạm hay tình nguyện viên. Điểm cứu hộ chỉ hiện ở mức phường.",
+    "sponsorsTitle": "Đối tác đề xuất",
+    "openMap": "Mở bản đồ mạng lưới",
+    "previewLabel": "Xem trước bản đồ mạng lưới; bấm để mở bản đồ đầy đủ",
+    "empty": "Không có điểm nào khớp bộ lọc.",
+    "directions": "Chỉ đường"
+  },
+  "report": {
+    "title": "Phát hiện 1 bé đi lạc",
+    "intro": "Xem ngay điểm cứu hộ và thú y gần bạn nhất. Không cần tài khoản.",
+    "bitten": "Bị cắn hoặc cào? Xem hướng dẫn khẩn cấp",
+    "steps": {
+      "photo": "Ảnh và mô tả",
+      "location": "Vị trí",
+      "send": "Gửi"
+    },
+    "stepOf": "Bước {n}/3",
+    "next": "Tiếp tục",
+    "back": "Quay lại",
+    "errorSummary": "Vui lòng kiểm tra {count} mục bên dưới.",
+    "errors": {
+      "photos": "Hãy thêm ít nhất 1 ảnh.",
+      "species": "Hãy chọn loài.",
+      "location": "Hãy chọn vị trí trên bản đồ hoặc chọn phường.",
+      "seenAt": "Hãy cho biết bạn thấy bé lúc nào.",
+      "consent": "Cần sự đồng ý của bạn để gửi báo cáo.",
+      "contact": "Hãy nhập cách liên lạc và tick đồng ý chia sẻ.",
+      "photoTooLarge": "Ảnh lớn hơn 10 MB.",
+      "photoType": "Chỉ nhận ảnh JPG, PNG, WebP hoặc HEIC.",
+      "photoUnreadable": "Không đọc được ảnh này (ảnh HEIC trên trình duyệt này?). Hãy thử chụp lại hoặc chọn ảnh JPG.",
+      "rateLimited": "Bạn đã gửi khá nhiều báo cáo trong một giờ. Vui lòng thử lại sau ít phút.",
+      "generic": "Chưa gửi được. Vui lòng thử lại."
+    },
+    "photo": {
+      "label": "Ảnh của bé (tối đa 3)",
+      "add": "Chụp hoặc chọn ảnh",
+      "retake": "Chụp lại",
+      "remove": "Xoá",
+      "privacy": "Đừng chụp rõ mặt người hoặc biển số xe.",
+      "alt": "Ảnh {n} bạn vừa chụp"
+    },
+    "type": {
+      "label": "Tình huống",
+      "sighting": "Bé vẫn còn ở đó",
+      "found": "Tôi đang giữ bé"
+    },
+    "species": {
+      "label": "Loài",
+      "cat": "Mèo",
+      "dog": "Chó",
+      "other": "Khác"
+    },
+    "condition": {
+      "label": "Tình trạng",
+      "healthy": "Khoẻ",
+      "thin": "Gầy / yếu",
+      "injured": "Bị thương",
+      "aggressive": "Hung dữ",
+      "unknown": "Không rõ"
+    },
+    "bittenLabel": "Tôi hoặc ai đó đã bị bé cắn / cào",
+    "collar": {
+      "label": "Có vòng cổ không?",
+      "yes": "Có",
+      "no": "Không",
+      "unknown": "Không rõ"
+    },
+    "note": {
+      "label": "Ghi chú (không bắt buộc)",
+      "hint": "{left} ký tự còn lại"
+    },
+    "location": {
+      "explain": "Bấm nút dưới đây, trình duyệt sẽ hỏi quyền vị trí. Vị trí chính xác chỉ gửi cho nhóm cứu hộ bạn chọn, không bao giờ công khai.",
+      "useMine": "Dùng vị trí hiện tại",
+      "locating": "Đang lấy vị trí…",
+      "accuracy": "Độ chính xác khoảng {m} m",
+      "denied": "Không lấy được vị trí. Bạn có thể kéo ghim trên bản đồ, hoặc chọn phường bên dưới.",
+      "drag": "Kéo ghim hoặc bấm vào bản đồ để chỉnh vị trí.",
+      "ward": "Phường",
+      "wardApprox": "{ward} (ước lượng)",
+      "wardChoose": "Chọn phường",
+      "wardManual": "Hoặc nhập tên phường",
+      "landmark": "Mốc dễ nhận ra (không bắt buộc)",
+      "landmarkHint": "Ví dụ: gần cổng chợ, trước tiệm tạp hoá",
+      "seenAt": "Bạn thấy bé lúc nào?",
+      "pin": "Vị trí bạn thấy bé",
+      "noMap": "Không dùng bản đồ: chọn phường và mô tả mốc là đủ."
+    },
+    "groups": {
+      "intro": "Báo cáo sẽ được gửi vào hộp thư của các nhóm bạn chọn.",
+      "none": "Chưa có điểm cứu hộ nhận báo cáo ở gần. Báo cáo vẫn được lưu và quản trị viên sẽ chuyển tiếp.",
+      "band": {
+        "lt1": "dưới 1 km",
+        "1to2": "khoảng 1–2 km",
+        "2to4": "khoảng 2–4 km",
+        "4to8": "khoảng 4–8 km",
+        "gt8": "hơn 8 km"
+      },
+      "contactToggle": "Cho nhóm cứu hộ cách liên lạc với tôi (không bắt buộc)",
+      "contact": "Số điện thoại / Zalo / email",
+      "contactConsent": "Tôi đồng ý chia sẻ thông tin liên lạc này chỉ với các nhóm đã chọn ở trên.",
+      "title": "Gửi tới"
+    },
+    "confirm": {
+      "summary": "Kiểm tra lại",
+      "photos": "{count} ảnh",
+      "where": "Ở đâu",
+      "when": "Lúc nào",
+      "to": "Gửi tới",
+      "consent": "Tôi đồng ý để HomeForAll lưu ảnh, vị trí và mô tả này và chuyển cho các nhóm cứu hộ đã chọn, chỉ để giúp bé. Vị trí chính xác chỉ gửi cho các nhóm đó và được xoá 30 ngày sau khi báo cáo đóng.",
+      "legalReview": "(Nội dung đồng ý đang chờ rà soát pháp lý theo Luật Bảo vệ dữ liệu cá nhân 91/2025/QH15.)",
+      "submit": "Gửi báo cáo",
+      "sending": "Đang gửi…"
+    },
+    "result": {
+      "title": "Đã gửi báo cáo {code}",
+      "saveLink": "Lưu liên kết theo dõi này. Liên kết chỉ hiện một lần và là cách duy nhất để xem hoặc cập nhật báo cáo.",
+      "copy": "Sao chép liên kết",
+      "copied": "Đã sao chép",
+      "open": "Mở trang theo dõi",
+      "duplicate": "Có thể đã có người báo một bé ở gần đây trong 24 giờ qua. Báo cáo của bạn vẫn được gửi; nhóm cứu hộ sẽ gộp nếu trùng.",
+      "back": "Quay lại hành trình",
+      "draftRestored": "Đã khôi phục bản nháp của bạn.",
+      "clearDraft": "Xoá bản nháp",
+      "honest": "Báo cáo đã được ghi nhận. Nếu bé đang bị thương hoặc nguy hiểm, hãy liên hệ trực tiếp điểm gần nhất ở trên.",
+      "timeline": "Trạng thái"
+    },
+    "track": {
+      "title": "Báo cáo {code}",
+      "invalid": "Liên kết không hợp lệ hoặc báo cáo đã bị xoá.",
+      "status": "Trạng thái",
+      "timeline": "Diễn biến",
+      "recipients": "Các nhóm đã nhận",
+      "update": "Gửi thêm thông tin",
+      "updateText": "Nội dung cập nhật",
+      "updatePhoto": "Thêm ảnh (không bắt buộc)",
+      "send": "Gửi cập nhật",
+      "left": "Bé đã đi khỏi chỗ đó",
+      "delete": "Xoá báo cáo",
+      "deleteConfirm": "Xoá vĩnh viễn báo cáo và ảnh? Không thể hoàn tác.",
+      "deleted": "Đã xoá báo cáo.",
+      "states": {
+        "pending": "Chưa nhận",
+        "claimed": "Đã nhận",
+        "declined": "Từ chối"
+      },
+      "events": {
+        "submitted": "Bạn đã gửi báo cáo",
+        "sent": "Đã gửi tới {spot}",
+        "claimed": "{spot} đã nhận ca",
+        "declined": "{spot} không nhận được ca này",
+        "status": "Cập nhật trạng thái",
+        "escalated": "Chưa có nhóm nhận: đã chuyển thêm tới {spot}",
+        "reporter_update": "Bạn đã gửi thêm thông tin",
+        "animal_left": "Bạn báo bé đã đi khỏi chỗ đó",
+        "message": "Tin nhắn từ {spot}",
+        "closed": "Đã đóng báo cáo"
+      }
+    },
+    "statuses": {
+      "submitted": "Đã gửi",
+      "sent_to_groups": "Đã chuyển tới nhóm cứu hộ",
+      "claimed": "Đã có nhóm nhận",
+      "on_the_way": "Đang tới nơi",
+      "animal_secured": "Đã đưa bé về an toàn",
+      "treated_or_fostered": "Đã chữa trị / đang nuôi tạm",
+      "closed": "Đã đóng"
+    },
+    "closeReasons": {
+      "reunited": "Đã về với chủ",
+      "rehomed": "Đã có nhà mới",
+      "not_found": "Không tìm thấy bé",
+      "duplicate": "Trùng báo cáo khác",
+      "spam": "Không hợp lệ"
+    },
+    "locBar": {
+      "title": "Bạn đang ở đâu?",
+      "useMine": "Dùng vị trí của tôi",
+      "locating": "Đang lấy vị trí…",
+      "accuracy": "Độ chính xác khoảng {m} m",
+      "denied": "Không lấy được vị trí. Hãy chọn phường, hoặc bấm vào bản đồ.",
+      "ward": "Hoặc chọn phường",
+      "wardChoose": "Chọn phường",
+      "wardManual": "Nhập tên phường",
+      "wardApprox": "Gần {ward}",
+      "privacy": "Vị trí chỉ dùng để tìm điểm gần bạn và không bao giờ được công khai."
+    },
+    "help": {
+      "title": "Gần bạn nhất",
+      "rescueTitle": "Điểm cứu hộ",
+      "vetTitle": "Thú y và trạm thú y",
+      "needLocation": "Chọn vị trí ở trên để xem các điểm gần bạn.",
+      "noneNear": "Không có điểm nào trong vòng 8 km; đây là các điểm gần nhất.",
+      "directions": "Chỉ đường",
+      "notify": "Báo cho nhóm này",
+      "call": "Gọi",
+      "message": "Nhắn",
+      "facebook": "Facebook",
+      "website": "Website",
+      "vetNote": "Danh sách thú y do nhóm dự án tổng hợp, chưa kiểm chứng. Gọi trước khi đến.",
+      "unseeded": "Toạ độ các điểm đang được cập nhật, nên danh sách thú y dưới đây chưa sắp theo khoảng cách. Bấm Chỉ đường để mở bản đồ tới địa chỉ.",
+      "mapRegion": "Bản đồ các điểm cứu hộ và thú y gần bạn",
+      "you": "Vị trí của bạn",
+      "kinds": {
+        "rescue": "Điểm cứu hộ",
+        "vet_hospital": "Bệnh viện thú y",
+        "vet_clinic": "Phòng khám thú y",
+        "state_station": "Trạm thú y nhà nước",
+        "rescue_station": "Tổ chức cứu hộ"
+      }
+    },
+    "now": {
+      "title": "Làm gì ngay bây giờ",
+      "s1": "Giữ khoảng cách an toàn, đừng đuổi theo bé.",
+      "s2": "Chụp ảnh từ xa và ghi lại chỗ thấy bé.",
+      "s3": "Đưa bé tới, hoặc liên hệ điểm gần nhất ở trên."
+    },
+    "bite": {
+      "title": "Bị cắn hoặc cào?",
+      "body": "Đến cơ sở y tế gần nhất càng sớm càng tốt. Nếu vết thương nặng, gọi 115.",
+      "link": "Xem trang Cần giúp ngay",
+      "who": "Tổ chức Y tế Thế giới (WHO): Bệnh dại (tiếng Anh)"
+    },
+    "quick": {
+      "title": "Gửi báo cáo nhanh",
+      "lead": "Gửi ảnh và vị trí cho các nhóm cứu hộ gần nhất. Khoảng 1 phút.",
+      "open": "Mở biểu mẫu báo cáo",
+      "close": "Thu gọn"
+    }
+  },
+  "inbox": {
+    "title": "Hộp thư báo cáo: {spot}",
+    "empty": "Chưa có báo cáo nào gửi tới điểm này.",
+    "yourState": "Nhóm bạn",
+    "exact": "Vị trí chính xác (chỉ nhóm được gửi thấy)",
+    "contact": "Liên hệ người báo (đã đồng ý)",
+    "claim": "Nhận ca này",
+    "decline": "Từ chối",
+    "declineReason": "Lý do từ chối (bắt buộc)",
+    "setStatus": "Cập nhật trạng thái",
+    "closeReason": "Lý do đóng",
+    "save": "Lưu",
+    "message": "Nhắn cho người báo (hiện trên trang theo dõi)",
+    "send": "Gửi",
+    "errors": {
+      "forbidden": "Bạn không có quyền với báo cáo này.",
+      "reason_required": "Cần nhập lý do.",
+      "bad_transition": "Không thể chuyển sang trạng thái này.",
+      "invalid": "Dữ liệu chưa hợp lệ."
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "_comment": "Settings for scripts/hfa_media.py. Paths are relative to design-refs/.",
+  "sources_in_priority_order": [
+    "video/master-4k.mp4",
+    "video/master-clean.mp4",
+    "video/master.mp4"
+  ],
+  "timecodes": "video/master-timecodes.txt",
+  "logo": {
+    "_comment": "Gemini sparkle, bottom-right, measured on the 1280x720 master. Relative numbers => works at any resolution. Star = |x|^p+|y|^p<=r^p; margin enlarges the mask to cover the soft edge.",
+    "cx": 0.9059,
+    "cy": 0.8326,
+    "half": 0.01875,
+    "shape_p": 0.78,
+    "margin": 0.18,
+    "apply_to_master_4k": false
+  },
+  "clip": {
+    "crf": 12,
+    "preset": "slow"
+  },
+  "plates": {
+    "width": 1920,
+    "fps": 12,
+    "quality": 72,
+    "poster_width": 2560
+  },
+  "stills": {
+    "width": 3840,
+    "quality": 90,
+    "keep_png_masters": true
+  },
+  "outputs": {
+    "plates": "../public/assets/plates",
+    "stills": "../public/assets/stills",
+    "stills_master": "stills-master"
+  },
+  "true_4k_min_width": 3840
+}

@@ -1,0 +1,11 @@
+{
+  "id": "s07",
+  "source": "s07-home-door.mp4",
+  "frames": 26,
+  "fps": 12,
+  "width": 1280,
+  "height": 720,
+  "duration_s": 2.167,
+  "pattern": "f_%03d.webp",
+  "bytes": 895610
+}

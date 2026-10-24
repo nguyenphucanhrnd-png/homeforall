@@ -1,0 +1,11 @@
+{
+  "id": "s08",
+  "source": "s08-network.mp4",
+  "frames": 15,
+  "fps": 12,
+  "width": 1280,
+  "height": 720,
+  "duration_s": 1.208,
+  "pattern": "f_%03d.webp",
+  "bytes": 661690
+}

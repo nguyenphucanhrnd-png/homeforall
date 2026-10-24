@@ -1,0 +1,43 @@
+﻿id,name,kind,address_raw,legacy_area,multi_branch,note
+1,Bệnh viện Thú y Pet Pro,vet_hospital,219 Nguyễn Trãi,Quận 1,,
+2,Bệnh viện Thú y Quốc tế Petcare,vet_hospital,125 Trần Hưng Đạo,Quận 1,,
+3,Bệnh viện Thú y Family Vet,vet_hospital,99 đường 3 tháng 2,Quận 10,,
+4,Bệnh viện Thú y Happy Pet Care,vet_hospital,550 Lũy Bán Bích,Tân Phú,,
+5,Bệnh viện Thú y Saigon Pet,vet_hospital,111 Trường Chinh,Tân Bình,,
+6,Bệnh viện Thú y trực thuộc Trường Đại học Nông Lâm TP.HCM,vet_hospital,"Khu phố 6, Linh Trung",Thủ Đức,,"address is a campus area, not a street number"
+7,Phòng khám Thú y Thi Thi,vet_clinic,62B Hòa Bình,Quận 11,,
+8,Phòng khám Thú y Anh Tú,vet_clinic,146 Nguyễn Ảnh Thủ,Hóc Môn,,
+9,Phòng khám Thú y Quang Vinh,vet_clinic,25A Nguyễn Văn Trỗi,Phú Nhuận,,
+10,Phòng khám Thú y Procare,vet_clinic,98C Phan Đăng Lưu,Phú Nhuận,,
+11,Bệnh viện Thú y AEC Pet Hospital Vietnam,vet_hospital,"27 Đường số 1, KDC Tân Phong",Quận 7,,
+12,Bệnh viện Thú y Pet Joy,vet_hospital,399 Hoàng Văn Thụ,Tân Bình,,
+13,Phòng khám Thú y K9,vet_clinic,275 Hoàng Diệu,Quận 4,,
+14,Bệnh viện Thú y New Pet Hospital & Spa,vet_hospital,53 Đặng Dung,Quận 1,,
+15,Phòng khám Thú y Animal Doctors International,vet_clinic,1 Trần Ngọc Diện,Thảo Điền (Quận 2 cũ),,
+16,Bệnh viện thú cưng Pet Mart,vet_hospital,,nhiều quận,yes,"chain, branches not listed: no map dot, list only"
+17,Phòng khám Thú y Petzone,vet_clinic,U50 Nguyễn Hữu Hào,Quận 4,,
+18,Bệnh viện Thú y Sasaki Animal Hospital,vet_hospital,38-40-42 Nguyễn Thị Thập,Quận 7,,
+19,Phòng khám Bác sĩ Thú y Dr. Kim Thanh,vet_clinic,6 Trần Hưng Đạo,Quận 9 cũ,,address looks doubtful (Trần Hưng Đạo is a central-city street name); verify first
+20,Bệnh viện Thú y Pethealth,vet_hospital,637 Hồng Bàng,Quận 6,,
+21,Bệnh viện Thú y Miền Nam,vet_hospital,401 Phạm Văn Đồng,Bình Thạnh,,
+22,Bệnh viện Thú y Funpet,vet_hospital,12 Vũ Tông Phan,Quận 2,,
+23,Bệnh viện Thú y Pet Health Centre,vet_hospital,"Khu phố Mỹ Hoàng, Nguyễn Văn Linh",Quận 7,,no street number
+24,Hệ thống Thú y Red Vet,vet_hospital,,,yes,"chain, no address given: list only"
+25,Trạm Thú y Quận 1,state_station,"178 Trần Hưng Đạo, Phường Nguyễn Cư Trinh",Quận 1,,
+26,Trạm Thú y Quận 3,state_station,254 Lý Chính Thắng,Quận 3,,
+27,Trạm Thú y Quận 4,state_station,38 Nguyễn Hữu Hào,Quận 4,,
+28,Trạm Thú y Quận 5,state_station,1091 Trần Hưng Đạo,Quận 5,,
+29,Trạm Thú y Quận 7,state_station,"29 Đường số 9M, Tân Thuận Tây",Quận 7,,
+30,Trạm Thú y Quận 8,state_station,382 Tùng Thiện Vương,Quận 8,,
+31,Trạm Thú y Quận 10,state_station,462 Lý Thái Tổ,Quận 10,,
+32,Trạm Thú y Quận 11,state_station,337 Minh Phụng,Quận 11,,
+33,Trạm Thú y Quận Tân Bình,state_station,1009 Hẻm 204 Cách Mạng Tháng Tám,Tân Bình,,address format unusual; verify
+34,Trạm Thú y Quận Bình Thạnh,state_station,313 Xô Viết Nghệ Tĩnh,Bình Thạnh,,
+35,Trạm Thú y Quận Gò Vấp,state_station,30 Nguyễn Văn Nghi,Gò Vấp,,
+36,Trạm Thú y Quận Phú Nhuận,state_station,93 Trần Huy Liệu,Phú Nhuận,,
+37,Trạm Thú y Quận Tân Phú,state_station,34 Trần Văn Giáp,Tân Phú,,
+38,Trạm Thú y TP. Thủ Đức,state_station,,"Thủ Đức (gộp Quận 2, Quận 9, Thủ Đức cũ)",,no address given: place at ward/district level only
+39,Trạm Thú y huyện Bình Chánh,state_station,"Đường Nguyễn Hữu Trí, Thị trấn Tân Túc",Bình Chánh,,
+40,Trạm Thú y huyện Hóc Môn,state_station,"161/5A Quốc lộ 22, Xã Trung Chánh",Hóc Môn,,
+41,Trạm cứu hộ động vật - Hội bảo vệ động vật Việt Nam (VAWA),rescue_station,,,,
+42,Tổ chức cứu hộ Yeudongvat Foundation (YDV),rescue_station,,,,

@@ -1,0 +1,8 @@
+real-photos/*
+!real-photos/.gitkeep
+stills-master/
+video/master-clean.mp4
+video/master-4k.mp4
+video/_test*
+video/s[0-9][0-9]-*.mp4
+frames/_logo-check.png

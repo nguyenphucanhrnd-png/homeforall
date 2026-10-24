@@ -1,0 +1,30 @@
+# master-timecodes.txt — how to slice the master video (REAL timings, measured on the 30.0 s Gemini master of 2026-10-24)
+# clip  <id> <name> <start_s> <end_s>   -> video/<id>-<name>.mp4   (then `plates` builds the WebP frame sequence)
+# still <name> <time_s>                  -> public/assets/stills/<name>.webp  (one distinct frame per page header)
+#
+# Windows chosen to AVOID the cross-dissolves in this master (do not widen them):
+#   3.2-4.1 hero->night dissolve | 7.5-7.7 volunteer enters | 11.1-11.4 alley->clinic dissolve
+#   14.1-15.5 clinic->foster door wipe | 17.6-18.3 foster->window push | 21.4-21.7 rooftops->house
+#   24.0-24.9 GHOSTED dissolve (door->windowsill, double exposure) | 27.8-28.7 window->skyline
+# If you re-generate the master, re-measure and edit only the numbers below.
+clip s01 hero         0.0  3.1
+clip s02 alley-night  4.2  7.4
+clip s03 rescue       7.7 11.0
+clip s04 clinic      11.5 14.0
+clip s05 foster      15.6 17.5
+clip s06 connect     18.4 21.3
+clip s07 home-door   21.8 23.9
+clip s09 follow-up   25.0 27.7
+clip s08 network     28.8 30.0
+
+still about-hero        2.4
+still help-calm         7.2
+still volunteer-header 10.4
+still care-header      13.4
+still foster-header    16.4
+still pets-header      20.5
+still login-door       22.2
+still adopt-door       23.4
+still stories-header   26.6
+still partners-header  29.2
+still report-rescue      8.6

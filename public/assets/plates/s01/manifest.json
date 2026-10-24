@@ -1,0 +1,11 @@
+{
+  "id": "s01",
+  "source": "s01-hero.mp4",
+  "frames": 38,
+  "fps": 12,
+  "width": 1280,
+  "height": 720,
+  "duration_s": 3.125,
+  "pattern": "f_%03d.webp",
+  "bytes": 1266812
+}

@@ -1,0 +1,11 @@
+{
+  "id": "s03",
+  "source": "s03-rescue.mp4",
+  "frames": 40,
+  "fps": 12,
+  "width": 1280,
+  "height": 720,
+  "duration_s": 3.333,
+  "pattern": "f_%03d.webp",
+  "bytes": 1440360
+}

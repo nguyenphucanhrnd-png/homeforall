@@ -1,0 +1,4 @@
+INTERIM: these plates and stills were cut from the 1280x720 master (not 4K). Logo already removed.
+To upgrade: AI-upscale the master (design-refs/README.md, section 4), then run
+  python design-refs/scripts/hfa_media.py all
+which regenerates everything in this folder. Delete this note after that.

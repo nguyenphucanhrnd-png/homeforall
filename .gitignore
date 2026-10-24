@@ -1,0 +1,70 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# keep the template
+!.env.example
+
+# playwright
+/test-results/
+/playwright-report/
+
+# audit screenshots (regenerable)
+/docs/audit/*.png
+
+# Plate sources: large videos stay local (outputs in public/assets/plates are committed)
+/design-refs/video/*.mp4
+# DEV STUB plates cut from the montage: never ship
+/public/assets/plates-stub/
+
+# User-supplied demo pet photos: rights not verified, keep out of git (see public/assets/CREDITS.md)
+/animal_picture/
+/public/assets/demo-pets/
+
+# Partner logos: originals and derived files stay out of git until permission is confirmed
+/partner_logo/
+/public/assets/partners/
+
+# Demo report store (private photos, signing key): never commit
+/.data/
+
+# Real reference photos: never commit (folder contract)
+/design-refs/real-photos/

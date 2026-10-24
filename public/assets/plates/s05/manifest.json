@@ -1,0 +1,11 @@
+{
+  "id": "s05",
+  "source": "s05-foster.mp4",
+  "frames": 24,
+  "fps": 12,
+  "width": 1280,
+  "height": 720,
+  "duration_s": 1.958,
+  "pattern": "f_%03d.webp",
+  "bytes": 688938
+}

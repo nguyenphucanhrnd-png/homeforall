@@ -1,0 +1,11 @@
+{
+  "id": "s09",
+  "source": "s09-follow-up.mp4",
+  "frames": 33,
+  "fps": 12,
+  "width": 1280,
+  "height": 720,
+  "duration_s": 2.708,
+  "pattern": "f_%03d.webp",
+  "bytes": 825402
+}
