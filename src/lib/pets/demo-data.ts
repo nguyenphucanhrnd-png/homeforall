@@ -1,3 +1,4 @@
+import { UNKNOWN_WARD } from "@/data/wards";
 import type { HealthEventType, Partner, Pet, PetLook } from "./types";
 
 // DEMO ONLY (prompt §13). Fictional animals and organisations, all is_demo,
@@ -27,7 +28,7 @@ const CLINIC = "Phòng khám thú y đối tác";
 
 const SPECS: Spec[] = [
   {
-    code: "HFA-0001", name: "Ộ I I", species: "cat", sex: "female", ageRange: "young", size: "small", ward: "dien-hong",
+    code: "HFA-0001", name: "Ộ I I", species: "cat", sex: "female", ageRange: "young", size: "small", ward: UNKNOWN_WARD,
     temperament: [{ vi: "Hiền", en: "Gentle" }, { vi: "Thích được vuốt ve", en: "Loves cuddles" }],
     goodWith: ["kids", "cats"], status: "available", partnerSlug: "demo-cuu-ho-a", publishedDaysAgo: 12, confirmedDaysAgo: 2,
     story: {
@@ -39,7 +40,7 @@ const SPECS: Spec[] = [
     look: { coat: "#F2A65A", accent: "#C9742E", pattern: "tabby", ears: "pointy" },
   },
   {
-    code: "HFA-0002", name: "Kiki", species: "dog", sex: "male", ageRange: "young", size: "medium", ward: "thu-duc",
+    code: "HFA-0002", name: "Kiki", species: "dog", sex: "male", ageRange: "young", size: "medium", ward: UNKNOWN_WARD,
     temperament: [{ vi: "Năng động", en: "Energetic" }, { vi: "Thích đi dạo", en: "Loves walks" }],
     goodWith: ["kids", "dogs"], status: "available", partnerSlug: "demo-cuu-ho-b", publishedDaysAgo: 20, confirmedDaysAgo: 1,
     story: {
@@ -63,7 +64,7 @@ const SPECS: Spec[] = [
     look: { coat: "#F5F0EA", accent: "#B9C3CE", pattern: "patch", ears: "pointy" },
   },
   {
-    code: "HFA-0004", name: "Dũng", species: "cat", sex: "female", ageRange: "young", size: "medium", ward: "dien-hong",
+    code: "HFA-0004", name: "Dũng", species: "cat", sex: "female", ageRange: "young", size: "medium", ward: UNKNOWN_WARD,
     temperament: [{ vi: "Độc lập", en: "Independent" }, { vi: "Điềm tĩnh", en: "Calm" }],
     goodWith: [], status: "available", partnerSlug: "demo-cuu-ho-a", publishedDaysAgo: 40, confirmedDaysAgo: 21,
     story: {
@@ -87,7 +88,7 @@ const SPECS: Spec[] = [
     look: { coat: "#F5F0EA", accent: "#EED9B6", pattern: "solid", ears: "floppy" },
   },
   {
-    code: "HFA-0006", name: "Tiên Tiên", species: "cat", sex: "male", ageRange: "senior", size: "medium", ward: "thu-duc",
+    code: "HFA-0006", name: "Tiên Tiên", species: "cat", sex: "male", ageRange: "senior", size: "medium", ward: UNKNOWN_WARD,
     temperament: [{ vi: "Hiền lành", en: "Mellow" }, { vi: "Thích nằm phơi nắng", en: "Loves sunny spots" }],
     goodWith: ["kids"], status: "available", partnerSlug: "demo-cuu-ho-b", publishedDaysAgo: 30, confirmedDaysAgo: 4,
     story: {
@@ -99,7 +100,7 @@ const SPECS: Spec[] = [
     look: { coat: "#9AA5B1", accent: "#6B7785", pattern: "tabby", ears: "pointy" },
   },
   {
-    code: "HFA-0007", name: "Fanh", species: "dog", sex: "male", ageRange: "adult", size: "large", ward: "dien-hong",
+    code: "HFA-0007", name: "Fanh", species: "dog", sex: "male", ageRange: "adult", size: "large", ward: UNKNOWN_WARD,
     temperament: [{ vi: "Trung thành", en: "Loyal" }, { vi: "Hơi nhút nhát lúc đầu", en: "Shy at first" }],
     goodWith: ["dogs"], status: "adoption_pending", partnerSlug: "demo-cuu-ho-a", publishedDaysAgo: 45, confirmedDaysAgo: 5,
     story: {
@@ -123,7 +124,7 @@ const SPECS: Spec[] = [
     look: { coat: "#F5F0EA", accent: "#E39B4F", pattern: "patch", ears: "pointy" },
   },
   {
-    code: "HFA-0009", name: "Xiang", species: "dog", sex: "female", ageRange: "baby", size: "small", ward: "thu-duc",
+    code: "HFA-0009", name: "Xiang", species: "dog", sex: "female", ageRange: "baby", size: "small", ward: UNKNOWN_WARD,
     temperament: [{ vi: "Lém lỉnh", en: "Cheeky" }, { vi: "Thích gặm đồ chơi", en: "Loves chew toys" }],
     goodWith: ["kids", "dogs"], status: "in_foster", partnerSlug: "demo-cuu-ho-b", publishedDaysAgo: 2, confirmedDaysAgo: 2,
     story: {
@@ -135,7 +136,7 @@ const SPECS: Spec[] = [
     look: { coat: "#2E2E33", accent: "#C8925A", pattern: "patch", ears: "floppy" },
   },
   {
-    code: "HFA-0010", name: "Tung Tung Meo Meo", species: "cat", sex: "male", ageRange: "young", size: "medium", ward: "dien-hong",
+    code: "HFA-0010", name: "Tung Tung Meo Meo", species: "cat", sex: "male", ageRange: "young", size: "medium", ward: UNKNOWN_WARD,
     temperament: [{ vi: "Lém lỉnh", en: "Mischievous" }, { vi: "Thích leo trèo", en: "Loves climbing" }],
     goodWith: ["cats"], status: "available", partnerSlug: "demo-cuu-ho-a", publishedDaysAgo: 15, confirmedDaysAgo: 6,
     story: {
@@ -147,7 +148,7 @@ const SPECS: Spec[] = [
     look: { coat: "#EED9B6", accent: "#C9742E", pattern: "tabby", ears: "pointy" },
   },
   {
-    code: "HFA-0011", name: "Gugugaga", species: "cat", sex: "female", ageRange: "senior", size: "small", ward: "thu-duc",
+    code: "HFA-0011", name: "Gugugaga", species: "cat", sex: "female", ageRange: "senior", size: "small", ward: UNKNOWN_WARD,
     temperament: [{ vi: "Dịu dàng", en: "Sweet" }, { vi: "Ngủ nhiều", en: "Sleepy" }],
     goodWith: ["kids", "cats"], status: "available", partnerSlug: "demo-cuu-ho-b", publishedDaysAgo: 60, confirmedDaysAgo: 18,
     story: {

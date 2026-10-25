@@ -1,14 +1,14 @@
 "use client";
 
 import { SlidersHorizontal } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useRef, useSyncExternalStore, useTransition } from "react";
+import { useMemo, useRef, useState, useSyncExternalStore, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import type { Locale } from "@/i18n/routing";
 import { AGE_RANGES, GOOD_WITH, SEXES, SIZES, SPECIES } from "@/lib/pets/types";
-import { WARDS } from "@/lib/pets/wards";
+import { WARD_SLUGS } from "@/data/wards";
+import { WardFilter } from "./ward-filter";
 
 type Option = { value: string; label: string };
 
@@ -16,9 +16,17 @@ type Option = { value: string; label: string };
  * A plain GET form, so filtering works without JavaScript. With JS, every
  * change updates the URL in place (deep-linkable, back button friendly).
  */
-export function FilterPanel({ partners, activeCount }: { partners: Option[]; activeCount: number }) {
+export function FilterPanel({
+  partners,
+  activeCount,
+  wardCounts,
+}: {
+  partners: Option[];
+  activeCount: number;
+  /** Pets per ward under the other current filters (ward group excluded). */
+  wardCounts: Record<string, number>;
+}) {
   const t = useTranslations("pets.filters");
-  const locale = useLocale() as Locale;
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
@@ -31,15 +39,36 @@ export function FilterPanel({ partners, activeCount }: { partners: Option[]; act
     () => false,
   );
 
-  function apply() {
+  // Ward selection comes from the URL (`?ward=a,b`); a pending choice shows instantly
+  // until the URL catches up (keyed to the params it was made from).
+  const base = params.toString();
+  const urlWards = useMemo(
+    () => [...new Set(params.getAll("ward").flatMap((v) => v.split(",")))].filter((w) => WARD_SLUGS.has(w)),
+    [params],
+  );
+  const [pendingWards, setPendingWards] = useState<{ base: string; list: string[] } | null>(null);
+  const wards = pendingWards && pendingWards.base === base ? pendingWards.list : urlWards;
+
+  function apply(nextWards: string[] = wards) {
     if (!form.current) return;
     const data = new FormData(form.current);
     const next = new URLSearchParams();
-    for (const [key, value] of data) if (typeof value === "string" && value !== "") next.append(key, value);
+    for (const [key, value] of data)
+      if (key !== "ward" && typeof value === "string" && value !== "") next.append(key, value);
     const sort = params.get("sort");
     if (sort) next.set("sort", sort);
-    const query = next.toString();
+    // Wards as one readable, shareable parameter: ?ward=an-khanh,an-phu (OR within the group).
+    const parts = [
+      nextWards.length ? `ward=${nextWards.map(encodeURIComponent).join(",")}` : "",
+      next.toString(),
+    ].filter(Boolean);
+    const query = parts.join("&");
     startTransition(() => router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false }));
+  }
+
+  function setWards(list: string[]) {
+    setPendingWards({ base, list });
+    apply(list);
   }
 
   // Reset in place (no remount) so keyboard focus stays where it was.
@@ -49,7 +78,7 @@ export function FilterPanel({ partners, activeCount }: { partners: Option[]; act
       if (el instanceof HTMLInputElement && el.type === "checkbox") el.checked = false;
       if (el instanceof HTMLSelectElement) el.value = "";
     }
-    apply();
+    setWards([]);
   }
 
   const checked = (name: string, value: string) => params.getAll(name).includes(value);
@@ -76,7 +105,7 @@ export function FilterPanel({ partners, activeCount }: { partners: Option[]; act
     <form
       ref={form}
       method="get"
-      onChange={apply}
+      onChange={() => apply()}
       onSubmit={(e) => {
         e.preventDefault();
         apply();
@@ -89,11 +118,7 @@ export function FilterPanel({ partners, activeCount }: { partners: Option[]; act
         {t("title")}
       </h2>
       {group("species", t("species"), opts(SPECIES))}
-      {group(
-        "ward",
-        t("ward"),
-        WARDS.map((w) => ({ value: w.slug, label: w.label[locale] })),
-      )}
+      <WardFilter selected={wards} counts={wardCounts} onChange={setWards} enhanced={enhanced} />
       {group("age", t("age"), opts(AGE_RANGES))}
       {group("size", t("size"), opts(SIZES))}
       {group("sex", t("sex"), opts(SEXES))}

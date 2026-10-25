@@ -132,7 +132,16 @@
       "partner": "Partner",
       "anyPartner": "All partners",
       "apply": "Apply filters",
-      "clear": "Clear filters ({count})"
+      "clear": "Clear filters ({count})",
+      "wardMore": "Show more ({count})",
+      "wardLess": "Show less",
+      "wardSearch": "Search wards",
+      "wardSearchHint": "Accents optional, e.g. binh trung",
+      "wardClear": "Clear selection",
+      "wardRemove": "Remove {ward}",
+      "wardNoMatch": "No ward matches.",
+      "wardSelected": "Selected",
+      "wardCount": "{count, plural, one {# pet} other {# pets}}"
     },
     "sort": {
       "label": "Sort by",
@@ -168,9 +177,10 @@
     "empty": {
       "title": "No animals match these filters",
       "body": "Try removing a few options, or see every animal waiting for a home.",
-      "cta": "See all"
+      "cta": "Clear filters"
     },
-    "photoAlt": "Photo of {name}"
+    "photoAlt": "Photo of {name}",
+    "resultCountWards": "{count, plural, one {# pet} other {# pets}} · {wards, plural, one {# area} other {# areas}}"
   },
   "petProfile": {
     "breadcrumb": "Breadcrumb",

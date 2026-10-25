@@ -132,7 +132,16 @@
       "partner": "Đối tác",
       "anyPartner": "Tất cả đối tác",
       "apply": "Áp dụng bộ lọc",
-      "clear": "Xoá bộ lọc ({count})"
+      "clear": "Xoá bộ lọc ({count})",
+      "wardMore": "Xem thêm ({count})",
+      "wardLess": "Thu gọn",
+      "wardSearch": "Tìm phường",
+      "wardSearchHint": "Gõ không dấu cũng được, ví dụ: binh trung",
+      "wardClear": "Xoá chọn",
+      "wardRemove": "Bỏ chọn {ward}",
+      "wardNoMatch": "Không có phường nào khớp.",
+      "wardSelected": "Đã chọn",
+      "wardCount": "{count, plural, other {# bé}}"
     },
     "sort": {
       "label": "Sắp xếp",
@@ -168,9 +177,10 @@
     "empty": {
       "title": "Chưa có bé nào khớp bộ lọc",
       "body": "Thử bỏ bớt vài lựa chọn, hoặc xem tất cả các bé đang chờ nhà.",
-      "cta": "Xem tất cả"
+      "cta": "Xoá bộ lọc"
     },
-    "photoAlt": "Ảnh bé {name}"
+    "photoAlt": "Ảnh bé {name}",
+    "resultCountWards": "{count} bé · {wards} khu vực"
   },
   "petProfile": {
     "breadcrumb": "Đường dẫn",

@@ -1,0 +1,346 @@
+[
+ {
+  "slug": "an-khanh",
+  "name": "An Khánh"
+ },
+ {
+  "slug": "an-lac",
+  "name": "An Lạc"
+ },
+ {
+  "slug": "an-lac-a",
+  "name": "An Lạc A"
+ },
+ {
+  "slug": "an-loi-dong",
+  "name": "An Lợi Đông"
+ },
+ {
+  "slug": "an-phu",
+  "name": "An Phú"
+ },
+ {
+  "slug": "an-phu-dong",
+  "name": "An Phú Đông"
+ },
+ {
+  "slug": "binh-chieu",
+  "name": "Bình Chiểu"
+ },
+ {
+  "slug": "binh-hung-hoa",
+  "name": "Bình Hưng Hòa"
+ },
+ {
+  "slug": "binh-hung-hoa-a",
+  "name": "Bình Hưng Hòa A"
+ },
+ {
+  "slug": "binh-hung-hoa-b",
+  "name": "Bình Hưng Hòa B"
+ },
+ {
+  "slug": "binh-thuan",
+  "name": "Bình Thuận"
+ },
+ {
+  "slug": "binh-tho",
+  "name": "Bình Thọ"
+ },
+ {
+  "slug": "binh-trung-dong",
+  "name": "Bình Trưng Đông"
+ },
+ {
+  "slug": "binh-trung-tay",
+  "name": "Bình Trưng Tây"
+ },
+ {
+  "slug": "binh-tri-dong",
+  "name": "Bình Trị Đông"
+ },
+ {
+  "slug": "binh-tri-dong-a",
+  "name": "Bình Trị Đông A"
+ },
+ {
+  "slug": "binh-tri-dong-b",
+  "name": "Bình Trị Đông B"
+ },
+ {
+  "slug": "ben-nghe",
+  "name": "Bến Nghé"
+ },
+ {
+  "slug": "ben-thanh",
+  "name": "Bến Thành"
+ },
+ {
+  "slug": "cat-lai",
+  "name": "Cát Lái"
+ },
+ {
+  "slug": "cau-kho",
+  "name": "Cầu Kho"
+ },
+ {
+  "slug": "cau-ong-lanh",
+  "name": "Cầu Ông Lãnh"
+ },
+ {
+  "slug": "co-giang",
+  "name": "Cô Giang"
+ },
+ {
+  "slug": "da-kao",
+  "name": "Đa Kao"
+ },
+ {
+  "slug": "dong-hung-thuan",
+  "name": "Đông Hưng Thuận"
+ },
+ {
+  "slug": "hiep-binh-chanh",
+  "name": "Hiệp Bình Chánh"
+ },
+ {
+  "slug": "hiep-binh-phuoc",
+  "name": "Hiệp Bình Phước"
+ },
+ {
+  "slug": "hiep-phu",
+  "name": "Hiệp Phú"
+ },
+ {
+  "slug": "hiep-tan",
+  "name": "Hiệp Tân"
+ },
+ {
+  "slug": "hiep-thanh",
+  "name": "Hiệp Thành"
+ },
+ {
+  "slug": "hoa-thanh",
+  "name": "Hòa Thạnh"
+ },
+ {
+  "slug": "linh-chieu",
+  "name": "Linh Chiểu"
+ },
+ {
+  "slug": "linh-dong",
+  "name": "Linh Đông"
+ },
+ {
+  "slug": "linh-tay",
+  "name": "Linh Tây"
+ },
+ {
+  "slug": "linh-trung",
+  "name": "Linh Trung"
+ },
+ {
+  "slug": "linh-xuan",
+  "name": "Linh Xuân"
+ },
+ {
+  "slug": "long-binh",
+  "name": "Long Bình"
+ },
+ {
+  "slug": "long-phuoc",
+  "name": "Long Phước"
+ },
+ {
+  "slug": "long-thanh-my",
+  "name": "Long Thạnh Mỹ"
+ },
+ {
+  "slug": "long-truong",
+  "name": "Long Trường"
+ },
+ {
+  "slug": "nguyen-cu-trinh",
+  "name": "Nguyễn Cư Trinh"
+ },
+ {
+  "slug": "nguyen-thai-binh",
+  "name": "Nguyễn Thái Bình"
+ },
+ {
+  "slug": "pham-ngu-lao",
+  "name": "Phạm Ngũ Lão"
+ },
+ {
+  "slug": "phu-huu",
+  "name": "Phú Hữu"
+ },
+ {
+  "slug": "phu-my",
+  "name": "Phú Mỹ"
+ },
+ {
+  "slug": "phu-thanh",
+  "name": "Phú Thạnh"
+ },
+ {
+  "slug": "phu-tho-hoa",
+  "name": "Phú Thọ Hòa"
+ },
+ {
+  "slug": "phu-thuan",
+  "name": "Phú Thuận"
+ },
+ {
+  "slug": "phu-trung",
+  "name": "Phú Trung"
+ },
+ {
+  "slug": "phuoc-binh",
+  "name": "Phước Bình"
+ },
+ {
+  "slug": "phuoc-long-a",
+  "name": "Phước Long A"
+ },
+ {
+  "slug": "phuoc-long-b",
+  "name": "Phước Long B"
+ },
+ {
+  "slug": "son-ky",
+  "name": "Sơn Kỳ"
+ },
+ {
+  "slug": "tam-binh",
+  "name": "Tam Bình"
+ },
+ {
+  "slug": "tam-phu",
+  "name": "Tam Phú"
+ },
+ {
+  "slug": "tang-nhon-phu-a",
+  "name": "Tăng Nhơn Phú A"
+ },
+ {
+  "slug": "tang-nhon-phu-b",
+  "name": "Tăng Nhơn Phú B"
+ },
+ {
+  "slug": "tan-chanh-hiep",
+  "name": "Tân Chánh Hiệp"
+ },
+ {
+  "slug": "tan-dinh",
+  "name": "Tân Định"
+ },
+ {
+  "slug": "tan-hung",
+  "name": "Tân Hưng"
+ },
+ {
+  "slug": "tan-hung-thuan",
+  "name": "Tân Hưng Thuận"
+ },
+ {
+  "slug": "tan-kieng",
+  "name": "Tân Kiểng"
+ },
+ {
+  "slug": "tan-phong",
+  "name": "Tân Phong"
+ },
+ {
+  "slug": "tan-phu",
+  "name": "Tân Phú"
+ },
+ {
+  "slug": "tan-quy",
+  "name": "Tân Quy"
+ },
+ {
+  "slug": "tan-quy-2",
+  "name": "Tân Quý"
+ },
+ {
+  "slug": "tan-son-nhi",
+  "name": "Tân Sơn Nhì"
+ },
+ {
+  "slug": "tan-tao",
+  "name": "Tân Tạo"
+ },
+ {
+  "slug": "tan-tao-a",
+  "name": "Tân Tạo A"
+ },
+ {
+  "slug": "tan-thanh",
+  "name": "Tân Thành"
+ },
+ {
+  "slug": "tan-thoi-hiep",
+  "name": "Tân Thới Hiệp"
+ },
+ {
+  "slug": "tan-thoi-hoa",
+  "name": "Tân Thới Hòa"
+ },
+ {
+  "slug": "tan-thoi-nhat",
+  "name": "Tân Thới Nhất"
+ },
+ {
+  "slug": "tan-thuan-dong",
+  "name": "Tân Thuận Đông"
+ },
+ {
+  "slug": "tan-thuan-tay",
+  "name": "Tân Thuận Tây"
+ },
+ {
+  "slug": "tay-thanh",
+  "name": "Tây Thạnh"
+ },
+ {
+  "slug": "thanh-loc",
+  "name": "Thạnh Lộc"
+ },
+ {
+  "slug": "thanh-my-loi",
+  "name": "Thạnh Mỹ Lợi"
+ },
+ {
+  "slug": "thanh-xuan",
+  "name": "Thạnh Xuân"
+ },
+ {
+  "slug": "thao-dien",
+  "name": "Thảo Điền"
+ },
+ {
+  "slug": "thoi-an",
+  "name": "Thới An"
+ },
+ {
+  "slug": "thu-thiem",
+  "name": "Thủ Thiêm"
+ },
+ {
+  "slug": "trung-my-tay",
+  "name": "Trung Mỹ Tây"
+ },
+ {
+  "slug": "truong-thanh",
+  "name": "Trường Thạnh"
+ },
+ {
+  "slug": "truong-tho",
+  "name": "Trường Thọ"
+ },
+ {
+  "slug": "vo-thi-sau",
+  "name": "Võ Thị Sáu"
+ }
+]
