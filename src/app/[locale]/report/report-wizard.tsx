@@ -5,6 +5,7 @@ import {
   ArrowRight,
   Camera,
   ChevronDown,
+  Map as MapIcon,
   CircleCheck,
   Copy,
   Crosshair,
@@ -28,7 +29,15 @@ import { clearDraft, loadDraft, saveDraft } from "@/lib/reports/draft";
 import { CONDITIONS, REPORT_SPECIES, STATUSES } from "@/lib/reports/model";
 import { reportSchema } from "@/lib/reports/schema";
 import { cn } from "@/lib/utils";
-import { knownWards, locate, nearestHelp, submitReport, type HelpItem, type NearestHelp, type SubmitResult } from "./actions";
+import {
+  knownWards,
+  locate,
+  nearestHelp,
+  submitReport,
+  type HelpItem,
+  type NearestHelp,
+  type SubmitResult,
+} from "./actions";
 
 // /report, action first: where am I → nearest help (list + map) → what to do
 // now → an optional quick report (3 steps, collapsed). Photos are re-encoded in
@@ -40,7 +49,14 @@ const MAX_BYTES = 10 * 1024 * 1024;
 const STEPS = ["photo", "location", "send"] as const;
 
 type Point = { lat: number; lng: number };
-export type FallbackVet = { id: string; name: string; kind: string; address: string | null; area: string | null; directions: string | null };
+export type FallbackVet = {
+  id: string;
+  name: string;
+  kind: string;
+  address: string | null;
+  area: string | null;
+  directions: string | null;
+};
 type Draft = {
   photos: Blob[];
   species: (typeof REPORT_SPECIES)[number] | null;
@@ -57,7 +73,8 @@ type ErrorKey = "photos" | "species" | "location" | "seenAt" | "consent" | "cont
 
 const choice =
   "flex min-h-11 cursor-pointer items-center gap-2 rounded-sm border-2 border-border bg-white px-4 has-checked:border-blue-600 has-checked:bg-blue-100 has-focus-visible:outline-2 has-focus-visible:outline-blue-600";
-const input = "block min-h-12 w-full rounded-sm border-2 border-border bg-white px-4 text-ink aria-invalid:border-danger";
+const input =
+  "block min-h-12 w-full rounded-sm border-2 border-border bg-white px-4 text-ink aria-invalid:border-danger";
 
 function nowLocal() {
   const d = new Date();
@@ -78,7 +95,8 @@ const blank = (): Draft => ({
   contactConsent: false,
 });
 
-const inCity = (p: Point | null) => Boolean(p && p.lat >= 10.3 && p.lat <= 11.4 && p.lng >= 106.3 && p.lng <= 107.2);
+const inCity = (p: Point | null) =>
+  Boolean(p && p.lat >= 10.3 && p.lat <= 11.4 && p.lng >= 106.3 && p.lng <= 107.2);
 
 /** Decode → resize → WebP. Canvas output carries no EXIF/GPS. */
 async function compress(file: File): Promise<Blob> {
@@ -101,11 +119,15 @@ async function compress(file: File): Promise<Blob> {
   return blob;
 }
 
-const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+const esc = (s: string) =>
+  s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
 export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fallbackVets: FallbackVet[] }) {
   const t = useTranslations("report");
+  const tm = useTranslations("mobile");
   const locale = useLocale();
+  // Phones: the map is a collapsible section (closed by default); always shown from 768 px.
+  const [mapOpen, setMapOpen] = useState(false);
 
   // ── Where ──
   const [point, setPoint] = useState<Point | null>(null);
@@ -139,7 +161,10 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
   const ready = useRef(false);
   const touchedRecipients = useRef(false);
 
-  const set = useCallback(<K extends keyof Draft>(k: K, v: Draft[K]) => setD((cur) => ({ ...cur, [k]: v })), []);
+  const set = useCallback(
+    <K extends keyof Draft>(k: K, v: Draft[K]) => setD((cur) => ({ ...cur, [k]: v })),
+    [],
+  );
 
   // ── Location ──
   const onPoint = useCallback((p: Point, acc: number | null = null) => {
@@ -228,7 +253,9 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
     const at = replaceAt.current;
     replaceAt.current = null;
     try {
-      const blobs = await Promise.all([...files].slice(0, at === null ? MAX_PHOTOS - d.photos.length : 1).map(compress));
+      const blobs = await Promise.all(
+        [...files].slice(0, at === null ? MAX_PHOTOS - d.photos.length : 1).map(compress),
+      );
       setD((cur) => {
         const photos = [...cur.photos];
         if (at !== null) photos[at] = blobs[0];
@@ -281,7 +308,12 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
     touchedRecipients.current = true;
     set("recipients", [id]);
     openForm();
-    requestAnimationFrame(() => formRef.current?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }));
+    requestAnimationFrame(() =>
+      formRef.current?.scrollIntoView({
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start",
+      }),
+    );
   }
 
   async function submit() {
@@ -312,7 +344,9 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
     if (!honeypot && !reportSchema.safeParse(data).success) return setServerError(t("errors.generic"));
     const form = new FormData();
     form.set("data", JSON.stringify(data));
-    d.photos.forEach((b, i) => form.append("photos", new File([b], `photo-${i + 1}.webp`, { type: "image/webp" })));
+    d.photos.forEach((b, i) =>
+      form.append("photos", new File([b], `photo-${i + 1}.webp`, { type: "image/webp" })),
+    );
     setSending(true);
     setServerError(null);
     try {
@@ -350,11 +384,21 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
   const byId = useMemo(() => new Map(items.map((i) => [i.id, i])), [items]);
   const kind = useCallback((i: { kind: string }) => t(`help.kinds.${i.kind}` as "help.kinds.rescue"), [t]);
   const mapSpots: MapSpot[] = useMemo(
-    () => items.map((i) => ({ id: i.id, name: i.name, layer: i.layer, lat: i.lat, lng: i.lng, precision: i.precision, isSample: false })),
+    () =>
+      items.map((i) => ({
+        id: i.id,
+        name: i.name,
+        layer: i.layer,
+        lat: i.lat,
+        lng: i.lng,
+        precision: i.precision,
+        isSample: false,
+      })),
     [items],
   );
   const labels: MapLabels = useMemo(
     () => ({
+      interact: tm("mapInteract"),
       region: t("help.mapRegion"),
       pin: t("help.you"),
       cluster: (n) => String(n),
@@ -368,11 +412,13 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
         return `<div class="hfa-popup"><p class="hfa-popup-kind">${esc(kind(i))}</p><p class="hfa-popup-name">${esc(i.name)}</p>${
           i.address ? `<p>${esc(i.address)}</p>` : i.area ? `<p>${esc(i.area)}</p>` : ""
         }<p class="hfa-popup-line">${esc(t(`groups.band.${i.band}`))}</p>${
-          i.directions ? `<p><a class="hfa-popup-dir" href="${esc(i.directions)}" target="_blank" rel="noopener noreferrer">${esc(t("help.directions"))} ↗</a></p>` : ""
+          i.directions
+            ? `<p><a class="hfa-popup-dir" href="${esc(i.directions)}" target="_blank" rel="noopener noreferrer">${esc(t("help.directions"))} ↗</a></p>`
+            : ""
         }</div>`;
       },
     }),
-    [t, byId, kind],
+    [t, tm, byId, kind],
   );
 
   const errorText = (k: ErrorKey) => t(`errors.${k}`);
@@ -396,12 +442,28 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
     consent: "report-consent",
   };
   const fmtWhen = (v: string) =>
-    v ? new Intl.DateTimeFormat(locale === "vi" ? "vi-VN" : "en-GB", { dateStyle: "medium", timeStyle: "short" }).format(new Date(v)) : "";
+    v
+      ? new Intl.DateTimeFormat(locale === "vi" ? "vi-VN" : "en-GB", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        }).format(new Date(v))
+      : "";
 
   // ─── Pieces ─────────────────────────────────────────────────────────────────
   const helpCard = (i: HelpItem) => (
-    <li key={i.id} data-help={i.layer} className={cn("space-y-2 rounded-md border-2 bg-white p-4", selected === i.id ? "border-blue-600" : "border-transparent shadow-soft")}>
-      <button type="button" onClick={() => setSelected(i.id)} className="block w-full cursor-pointer text-left">
+    <li
+      key={i.id}
+      data-help={i.layer}
+      className={cn(
+        "space-y-2 rounded-md border-2 bg-white p-4",
+        selected === i.id ? "border-blue-600" : "border-transparent shadow-soft",
+      )}
+    >
+      <button
+        type="button"
+        onClick={() => setSelected(i.id)}
+        className="block w-full cursor-pointer text-left"
+      >
         <span className="flex items-center gap-2 text-xs font-bold text-muted">
           <span aria-hidden="true" className={cn("size-2.5 rounded-full", `hfa-${i.layer}`)} />
           {kind(i)} · <span className="text-ink">{t(`groups.band.${i.band}`)}</span>
@@ -411,7 +473,12 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
       </button>
       <div className="flex flex-wrap gap-2">
         {i.directions && (
-          <a href={i.directions} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "secondary", size: "sm" })}>
+          <a
+            href={i.directions}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonVariants({ variant: "secondary", size: "sm" })}
+          >
             <Navigation aria-hidden="true" />
             {t("help.directions")}
             <span className="sr-only">: {i.name}</span>
@@ -424,11 +491,30 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
           </Button>
         )}
         {i.contacts.map((c) => {
-          const Icon = c.type === "phone" ? Phone : c.type === "zalo" ? MessageCircle : c.type === "facebook" ? ExternalLink : Globe;
-          const href = c.type === "phone" ? `tel:${c.value}` : c.type === "zalo" ? `https://zalo.me/${c.value}` : c.value;
-          const label = c.type === "phone" ? t("help.call") : c.type === "zalo" ? t("help.message") : t(`help.${c.type}`);
+          const Icon =
+            c.type === "phone"
+              ? Phone
+              : c.type === "zalo"
+                ? MessageCircle
+                : c.type === "facebook"
+                  ? ExternalLink
+                  : Globe;
+          const href =
+            c.type === "phone"
+              ? `tel:${c.value}`
+              : c.type === "zalo"
+                ? `https://zalo.me/${c.value}`
+                : c.value;
+          const label =
+            c.type === "phone" ? t("help.call") : c.type === "zalo" ? t("help.message") : t(`help.${c.type}`);
           return (
-            <a key={c.type + c.value} href={href} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "ghost", size: "sm" })}>
+            <a
+              key={c.type + c.value}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonVariants({ variant: "ghost", size: "sm" })}
+            >
               <Icon aria-hidden="true" />
               {label}
             </a>
@@ -439,7 +525,11 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
   );
 
   const helpSection = (
-    <section aria-labelledby="help-title" className="space-y-4" data-testid="nearest-help">
+    <section
+      aria-labelledby="help-title"
+      className="space-y-4 max-md:order-2 max-md:col-span-12"
+      data-testid="nearest-help"
+    >
       <h2 id="help-title" className="text-2xl font-bold text-blue-800">
         {t("help.title")}
       </h2>
@@ -449,12 +539,16 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
         <>
           <div className="space-y-2">
             <h3 className="font-bold">{t("help.rescueTitle")}</h3>
-            {help.rescue.length > 0 && !help.rescueWithin8 && <p className="text-sm font-semibold text-warning">{t("help.noneNear")}</p>}
+            {help.rescue.length > 0 && !help.rescueWithin8 && (
+              <p className="text-sm font-semibold text-warning">{t("help.noneNear")}</p>
+            )}
             <ul className="space-y-2">{help.rescue.map(helpCard)}</ul>
           </div>
           <div className="space-y-2">
             <h3 className="font-bold">{t("help.vetTitle")}</h3>
-            {help.vets.length > 0 && !help.vetsWithin8 && <p className="text-sm font-semibold text-warning">{t("help.noneNear")}</p>}
+            {help.vets.length > 0 && !help.vetsWithin8 && (
+              <p className="text-sm font-semibold text-warning">{t("help.noneNear")}</p>
+            )}
             <ul className="space-y-2">{help.vets.map(helpCard)}</ul>
             <p className="text-sm text-muted">{t("help.vetNote")}</p>
           </div>
@@ -462,20 +556,32 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
       )}
       {!seeded && fallbackVets.length > 0 && (
         <details className="rounded-md bg-white p-4 shadow-soft" open={!help?.vets.length}>
-          <summary className="cursor-pointer font-bold">
+          <summary className="cursor-pointer font-bold max-md:flex max-md:min-h-11 max-md:items-center">
             {t("help.vetTitle")} ({fallbackVets.length})
           </summary>
           <p className="mt-2 text-sm text-muted">{t("help.unseeded")}</p>
           <ul className="mt-3 max-h-[420px] space-y-2 overflow-y-auto pe-1" data-testid="fallback-vets">
             {fallbackVets.map((v) => (
-              <li key={v.id} className="flex flex-wrap items-start justify-between gap-2 rounded-md bg-cream-50 p-3">
+              <li
+                key={v.id}
+                className="flex flex-wrap items-start justify-between gap-2 rounded-md bg-cream-50 p-3"
+              >
                 <span>
-                  <span className="block text-xs font-bold text-muted">{t(`help.kinds.${v.kind}` as "help.kinds.rescue")}</span>
+                  <span className="block text-xs font-bold text-muted">
+                    {t(`help.kinds.${v.kind}` as "help.kinds.rescue")}
+                  </span>
                   <span className="block font-bold">{v.name}</span>
-                  <span className="block text-sm text-muted">{[v.address, v.area].filter(Boolean).join(", ")}</span>
+                  <span className="block text-sm text-muted">
+                    {[v.address, v.area].filter(Boolean).join(", ")}
+                  </span>
                 </span>
                 {v.directions && (
-                  <a href={v.directions} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "ghost", size: "sm" })}>
+                  <a
+                    href={v.directions}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={buttonVariants({ variant: "ghost", size: "sm" })}
+                  >
                     <Navigation aria-hidden="true" />
                     {t("help.directions")}
                     <span className="sr-only">: {v.name}</span>
@@ -490,7 +596,10 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
   );
 
   const nowSection = (
-    <section aria-labelledby="now-title" className="space-y-4 rounded-lg bg-white p-6 shadow-soft">
+    <section
+      aria-labelledby="now-title"
+      className="space-y-4 rounded-lg bg-white p-6 shadow-soft max-md:order-4 max-md:col-span-12 max-md:p-5"
+    >
       <h2 id="now-title" className="text-2xl font-bold text-blue-800">
         {t("now.title")}
       </h2>
@@ -514,10 +623,15 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
         </h3>
         <p>{t("bite.body")}</p>
         <p className="flex flex-wrap gap-x-4 gap-y-1">
-          <Link href="/help" className="font-bold text-blue-600 underline hover:text-blue-800">
+          <Link href="/help" className="font-bold text-blue-600 underline hover:text-blue-800 max-md:inline-flex max-md:min-h-11 max-md:items-center">
             {t("bite.link")}
           </Link>
-          <a href="https://www.who.int/news-room/fact-sheets/detail/rabies" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800">
+          <a
+            href="https://www.who.int/news-room/fact-sheets/detail/rabies"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline hover:text-blue-800 max-md:inline-flex max-md:min-h-11 max-md:items-center"
+          >
             {t("bite.who")}
           </a>
         </p>
@@ -525,71 +639,102 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
     </section>
   );
 
-  const resultView = result && (() => {
-    const link = `${window.location.origin}/${locale}/report/track/${result.token}`;
-    const current = STATUSES.indexOf(d.recipients.length ? "sent_to_groups" : "submitted");
-    return (
-      <div className="space-y-5" data-testid="report-result">
-        <h2 ref={headingRef} tabIndex={-1} className="flex items-center gap-3 text-2xl font-bold text-success outline-none">
-          <CircleCheck aria-hidden="true" className="size-7" />
-          {t("result.title", { code: result.code })}
-        </h2>
-        <p className="rounded-md bg-cream-50 p-4 font-semibold">{t("result.honest")}</p>
-        <p className="font-semibold">{t("result.saveLink")}</p>
-        <div className="flex flex-wrap items-center gap-3">
-          <input readOnly value={link} aria-label={t("result.open")} className={cn(input, "min-w-0 flex-1 font-mono text-sm")} data-testid="track-link" onFocus={(e) => e.target.select()} />
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={async () => {
-              try {
-                await navigator.clipboard.writeText(link);
-                setCopied(true);
-              } catch {
-                setCopied(false);
-              }
-            }}
+  const resultView =
+    result &&
+    (() => {
+      const link = `${window.location.origin}/${locale}/report/track/${result.token}`;
+      const current = STATUSES.indexOf(d.recipients.length ? "sent_to_groups" : "submitted");
+      return (
+        <div className="space-y-5" data-testid="report-result">
+          <h2
+            ref={headingRef}
+            tabIndex={-1}
+            className="flex items-center gap-3 text-2xl font-bold text-success outline-none"
           >
-            <Copy aria-hidden="true" />
-            {copied ? t("result.copied") : t("result.copy")}
-          </Button>
-        </div>
-        <p role="status" className="sr-only">
-          {copied ? t("result.copied") : ""}
-        </p>
-        {result.possibleDuplicate && (
-          <p className="flex items-start gap-2 rounded-md bg-blue-100 p-4">
-            <Info aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-blue-800" />
-            {t("result.duplicate")}
+            <CircleCheck aria-hidden="true" className="size-7" />
+            {t("result.title", { code: result.code })}
+          </h2>
+          <p className="rounded-md bg-cream-50 p-4 font-semibold">{t("result.honest")}</p>
+          <p className="font-semibold">{t("result.saveLink")}</p>
+          <div className="flex flex-wrap items-center gap-3">
+            <input
+              readOnly
+              value={link}
+              aria-label={t("result.open")}
+              className={cn(input, "min-w-0 flex-1 font-mono text-sm")}
+              data-testid="track-link"
+              onFocus={(e) => e.target.select()}
+            />
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(link);
+                  setCopied(true);
+                } catch {
+                  setCopied(false);
+                }
+              }}
+            >
+              <Copy aria-hidden="true" />
+              {copied ? t("result.copied") : t("result.copy")}
+            </Button>
+          </div>
+          <p role="status" className="sr-only">
+            {copied ? t("result.copied") : ""}
           </p>
-        )}
-        <div className="space-y-2">
-          <h3 className="font-bold">{t("result.timeline")}</h3>
-          <ol className="space-y-1.5" data-testid="status-timeline">
-            {STATUSES.map((s, i) => (
-              <li key={s} aria-current={i === current ? "step" : undefined} className={cn("flex items-center gap-2", i <= current ? "font-bold text-ink" : "text-muted")}>
-                <span aria-hidden="true" className={cn("size-3 rounded-full", i <= current ? "bg-success" : "border-2 border-border")} />
-                {t(`statuses.${s}`)}
-              </li>
-            ))}
-          </ol>
+          {result.possibleDuplicate && (
+            <p className="flex items-start gap-2 rounded-md bg-blue-100 p-4">
+              <Info aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-blue-800" />
+              {t("result.duplicate")}
+            </p>
+          )}
+          <div className="space-y-2">
+            <h3 className="font-bold">{t("result.timeline")}</h3>
+            <ol className="space-y-1.5" data-testid="status-timeline">
+              {STATUSES.map((s, i) => (
+                <li
+                  key={s}
+                  aria-current={i === current ? "step" : undefined}
+                  className={cn(
+                    "flex items-center gap-2",
+                    i <= current ? "font-bold text-ink" : "text-muted",
+                  )}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "size-3 rounded-full",
+                      i <= current ? "bg-success" : "border-2 border-border",
+                    )}
+                  />
+                  {t(`statuses.${s}`)}
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <a href={link} className={buttonVariants({ variant: "primary" })}>
+              {t("result.open")}
+            </a>
+            <Link href="/#journey-1" className={buttonVariants({ variant: "ghost" })}>
+              {t("result.back")}
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-wrap gap-3">
-          <a href={link} className={buttonVariants({ variant: "primary" })}>
-            {t("result.open")}
-          </a>
-          <Link href="/#journey-1" className={buttonVariants({ variant: "ghost" })}>
-            {t("result.back")}
-          </Link>
-        </div>
-      </div>
-    );
-  })();
+      );
+    })();
 
   const recipientsList = help?.rescue.filter((s) => s.canReport) ?? [];
 
   const quickReport = (
-    <section ref={formRef} aria-labelledby="quick-title" className="scroll-mt-24 space-y-5 rounded-lg bg-white p-6 shadow-lift" data-testid="quick-report">
+    <section
+      ref={formRef}
+      aria-labelledby="quick-title"
+      className="scroll-mt-24 space-y-5 rounded-lg bg-white p-6 shadow-lift max-md:order-5 max-md:col-span-12 max-md:p-5"
+      data-testid="quick-report"
+    >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="space-y-1">
           <h2 id="quick-title" className="text-2xl font-bold text-blue-800">
@@ -598,7 +743,13 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
           <p className="text-muted">{t("quick.lead")}</p>
         </div>
         {!result && (
-          <Button type="button" variant={open ? "ghost" : "secondary"} aria-expanded={open} aria-controls="quick-body" onClick={() => (open ? setOpen(false) : openForm())}>
+          <Button
+            type="button"
+            variant={open ? "ghost" : "secondary"}
+            aria-expanded={open}
+            aria-controls="quick-body"
+            onClick={() => (open ? setOpen(false) : openForm())}
+          >
             <ChevronDown aria-hidden="true" className={cn("transition-transform", open && "rotate-180")} />
             {open ? t("quick.close") : t("quick.open")}
           </Button>
@@ -614,7 +765,14 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
               <li
                 key={s}
                 aria-current={i === step ? "step" : undefined}
-                className={cn("rounded-full px-3 py-1 text-sm font-bold", i === step ? "bg-blue-600 text-white" : i < step ? "bg-blue-100 text-blue-800" : "bg-cream-50 text-muted")}
+                className={cn(
+                  "rounded-full px-3 py-1 text-sm font-bold",
+                  i === step
+                    ? "bg-blue-600 text-white"
+                    : i < step
+                      ? "bg-blue-100 text-blue-800"
+                      : "bg-cream-50 text-muted",
+                )}
               >
                 {i + 1}. {t(`steps.${s}`)}
               </li>
@@ -624,7 +782,11 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
           {restored && step === 0 && (
             <p className="flex flex-wrap items-center gap-3 rounded-md bg-cream-50 p-3 text-sm font-semibold">
               {t("result.draftRestored")}
-              <button type="button" onClick={discardDraft} className="cursor-pointer text-blue-600 underline hover:text-blue-800">
+              <button
+                type="button"
+                onClick={discardDraft}
+                className="cursor-pointer text-blue-600 underline hover:text-blue-800"
+              >
                 {t("result.clearDraft")}
               </button>
             </p>
@@ -636,7 +798,13 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
           </h3>
 
           {errors.length > 0 && (
-            <div ref={summaryRef} tabIndex={-1} role="alert" className="rounded-md border-2 border-danger p-4 outline-none" data-testid="report-errors">
+            <div
+              ref={summaryRef}
+              tabIndex={-1}
+              role="alert"
+              className="rounded-md border-2 border-danger p-4 outline-none"
+              data-testid="report-errors"
+            >
               <p className="font-bold text-danger">{t("errorSummary", { count: errors.length })}</p>
               <ul className="mt-2 list-disc ps-5">
                 {errors.map((k) => (
@@ -661,7 +829,11 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
                     {previews.map((src, i) => (
                       <li key={src} className="space-y-2">
                         {/* eslint-disable-next-line @next/next/no-img-element -- local object URL preview */}
-                        <img src={src} alt={t("photo.alt", { n: i + 1 })} className="aspect-square w-full rounded-md object-cover" />
+                        <img
+                          src={src}
+                          alt={t("photo.alt", { n: i + 1 })}
+                          className="aspect-square w-full rounded-md object-cover"
+                        />
                         <div className="flex gap-1">
                           <Button
                             type="button"
@@ -679,7 +851,18 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
                               {t("photo.retake")}
                             </span>
                           </Button>
-                          <Button type="button" variant="ghost" size="sm" className="px-2" onClick={() => set("photos", d.photos.filter((_, j) => j !== i))}>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="px-2"
+                            onClick={() =>
+                              set(
+                                "photos",
+                                d.photos.filter((_, j) => j !== i),
+                              )
+                            }
+                          >
                             <Trash2 aria-hidden="true" />
                             <span className="sr-only">
                               {t("photo.remove")} {t("photo.alt", { n: i + 1 })}
@@ -707,6 +890,7 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
                     id="report-photo-add"
                     type="button"
                     variant="secondary"
+                    className="max-md:min-h-16 max-md:w-full max-md:text-lg"
                     {...aria("photos")}
                     onClick={() => {
                       replaceAt.current = null;
@@ -752,7 +936,13 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
                 <div className="flex flex-wrap gap-2">
                   {CONDITIONS.map((v) => (
                     <label key={v} className={choice}>
-                      <input type="radio" name="condition" checked={d.condition === v} onChange={() => set("condition", v)} className="size-4 accent-blue-600" />
+                      <input
+                        type="radio"
+                        name="condition"
+                        checked={d.condition === v}
+                        onChange={() => set("condition", v)}
+                        className="size-4 accent-blue-600"
+                      />
                       {t(`condition.${v}`)}
                     </label>
                   ))}
@@ -808,7 +998,15 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
                 <label htmlFor="report-seen" className="block font-bold">
                   {t("location.seenAt")}
                 </label>
-                <input id="report-seen" type="datetime-local" value={d.seenAt} max={nowLocal()} onChange={(e) => set("seenAt", e.target.value)} className={input} {...aria("seenAt")} />
+                <input
+                  id="report-seen"
+                  type="datetime-local"
+                  value={d.seenAt}
+                  max={nowLocal()}
+                  onChange={(e) => set("seenAt", e.target.value)}
+                  className={input}
+                  {...aria("seenAt")}
+                />
                 {fieldErr("seenAt")}
               </div>
             </div>
@@ -834,7 +1032,12 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
                             checked={d.recipients.includes(s.id)}
                             onChange={(e) => {
                               touchedRecipients.current = true;
-                              set("recipients", e.target.checked ? [...d.recipients, s.id] : d.recipients.filter((id) => id !== s.id));
+                              set(
+                                "recipients",
+                                e.target.checked
+                                  ? [...d.recipients, s.id]
+                                  : d.recipients.filter((id) => id !== s.id),
+                              );
                             }}
                             className="size-4 shrink-0 accent-blue-600"
                           />
@@ -854,7 +1057,12 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
 
               <div className="space-y-3 border-t border-border pt-5">
                 <label className="flex cursor-pointer items-start gap-3">
-                  <input type="checkbox" checked={d.contactEnabled} onChange={(e) => set("contactEnabled", e.target.checked)} className="mt-1 size-5 shrink-0 accent-blue-600" />
+                  <input
+                    type="checkbox"
+                    checked={d.contactEnabled}
+                    onChange={(e) => set("contactEnabled", e.target.checked)}
+                    className="mt-1 size-5 shrink-0 accent-blue-600"
+                  />
                   <span className="font-semibold">{t("groups.contactToggle")}</span>
                 </label>
                 {d.contactEnabled && (
@@ -863,10 +1071,23 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
                       <label htmlFor="report-contact" className="block font-bold">
                         {t("groups.contact")}
                       </label>
-                      <input id="report-contact" value={d.contact} maxLength={120} autoComplete="tel" onChange={(e) => set("contact", e.target.value)} className={input} {...aria("contact")} />
+                      <input
+                        id="report-contact"
+                        value={d.contact}
+                        maxLength={120}
+                        autoComplete="tel"
+                        onChange={(e) => set("contact", e.target.value)}
+                        className={input}
+                        {...aria("contact")}
+                      />
                     </div>
                     <label className="flex cursor-pointer items-start gap-3">
-                      <input type="checkbox" checked={d.contactConsent} onChange={(e) => set("contactConsent", e.target.checked)} className="mt-1 size-5 shrink-0 accent-blue-600" />
+                      <input
+                        type="checkbox"
+                        checked={d.contactConsent}
+                        onChange={(e) => set("contactConsent", e.target.checked)}
+                        className="mt-1 size-5 shrink-0 accent-blue-600"
+                      />
                       <span>{t("groups.contactConsent")}</span>
                     </label>
                     {fieldErr("contact")}
@@ -874,13 +1095,19 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
                 )}
               </div>
 
-              <dl className="grid grid-cols-[max-content_1fr] gap-x-6 gap-y-1 rounded-md bg-cream-50 p-4 text-sm" data-testid="report-summary">
+              <dl
+                className="grid grid-cols-[max-content_1fr] gap-x-6 gap-y-1 rounded-md bg-cream-50 p-4 text-sm"
+                data-testid="report-summary"
+              >
                 <dt className="font-bold">{t("steps.photo")}</dt>
                 <dd>
-                  {t("confirm.photos", { count: d.photos.length })} · {d.species ? t(`species.${d.species}`) : ""} · {t(`condition.${d.condition}`)}
+                  {t("confirm.photos", { count: d.photos.length })} ·{" "}
+                  {d.species ? t(`species.${d.species}`) : ""} · {t(`condition.${d.condition}`)}
                 </dd>
                 <dt className="font-bold">{t("confirm.where")}</dt>
-                <dd>{[ward, d.landmark].filter(Boolean).join(" · ") || (inCity(point) ? t("location.pin") : "")}</dd>
+                <dd>
+                  {[ward, d.landmark].filter(Boolean).join(" · ") || (inCity(point) ? t("location.pin") : "")}
+                </dd>
                 <dt className="font-bold">{t("confirm.when")}</dt>
                 <dd>{fmtWhen(d.seenAt)}</dd>
               </dl>
@@ -888,7 +1115,14 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
               {/* Honeypot: hidden from people and assistive tech; bots fill it. */}
               <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
                 <label htmlFor="report-website">Website</label>
-                <input id="report-website" tabIndex={-1} autoComplete="off" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+                <input
+                  id="report-website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  name="website"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                />
               </div>
 
               <div className="space-y-2">
@@ -917,7 +1151,7 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
             </div>
           )}
 
-          <div className="flex flex-wrap items-center gap-3 border-t border-border pt-5">
+          <div className="flex flex-wrap items-center gap-3 border-t border-border pt-5 max-md:sticky max-md:bottom-0 max-md:z-10 max-md:-mx-5 max-md:flex-nowrap max-md:bg-white max-md:px-5 max-md:pb-[max(0.75rem,env(safe-area-inset-bottom))]">
             {step > 0 && (
               <Button type="button" variant="ghost" onClick={() => go(step - 1)}>
                 <ArrowLeft aria-hidden="true" />
@@ -925,12 +1159,12 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
               </Button>
             )}
             {step < 2 ? (
-              <Button type="button" className="ms-auto" onClick={() => go(step + 1)}>
+              <Button type="button" className="ms-auto max-md:flex-1" onClick={() => go(step + 1)}>
                 {t("next")}
                 <ArrowRight aria-hidden="true" />
               </Button>
             ) : (
-              <Button type="button" className="ms-auto" onClick={submit} disabled={sending}>
+              <Button type="button" className="ms-auto max-md:flex-1" onClick={submit} disabled={sending}>
                 <Send aria-hidden="true" />
                 {sending ? t("confirm.sending") : t("confirm.submit")}
               </Button>
@@ -944,7 +1178,11 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
   return (
     <div className="grid grid-cols-12 items-start gap-y-6 lg:gap-x-8">
       {/* 1. Location bar */}
-      <section aria-labelledby="loc-title" className="col-span-12 flex flex-wrap items-end gap-4 rounded-lg bg-white p-5 shadow-soft" data-testid="location-bar">
+      <section
+        aria-labelledby="loc-title"
+        className="col-span-12 flex flex-wrap items-end gap-4 rounded-lg bg-white p-5 shadow-soft"
+        data-testid="location-bar"
+      >
         <h2 id="loc-title" className="sr-only">
           {t("locBar.title")}
         </h2>
@@ -1007,20 +1245,48 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
       </section>
 
       {/* 2–4. Nearest help, what to do now, quick report */}
-      <div className="col-span-12 space-y-6 lg:col-span-5">
+      <div className="col-span-12 space-y-6 max-md:contents lg:col-span-5">
         {helpSection}
         {nowSection}
         {quickReport}
       </div>
 
-      <div className="col-span-12 space-y-3 lg:sticky lg:top-24 lg:order-none lg:col-span-7">
-        <CityMap spots={mapSpots} labels={labels} pin={inCity(point) ? point : null} onPinChange={onPinChange} selectedId={selected} onSelect={setSelected} height={560} />
-        <p className="flex items-start gap-2 text-sm text-muted">
-          <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
-          {t("location.drag")} {t("locBar.privacy")}
-        </p>
+      <div className="col-span-12 space-y-3 max-md:order-3 lg:sticky lg:top-24 lg:order-none lg:col-span-7">
+        <button
+          type="button"
+          aria-expanded={mapOpen}
+          aria-controls="report-map"
+          onClick={() => setMapOpen((o) => !o)}
+          className="flex min-h-12 w-full cursor-pointer items-center justify-between rounded-md bg-white px-4 font-bold shadow-soft md:hidden"
+        >
+          <span className="inline-flex items-center gap-2">
+            <MapIcon aria-hidden="true" className="size-5 text-blue-800" />
+            {mapOpen ? tm("mapHide") : tm("mapShow")}
+          </span>
+          <ChevronDown
+            aria-hidden="true"
+            className={cn("size-5 transition-transform", mapOpen && "rotate-180")}
+          />
+        </button>
+        <div
+          id="report-map"
+          className={cn("space-y-3 max-md:[--hfa-map-h:50dvh]", !mapOpen && "max-md:hidden")}
+        >
+          <CityMap
+            spots={mapSpots}
+            labels={labels}
+            pin={inCity(point) ? point : null}
+            onPinChange={onPinChange}
+            selectedId={selected}
+            onSelect={setSelected}
+            height="var(--hfa-map-h, 560px)"
+          />
+          <p className="flex items-start gap-2 text-sm text-muted">
+            <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+            {t("location.drag")} {t("locBar.privacy")}
+          </p>
+        </div>
       </div>
     </div>
   );
 }
-

@@ -29,12 +29,15 @@ export function AdoptActions({ petCode, petName, partnerName }: Omit<Props, "sha
   }
 
   return (
-    <div className="space-y-3">
-      <Button size="lg" className="w-full" onClick={() => setOpen(true)} data-testid="adopt-cta">
+    <div
+      data-sticky-actions
+      className="space-y-3 max-md:fixed max-md:inset-x-0 max-md:bottom-0 max-md:z-40 max-md:flex max-md:gap-2 max-md:space-y-0 max-md:border-t max-md:border-border max-md:bg-white/95 max-md:px-4 max-md:pt-2 max-md:pb-[max(0.5rem,env(safe-area-inset-bottom))] max-md:backdrop-blur-sm"
+    >
+      <Button size="lg" className="w-full max-md:min-h-12 max-md:flex-1 max-md:px-3 max-md:text-base" onClick={() => setOpen(true)} data-testid="adopt-cta">
         <House aria-hidden="true" />
         {t("adoptCta")}
       </Button>
-      <Button asChild variant="secondary" className="w-full">
+      <Button asChild variant="secondary" className="w-full max-md:min-h-12 max-md:flex-1 max-md:px-3 max-md:text-base">
         <Link href="/foster">
           <HandHeart aria-hidden="true" />
           {t("fosterCta")}

@@ -28,22 +28,17 @@ function canDrawPlates() {
 }
 
 /**
- * Full on capable desktops, Lite on weaker hardware (smaller decode window),
- * Static when the visitor asks for less motion, saves data, the browser can't
- * draw plates, or the window is narrower than 768 px (mobile layout deferred).
+ * Full on capable desktops, Lite on weaker hardware and on phones (smaller
+ * decode window, see setupStory), Static when the visitor asks for less
+ * motion, saves data, or the browser can't draw plates.
  * Starts "pending", which renders exactly like Static.
  */
 function detect(userReduce: boolean): ExperienceMode {
   const nav = navigator as NavigatorExtras;
-  if (
-    userReduce ||
-    matchMedia("(prefers-reduced-motion: reduce)").matches ||
-    nav.connection?.saveData ||
-    window.innerWidth < 768 ||
-    !canDrawPlates()
-  ) {
+  if (userReduce || matchMedia("(prefers-reduced-motion: reduce)").matches || nav.connection?.saveData || !canDrawPlates()) {
     return "static";
   }
+  if (window.innerWidth < 768) return "lite"; // phones: pinned story with the phone budget
   const lowEnd = (nav.hardwareConcurrency ?? 8) <= 4 || (nav.deviceMemory ?? 8) <= 4;
   return lowEnd ? "lite" : "full";
 }

@@ -296,3 +296,34 @@ dialog::backdrop {
   font-weight: 800;
   text-transform: uppercase;
 }
+
+/* ─── Phones only (≤ 767 px). Nothing here applies from 768 px up. ─────────── */
+@media (max-width: 767px) {
+  /* ≥ 16 px form text: iOS Safari zooms into smaller inputs. */
+  input,
+  select,
+  textarea {
+    font-size: max(1rem, 1em);
+  }
+  /* Height of a fixed bottom bar (sticky CTA or a page's own action bar). */
+  html:has([data-mobile-cta]),
+  html:has([data-sticky-actions]) {
+    --mobile-cta-h: 4.25rem;
+  }
+  body {
+    padding-bottom: calc(var(--mobile-cta-h, 0px) + env(safe-area-inset-bottom));
+  }
+  /* Full-height menu: hide the bar and keep the page still underneath. */
+  html[data-menu-open] {
+    overflow: hidden;
+  }
+  html[data-menu-open] [data-mobile-cta] {
+    display: none;
+  }
+  /* Leaflet zoom buttons: 44 px touch targets. */
+  .leaflet-container.leaflet-touch .leaflet-bar a {
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+  }
+}

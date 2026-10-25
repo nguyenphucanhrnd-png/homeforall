@@ -74,7 +74,7 @@ function ChipView({
         popoverTarget={id}
         data-journey-chip
         className={cn(
-          "inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full px-4 text-sm font-bold shadow-soft ring-1 ring-inset",
+          "inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full px-4 text-sm font-bold shadow-soft ring-1 ring-inset max-md:min-h-11",
           tone === "onImage" ? "bg-white/95 text-ink ring-white/60" : "bg-white text-ink ring-border",
         )}
       >

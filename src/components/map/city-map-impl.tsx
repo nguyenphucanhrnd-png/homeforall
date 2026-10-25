@@ -3,7 +3,8 @@
 import L from "leaflet";
 import "leaflet.markercluster";
 import "./leaflet.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { PHONE_QUERY } from "@/world/world.config";
 import type { MapSpot, CityMapProps } from "./city-map";
 
 // Leaflet is loaded only on pages that show a map (next/dynamic, ssr: false).
@@ -12,13 +13,16 @@ import type { MapSpot, CityMapProps } from "./city-map";
 // required". Community servers are not for production: a provider must be
 // chosen and approved before launch (see CLAUDE.md → Maps).
 const TILE_URL = "https://tile.openstreetmap.de/{z}/{x}/{y}.png";
-const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors (tiles: openstreetmap.de)';
+const ATTRIBUTION =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors (tiles: openstreetmap.de)';
 export const HCMC_CENTRE: [number, number] = [10.78, 106.7];
 
-const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+const esc = (s: string) =>
+  s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
 function markerIcon(spot: MapSpot, label: string, selected: boolean) {
-  const count = spot.layer === "foster" && spot.count ? `<span class="hfa-marker-count">${spot.count}</span>` : "";
+  const count =
+    spot.layer === "foster" && spot.count ? `<span class="hfa-marker-count">${spot.count}</span>` : "";
   return L.divIcon({
     className: "hfa-marker-wrap",
     html: `<button type="button" class="hfa-marker hfa-${spot.layer}${spot.precision === "district" ? " hfa-district" : ""}${selected ? " is-selected" : ""}" aria-label="${esc(label)}" data-spot="${esc(spot.id)}">${count}</button>`,
@@ -47,6 +51,10 @@ export default function CityMapImpl({
   const zones = useRef<L.LayerGroup | null>(null);
   const pinChange = useRef(onPinChange);
   const reduced = typeof window !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Phones: the map must not trap page scrolling. It starts locked behind a
+  // "tap to interact" overlay, and shows no popups (pages use a bottom sheet).
+  const [phone] = useState(() => typeof window !== "undefined" && matchMedia(PHONE_QUERY).matches);
+  const [locked, setLocked] = useState(phone && interactive);
 
   // Create the map once.
   useEffect(() => {
@@ -56,10 +64,10 @@ export default function CityMapImpl({
       center: HCMC_CENTRE,
       zoom: 12,
       zoomControl: interactive,
-      dragging: interactive,
+      dragging: interactive && !phone,
       scrollWheelZoom: interactive,
-      doubleClickZoom: interactive,
-      touchZoom: interactive,
+      doubleClickZoom: interactive && !phone,
+      touchZoom: interactive && !phone,
       boxZoom: interactive,
       keyboard: interactive,
       zoomAnimation: !reduced,
@@ -83,7 +91,11 @@ export default function CityMapImpl({
     });
     m.addLayer(cluster.current);
     map.current = m;
+    // Collapsible containers (phones) and late layout: keep the tiles in sync with the box.
+    const ro = new ResizeObserver(() => m.invalidateSize({ animate: false }));
+    ro.observe(el.current);
     return () => {
+      ro.disconnect();
       m.remove();
       map.current = null;
       markerMap.clear();
@@ -104,12 +116,12 @@ export default function CityMapImpl({
         keyboard: false, // the inner <button> is the focusable control
         title: s.name,
       });
-      marker.bindPopup(labels.popup(s), { maxWidth: 280, autoPan: !reduced });
+      if (!phone) marker.bindPopup(labels.popup(s), { maxWidth: 280, autoPan: !reduced });
       marker.on("click", () => onSelect?.(s.id));
       markers.current.set(s.id, marker);
       c.addLayer(marker);
     }
-  }, [spots, labels, onSelect, selectedId, reduced]);
+  }, [spots, labels, onSelect, selectedId, reduced, phone]);
 
   // Pilot zones as circles.
   useEffect(() => {
@@ -117,7 +129,15 @@ export default function CityMapImpl({
     if (!z) return;
     z.clearLayers();
     for (const p of pilotZones) {
-      L.circle([p.lat, p.lng], { radius: p.radius, color: "#C2410C", weight: 2, dashArray: "6 6", fillColor: "#FF993D", fillOpacity: 0.08, interactive: false })
+      L.circle([p.lat, p.lng], {
+        radius: p.radius,
+        color: "#C2410C",
+        weight: 2,
+        dashArray: "6 6",
+        fillColor: "#FF993D",
+        fillOpacity: 0.08,
+        interactive: false,
+      })
         .bindTooltip(p.name, { permanent: true, direction: "center", className: "hfa-zone-label" })
         .addTo(z);
     }
@@ -128,8 +148,20 @@ export default function CityMapImpl({
     const m = map.current;
     const marker = selectedId ? markers.current.get(selectedId) : undefined;
     if (!m || !marker || !cluster.current) return;
-    cluster.current.zoomToShowLayer(marker, () => marker.openPopup());
-  }, [selectedId]);
+    cluster.current.zoomToShowLayer(marker, () => {
+      if (!phone) marker.openPopup();
+    });
+  }, [selectedId, phone]);
+
+  function unlock() {
+    const m = map.current;
+    if (m) {
+      m.dragging.enable();
+      m.touchZoom.enable();
+      m.doubleClickZoom.enable();
+    }
+    setLocked(false);
+  }
 
   // Draggable pin (report flow). The handler lives in a ref so map clicks always
   // reach the latest callback, and a click can place the very first pin.
@@ -162,7 +194,12 @@ export default function CityMapImpl({
         keyboard: true,
         title: labels.pin,
         alt: labels.pin,
-        icon: L.divIcon({ className: "hfa-marker-wrap", html: `<span class="hfa-pin" aria-hidden="true"></span>`, iconSize: [34, 44], iconAnchor: [17, 42] }),
+        icon: L.divIcon({
+          className: "hfa-marker-wrap",
+          html: `<span class="hfa-pin" aria-hidden="true"></span>`,
+          iconSize: [34, 44],
+          iconAnchor: [17, 42],
+        }),
       }).addTo(m);
       pinMarker.current.on("dragend", () => {
         const ll = pinMarker.current!.getLatLng();
@@ -171,10 +208,11 @@ export default function CityMapImpl({
     } else {
       pinMarker.current.setLatLng([pin.lat, pin.lng]);
     }
-    if (!m.getBounds().pad(-0.2).contains([pin.lat, pin.lng])) m.setView([pin.lat, pin.lng], Math.max(m.getZoom(), 15), { animate: !reduced });
+    if (!m.getBounds().pad(-0.2).contains([pin.lat, pin.lng]))
+      m.setView([pin.lat, pin.lng], Math.max(m.getZoom(), 15), { animate: !reduced });
   }, [pin, labels.pin, reduced]);
 
-  return (
+  const box = (
     <div
       ref={el}
       role="region"
@@ -182,5 +220,23 @@ export default function CityMapImpl({
       className={className}
       style={{ height, width: "100%", borderRadius: 16, overflow: "hidden" }}
     />
+  );
+  // Desktop/tablet render exactly the map box; only phones get the wrapper + overlay.
+  if (!phone || !interactive) return box;
+  return (
+    <div className="relative">
+      {box}
+      {locked && (
+        <button
+          type="button"
+          onClick={unlock}
+          className="absolute inset-0 z-[600] flex cursor-pointer items-end justify-center rounded-2xl bg-ink/10 p-4"
+        >
+          <span className="inline-flex min-h-11 items-center rounded-full bg-white px-4 font-bold text-ink shadow-lift">
+            {labels.interact ?? "Tap to interact"}
+          </span>
+        </button>
+      )}
+    </div>
   );
 }

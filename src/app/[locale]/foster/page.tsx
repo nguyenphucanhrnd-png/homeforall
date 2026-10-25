@@ -76,7 +76,7 @@ export default async function FosterPage({ params }: PageProps<"/[locale]/foster
             </h2>
             {faq.map((item) => (
               <details key={item.q} className="group rounded-md border border-border p-4">
-                <summary className="cursor-pointer font-bold">{item.q}</summary>
+                <summary className="cursor-pointer font-bold max-md:flex max-md:min-h-11 max-md:items-center">{item.q}</summary>
                 <p className="mt-2">{item.a}</p>
               </details>
             ))}

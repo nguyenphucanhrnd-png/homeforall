@@ -84,7 +84,7 @@ export async function ProposedPartnerCards({
                   key={s.url}
                   href={s.url}
                   rel="noopener"
-                  className="inline-flex items-center gap-1 font-semibold"
+                  className="inline-flex items-center gap-1 font-semibold max-md:min-h-11"
                 >
                   {t("sourceLabel")}
                   {p.sources.length > 1 ? ` ${i + 1}` : ""}

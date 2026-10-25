@@ -15,7 +15,7 @@ const buttonVariants = cva(
         emergency: "border-2 border-danger bg-white text-danger hover:bg-cream-50",
       },
       size: {
-        sm: "min-h-10 px-4 text-sm",
+        sm: "min-h-10 px-4 text-sm max-md:min-h-11",
         md: "min-h-12 px-6 text-base",
         lg: "min-h-14 px-8 text-lg",
       },

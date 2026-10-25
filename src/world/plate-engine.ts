@@ -1,5 +1,5 @@
 import type { PlateSource, PlateSources } from "./plate-types";
-import { MOODS, PLATES, type PlateId } from "./world.config";
+import { MOODS, PHONE_QUERY, PLATES, type PlateId } from "./world.config";
 
 // ScrollPlate engine (v4 §6): draws WebP frame sequences onto one 2D canvas.
 //
@@ -52,7 +52,10 @@ export class PlateEngine {
   constructor(
     private canvas: HTMLCanvasElement,
     private sources: PlateSources,
-    private opts: { maxBytes: number; maxDpr: number; concurrency?: number } = { maxBytes: 200 * 1048576, maxDpr: 1.5 },
+    private opts: { maxBytes: number; maxDpr: number; concurrency?: number; ahead?: number; behind?: number } = {
+      maxBytes: 200 * 1048576,
+      maxDpr: 1.5,
+    },
   ) {
     const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) throw new Error("2D canvas unavailable");
@@ -60,10 +63,16 @@ export class PlateEngine {
     this.resize();
   }
 
+  /** Portrait phones use each plate's `focalMobile` (a 16:9 plate shows only a slice). */
+  private portraitPhone = false;
+
   resize() {
+    this.portraitPhone = matchMedia(PHONE_QUERY).matches && window.innerHeight > window.innerWidth;
     const dpr = Math.min(window.devicePixelRatio || 1, this.opts.maxDpr);
     this.canvas.width = Math.round(window.innerWidth * dpr);
-    this.canvas.height = Math.round(window.innerHeight * dpr);
+    // Phones: the canvas is 100lvh (CSS), so use its own height, not the URL-bar-dependent innerHeight.
+    const height = matchMedia(PHONE_QUERY).matches ? this.canvas.clientHeight || window.innerHeight : window.innerHeight;
+    this.canvas.height = Math.round(height * dpr);
     this.ctx.imageSmoothingQuality = "high";
     this.dirty = true;
   }
@@ -108,8 +117,8 @@ export class PlateEngine {
   private want(src: PlateSource, center: number, direction: number) {
     // Ahead of the scroll direction gets most of the window (the slower journey
     // scrub dwells longer per frame, so look farther ahead than behind).
-    const ahead = 16;
-    const behind = 4;
+    const ahead = this.opts.ahead ?? 16;
+    const behind = this.opts.behind ?? 4;
     const keys: Array<{ key: string; url: string }> = [];
     for (let d = 0; d <= ahead; d++) {
       const i = center + d * (direction >= 0 ? 1 : -1);
@@ -224,7 +233,8 @@ export class PlateEngine {
       } else {
         const bmp = this.get(`${r.src.id}:${r.index}`) ?? this.nearest(r.src, r.index);
         if (bmp) {
-          const { focal } = PLATES[r.src.id];
+          const plate = PLATES[r.src.id];
+          const focal = (this.portraitPhone && plate.focalMobile) || plate.focal;
           this.cover(bmp, focal, l.zoom);
           // Blend toward the next frame at fractional positions (only if it is decoded).
           const next = r.frac > 0.02 ? this.get(`${r.src.id}:${r.index + 1}`) : undefined;

@@ -1,14 +1,15 @@
 "use client";
 
-import { SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useRef, useSyncExternalStore, useTransition } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { AGE_RANGES, GOOD_WITH, SEXES, SIZES, SPECIES } from "@/lib/pets/types";
 import { WARDS } from "@/lib/pets/wards";
+import { cn } from "@/lib/utils";
 
 type Option = { value: string; label: string };
 
@@ -18,6 +19,23 @@ type Option = { value: string; label: string };
  */
 export function FilterPanel({ partners, activeCount }: { partners: Option[]; activeCount: number }) {
   const t = useTranslations("pets.filters");
+  const tm = useTranslations("mobile");
+  // Phones: the form is a bottom drawer opened by the "Lọc" button (md:hidden).
+  const [drawer, setDrawer] = useState(false);
+  const trigger = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!drawer) return;
+    form.current?.querySelector<HTMLElement>("input, select, button")?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeDrawer();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [drawer]);
+  function closeDrawer() {
+    setDrawer(false);
+    requestAnimationFrame(() => trigger.current?.focus());
+  }
   const locale = useLocale() as Locale;
   const router = useRouter();
   const pathname = usePathname();
@@ -73,75 +91,123 @@ export function FilterPanel({ partners, activeCount }: { partners: Option[]; act
   const opts = (values: readonly string[]) => values.map((v) => ({ value: v, label: t(v) }));
 
   return (
-    <form
-      ref={form}
-      method="get"
-      onChange={apply}
-      onSubmit={(e) => {
-        e.preventDefault();
-        apply();
-      }}
-      aria-busy={pending}
-      className="space-y-6 rounded-lg bg-white p-6 shadow-soft"
-    >
-      <h2 className="flex items-center gap-2 text-xl font-bold">
+    <>
+      <button
+        ref={trigger}
+        type="button"
+        aria-expanded={drawer}
+        aria-controls="pet-filters"
+        onClick={() => setDrawer(true)}
+        className="inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-4 font-bold shadow-soft md:hidden"
+        data-testid="filters-open"
+      >
         <SlidersHorizontal aria-hidden="true" className="size-5 text-blue-800" />
-        {t("title")}
-      </h2>
-      {group("species", t("species"), opts(SPECIES))}
-      {group(
-        "ward",
-        t("ward"),
-        WARDS.map((w) => ({ value: w.slug, label: w.label[locale] })),
+        {tm("filters")}
+        {activeCount > 0 && (
+          <span className="inline-flex min-w-6 items-center justify-center rounded-full bg-blue-800 px-1.5 text-sm text-white">
+            {activeCount}
+          </span>
+        )}
+      </button>
+      {drawer && (
+        <div aria-hidden="true" onClick={closeDrawer} className="fixed inset-0 z-40 bg-ink/40 md:hidden" />
       )}
-      {group("age", t("age"), opts(AGE_RANGES))}
-      {group("size", t("size"), opts(SIZES))}
-      {group("sex", t("sex"), opts(SEXES))}
-      {group("good", t("goodWith"), opts(GOOD_WITH))}
-      <fieldset className="space-y-2">
-        <legend className="mb-2 font-heading text-lg font-bold">{t("health")}</legend>
-        {(["vaccinated", "sterilized"] as const).map((name) => (
-          <label key={name} className="flex min-h-10 cursor-pointer items-center gap-3">
-            <input
-              type="checkbox"
-              name={name}
-              value="1"
-              defaultChecked={params.get(name) === "1"}
-              className="size-5 cursor-pointer accent-blue-600"
-            />
-            <span>{t(name)}</span>
-          </label>
-        ))}
-      </fieldset>
-      <div className="space-y-2">
-        <label htmlFor="filter-partner" className="block font-heading text-lg font-bold">
-          {t("partner")}
-        </label>
-        <select
-          id="filter-partner"
-          name="partner"
-          defaultValue={params.get("partner") ?? ""}
-          className="min-h-11 w-full cursor-pointer rounded-sm border-2 border-border bg-white px-3"
-        >
-          <option value="">{t("anyPartner")}</option>
-          {partners.map((p) => (
-            <option key={p.value} value={p.value}>
-              {p.label}
-            </option>
+      <form
+        ref={form}
+        id="pet-filters"
+        role={drawer ? "dialog" : undefined}
+        aria-modal={drawer ? true : undefined}
+        aria-label={drawer ? t("title") : undefined}
+        method="get"
+        onChange={apply}
+        onSubmit={(e) => {
+          e.preventDefault();
+          apply();
+        }}
+        aria-busy={pending}
+        className={cn(
+          "space-y-6 rounded-lg bg-white p-6 shadow-soft",
+          drawer
+            ? "max-md:fixed max-md:inset-x-0 max-md:bottom-0 max-md:z-50 max-md:max-h-[85dvh] max-md:overflow-y-auto max-md:overscroll-contain max-md:rounded-b-none max-md:p-5 max-md:pb-24 max-md:shadow-lift"
+            : "max-md:hidden",
+        )}
+      >
+        <h2 className="flex items-center gap-2 text-xl font-bold">
+          <SlidersHorizontal aria-hidden="true" className="size-5 text-blue-800" />
+          {t("title")}
+          <button
+            type="button"
+            onClick={closeDrawer}
+            aria-label={tm("filtersClose")}
+            className="ms-auto inline-flex size-11 cursor-pointer items-center justify-center rounded-full bg-cream-50 md:hidden"
+          >
+            <X aria-hidden="true" className="size-5" />
+          </button>
+        </h2>
+        {group("species", t("species"), opts(SPECIES))}
+        {group(
+          "ward",
+          t("ward"),
+          WARDS.map((w) => ({ value: w.slug, label: w.label[locale] })),
+        )}
+        {group("age", t("age"), opts(AGE_RANGES))}
+        {group("size", t("size"), opts(SIZES))}
+        {group("sex", t("sex"), opts(SEXES))}
+        {group("good", t("goodWith"), opts(GOOD_WITH))}
+        <fieldset className="space-y-2">
+          <legend className="mb-2 font-heading text-lg font-bold">{t("health")}</legend>
+          {(["vaccinated", "sterilized"] as const).map((name) => (
+            <label key={name} className="flex min-h-10 cursor-pointer items-center gap-3">
+              <input
+                type="checkbox"
+                name={name}
+                value="1"
+                defaultChecked={params.get(name) === "1"}
+                className="size-5 cursor-pointer accent-blue-600"
+              />
+              <span>{t(name)}</span>
+            </label>
           ))}
-        </select>
-      </div>
+        </fieldset>
+        <div className="space-y-2">
+          <label htmlFor="filter-partner" className="block font-heading text-lg font-bold">
+            {t("partner")}
+          </label>
+          <select
+            id="filter-partner"
+            name="partner"
+            defaultValue={params.get("partner") ?? ""}
+            className="min-h-11 w-full cursor-pointer rounded-sm border-2 border-border bg-white px-3"
+          >
+            <option value="">{t("anyPartner")}</option>
+            {partners.map((p) => (
+              <option key={p.value} value={p.value}>
+                {p.label}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      {!enhanced && (
-        <Button type="submit" variant="secondary" className="w-full">
-          {t("apply")}
-        </Button>
+        {!enhanced && (
+          <Button type="submit" variant="secondary" className="w-full">
+            {t("apply")}
+          </Button>
+        )}
+        {activeCount > 0 && (
+          <Button type="button" variant="ghost" onClick={clear} className="w-full">
+            {t("clear", { count: activeCount })}
+          </Button>
+        )}
+      </form>
+      {/* Phones: results update live; this closes the drawer to show them. Outside the
+          form so its space-y children are unchanged on tablet/desktop. */}
+      {drawer && (
+        <div className="fixed inset-x-0 bottom-0 z-[60] border-t border-border bg-white px-5 pt-2 pb-[max(1rem,env(safe-area-inset-bottom))] md:hidden">
+          <Button type="button" className="w-full" onClick={closeDrawer}>
+            {tm("filtersApply")}
+          </Button>
+        </div>
       )}
-      {activeCount > 0 && (
-        <Button type="button" variant="ghost" onClick={clear} className="w-full">
-          {t("clear", { count: activeCount })}
-        </Button>
-      )}
-    </form>
+    </>
   );
 }

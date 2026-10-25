@@ -25,7 +25,7 @@ function NavList({ pathname }: { pathname: string | null }) {
   const t = useTranslations("nav");
 
   return (
-    <ul className="flex flex-wrap items-center gap-x-4 gap-y-1 xl:flex-nowrap">
+    <ul className="flex flex-wrap items-center gap-x-4 gap-y-1 xl:flex-nowrap max-md:flex-col max-md:items-stretch">
       {ITEMS.map(({ href, key }) => {
         const active = pathname !== null && (pathname === href || pathname.startsWith(`${href}/`));
         return (
@@ -34,7 +34,7 @@ function NavList({ pathname }: { pathname: string | null }) {
               href={href}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "inline-flex min-h-11 items-center font-semibold whitespace-nowrap text-ink no-underline decoration-2 underline-offset-8 hover:text-blue-600 hover:underline",
+                "inline-flex min-h-11 items-center font-semibold whitespace-nowrap max-md:text-lg text-ink no-underline decoration-2 underline-offset-8 hover:text-blue-600 hover:underline",
                 active && "text-blue-600 underline",
               )}
             >

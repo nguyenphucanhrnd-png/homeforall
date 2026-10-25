@@ -79,7 +79,7 @@ export function FanhChat() {
           role="dialog"
           aria-modal="false"
           aria-labelledby={titleId}
-          className="fixed right-5 bottom-24 z-40 flex max-h-[min(580px,calc(100dvh-140px))] w-[min(390px,calc(100vw-32px))] flex-col overflow-hidden rounded-lg bg-white shadow-lift ring-1 ring-border"
+          className="fixed right-5 bottom-24 z-40 flex max-h-[min(580px,calc(100dvh-140px))] w-[min(390px,calc(100vw-32px))] flex-col overflow-hidden rounded-lg bg-white shadow-lift ring-1 ring-border max-md:right-4 max-md:bottom-[calc(var(--mobile-cta-h,0px)+env(safe-area-inset-bottom)+4.75rem)] max-md:max-h-[calc(100dvh-var(--mobile-cta-h,0px)-9rem)]"
         >
           <header className="flex items-center gap-3 bg-blue-800 px-5 py-4 text-white">
             <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-orange-500 text-ink">
@@ -188,12 +188,12 @@ export function FanhChat() {
         onClick={() => (open ? close() : setOpen(true))}
         aria-expanded={open}
         data-testid="fanh-launcher"
-        className="fixed right-5 bottom-5 z-40 inline-flex min-h-12 cursor-pointer items-center gap-2 rounded-full bg-blue-800 py-1.5 ps-1.5 pe-5 font-bold text-white shadow-lift transition-transform hover:-translate-y-0.5"
+        className="fixed right-5 bottom-5 z-40 inline-flex min-h-12 cursor-pointer items-center gap-2 rounded-full bg-blue-800 py-1.5 ps-1.5 pe-5 font-bold text-white shadow-lift transition-transform hover:-translate-y-0.5 max-md:right-4 max-md:bottom-[calc(var(--mobile-cta-h,0px)+env(safe-area-inset-bottom)+0.75rem)] max-md:pe-1.5"
       >
         <span className="inline-flex size-9 items-center justify-center rounded-full bg-orange-500 text-ink">
           <MessageCircleHeart aria-hidden="true" className="size-5" />
         </span>
-        {t("launcher")}
+        <span className="max-md:sr-only">{t("launcher")}</span>
       </button>
     </>
   );

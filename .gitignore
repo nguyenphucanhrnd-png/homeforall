@@ -70,3 +70,7 @@ next-env.d.ts
 /design-refs/real-photos/
 
 .vercel
+
+# Mobile layout regression harness (screenshots, diffs)
+/.mobile-baseline/
+/.mobile-after/

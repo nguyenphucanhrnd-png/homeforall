@@ -61,7 +61,7 @@ export default async function HelpPage({ params }: PageProps<"/[locale]/help">) 
           <p data-placeholder="medical-review">{t("pendingReview")}</p>
           <p>
             <span className="font-semibold">{t("sourceLabel")}: </span>
-            <a href={WHO_RABIES_URL} rel="noopener" className="inline-flex items-center gap-1 font-semibold">
+            <a href={WHO_RABIES_URL} rel="noopener" className="inline-flex items-center gap-1 font-semibold max-md:min-h-11">
               {t("whoLink")}
               <ExternalLink aria-hidden="true" className="size-4" />
             </a>

@@ -20,6 +20,8 @@ export type MapLabels = {
   cluster: (n: number) => string;
   /** Trusted HTML for the popup (built by the caller from our own data, escaped). */
   popup: (s: MapSpot) => string;
+  /** Phones: label of the "tap to interact" overlay on interactive maps. */
+  interact?: string;
 };
 
 export type CityMapProps = {
@@ -32,7 +34,8 @@ export type CityMapProps = {
   pin?: { lat: number; lng: number } | null;
   onPinChange?: (p: { lat: number; lng: number }) => void;
   className?: string;
-  height?: number;
+  /** px, or any CSS length (e.g. "var(--hfa-map-h, 600px)" so phones can override it in CSS). */
+  height?: number | string;
 };
 
 /** Leaflet loads only here, after first paint; the skeleton keeps the layout stable (CLS). */

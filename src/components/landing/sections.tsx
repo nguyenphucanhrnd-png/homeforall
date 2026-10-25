@@ -20,6 +20,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { Container } from "@/components/layout/container";
 import { NetworkPreview } from "@/components/map/network-preview";
@@ -58,7 +59,8 @@ function Still({
   sizes?: string;
 }) {
   const url = stillUrl(sources, plate, frame);
-  const { focal, mood } = PLATES[plate];
+  const { focal, focalMobile, mood } = PLATES[plate];
+  const pos = (f: [number, number]) => `${f[0] * 100}% ${f[1] * 100}%`;
   if (!url) return <div aria-hidden="true" className={cn("absolute inset-0", className)} style={{ background: MOODS[mood] }} />;
   return (
     <Image
@@ -68,8 +70,8 @@ function Still({
       fill
       priority={priority}
       sizes={sizes}
-      className={cn("object-cover", className)}
-      style={{ objectPosition: `${focal[0] * 100}% ${focal[1] * 100}%` }}
+      className={cn("object-cover max-md:portrait:[object-position:var(--obj-m)]!", className)}
+      style={{ objectPosition: pos(focal), "--obj-m": pos(focalMobile ?? focal) } as CSSProperties}
     />
   );
 }
@@ -84,23 +86,23 @@ export async function HeroScene({ locale, sources }: P) {
         <Still sources={sources} plate="s01" frame="poster" priority />
       </div>
       {/* Scrim: keeps the copy ≥ 4.5:1 over any frame. */}
-      <div aria-hidden="true" className="absolute inset-y-0 left-0 w-full bg-linear-to-r from-cream-50/95 via-cream-50/80 to-transparent lg:w-[62%]" />
-      <Container className="relative grid min-h-[calc(100dvh-72px)] grid-cols-12 items-center gap-y-8 lg:gap-x-8 py-16">
+      <div aria-hidden="true" className="absolute inset-y-0 left-0 w-full bg-linear-to-r from-cream-50/95 via-cream-50/80 to-transparent lg:w-[62%] max-md:bg-linear-to-t max-md:from-cream-50 max-md:from-40% max-md:via-cream-50/85 max-md:via-60% max-md:to-cream-50/0" />
+      <Container className="relative grid min-h-[calc(100dvh-72px)] grid-cols-12 items-center gap-y-8 lg:gap-x-8 py-16 max-md:min-h-[calc(100svh-72px)] max-md:items-end max-md:pt-24 max-md:pb-10">
         <div className="col-span-12 space-y-6 lg:col-span-6">
-          <h1 id="hero-title" data-hero-line className="text-5xl font-bold text-blue-800 xl:text-6xl">
+          <h1 id="hero-title" data-hero-line className="text-5xl font-bold text-blue-800 xl:text-6xl max-md:text-[clamp(2.125rem,9.5vw,2.75rem)] max-md:leading-tight">
             {t("title")}
           </h1>
-          <p data-hero-line className="max-w-[48ch] text-xl text-ink">
+          <p data-hero-line className="max-w-[48ch] text-xl text-ink max-md:text-lg">
             {t("lead")}
           </p>
-          <div data-hero-line className="flex flex-wrap gap-4">
-            <Button asChild size="lg">
+          <div data-hero-line className="flex flex-wrap gap-4 max-md:flex-col max-md:gap-3">
+            <Button asChild size="lg" className="max-md:w-full">
               <Link href="/pets">
                 <PawPrint aria-hidden="true" />
                 {t("ctaFind")}
               </Link>
             </Button>
-            <Button asChild size="lg" variant="secondary">
+            <Button asChild size="lg" variant="secondary" className="max-md:w-full">
               <Link href="/report">
                 <Search aria-hidden="true" />
                 {t("ctaReport")}
@@ -136,11 +138,11 @@ export async function DoorsScene({ locale, sources }: P) {
         <Still sources={sources} plate="s01" frame="last" />
         <div className="absolute inset-0 bg-cream-50/60" />
       </div>
-      <Container className="relative flex min-h-screen flex-col justify-end gap-10 py-20">
-        <h2 id="doors-title" data-reveal className="on-canvas text-4xl font-bold text-blue-800">
+      <Container className="relative flex min-h-screen flex-col justify-end gap-10 py-20 max-md:min-h-0 max-md:gap-6 max-md:py-14">
+        <h2 id="doors-title" data-reveal className="on-canvas text-4xl font-bold text-blue-800 max-md:text-[clamp(1.75rem,7.5vw,2.25rem)]">
           {t("title")}
         </h2>
-        <ul className="grid grid-cols-2 gap-6 md:grid-cols-3 xl:grid-cols-5">
+        <ul className="grid grid-cols-2 gap-6 md:grid-cols-3 xl:grid-cols-5 max-md:grid-cols-1">
           {DOORS.map(({ key, href, icon: Icon, plate, still }, i) => (
             <li key={key} data-mask="arch" className="rounded-t-full rounded-b-lg">
               <Link
@@ -155,7 +157,7 @@ export async function DoorsScene({ locale, sources }: P) {
                       alt=""
                       aria-hidden="true"
                       fill
-                      sizes="320px"
+                      sizes="(max-width: 430px) 430px, (max-width: 767px) 767px, 320px"
                       className="object-cover transition-transform duration-500 group-hover/door:scale-105"
                     />
                   ) : (
@@ -163,7 +165,7 @@ export async function DoorsScene({ locale, sources }: P) {
                       sources={sources}
                       plate={plate}
                       frame="last"
-                      sizes="320px"
+                      sizes="(max-width: 430px) 430px, (max-width: 767px) 767px, 320px"
                       className="transition-transform duration-500 group-hover/door:scale-105"
                     />
                   )}
@@ -276,10 +278,10 @@ export async function JourneyScene({ locale, sources }: P) {
       aria-labelledby="journey-title"
       className={cn(sectionBase, "still:bg-cream-50")}
     >
-      <div data-journey className="anim:h-screen">
-        <Container className="grid h-full grid-cols-12 items-center gap-y-8 py-16 lg:gap-x-8">
-          <div className="col-span-12 space-y-5 rounded-lg anim:bg-white/95 anim:p-8 anim:shadow-lift lg:col-span-5 still:lg:col-span-12">
-            <div className="space-y-2">
+      <div data-journey className="anim:h-screen max-md:touch-pan-y max-md:anim:relative max-md:anim:h-svh">
+        <Container className="grid h-full grid-cols-12 items-center gap-y-8 py-16 lg:gap-x-8 max-md:anim:py-0">
+          <div className="col-span-12 space-y-5 rounded-lg anim:bg-white/95 anim:p-8 anim:shadow-lift lg:col-span-5 still:lg:col-span-12 max-md:anim:absolute max-md:anim:inset-x-0 max-md:anim:bottom-[var(--mobile-cta-h,0px)] max-md:anim:max-h-[45dvh] max-md:anim:space-y-3 max-md:anim:overflow-y-auto max-md:anim:rounded-b-none max-md:anim:p-4 max-md:anim:pb-16">
+            <div className="space-y-2 max-md:anim:sr-only">
               <h2 id="journey-title" className="text-4xl font-bold text-blue-800">
                 {t("title")}
               </h2>
@@ -287,7 +289,7 @@ export async function JourneyScene({ locale, sources }: P) {
             </div>
 
             {/* Journey spine: six labelled steps; the active one is marked while pinned. */}
-            <ol aria-label={t("spineLabel")} className="flex gap-1.5 still:hidden">
+            <ol aria-label={t("spineLabel")} className="flex gap-1.5 still:hidden max-md:anim:hidden">
               {JOURNEY.map((s, i) => (
                 <li key={s.id} className="flex-1">
                   <button
@@ -307,7 +309,7 @@ export async function JourneyScene({ locale, sources }: P) {
               ))}
             </ol>
 
-            <ol className="still:grid still:grid-cols-1 still:gap-5 still:md:grid-cols-2 still:xl:grid-cols-3 anim:relative anim:h-[19rem]">
+            <ol className="still:grid still:grid-cols-1 still:gap-5 still:md:grid-cols-2 still:xl:grid-cols-3 anim:relative anim:h-[19rem] max-md:anim:h-[10.5rem]">
               {JOURNEY.map((s, i) => {
                 const Icon = STEP_ICONS[s.id];
                 const plate = s.plates[s.plates.length - 1];
@@ -324,10 +326,10 @@ export async function JourneyScene({ locale, sources }: P) {
                     <div className="relative aspect-video anim:hidden">
                       <Still sources={sources} plate={plate} frame="last" sizes="(min-width: 1280px) 400px, 50vw" />
                     </div>
-                    <div className="space-y-3 still:px-6 still:pb-6">
+                    <div className="space-y-3 still:px-6 still:pb-6 max-md:anim:space-y-2">
                       <p className="text-sm font-bold text-orange-700">{t("stepLabel", { n: s.n })}</p>
-                      <h3 tabIndex={-1} className="flex items-center gap-3 text-3xl font-bold outline-none">
-                        <span className="inline-flex size-12 items-center justify-center rounded-full bg-peach-200">
+                      <h3 tabIndex={-1} className="flex items-center gap-3 text-3xl font-bold outline-none max-md:text-2xl">
+                        <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-peach-200 max-md:size-10">
                           <Icon aria-hidden="true" className="size-6 text-blue-800" />
                         </span>
                         {t(`steps.${s.id}.title`)}
@@ -338,7 +340,7 @@ export async function JourneyScene({ locale, sources }: P) {
                           {t("who")}: {t(`steps.${s.id}.who`)}
                         </span>
                       </p>
-                      <p>{t(`steps.${s.id}.body`)}</p>
+                      <p className="max-md:anim:hidden">{t(`steps.${s.id}.body`)}</p>
                       <Link
                         href={s.feature.href}
                         aria-label={`${t("goFeature")}: ${t(`cta.${s.feature.ctaKey}`)}`}
@@ -434,14 +436,14 @@ export async function FactsScene({ locale, sources }: P) {
       </div>
       {/* Navy scrim: white text stays ≥ 4.5:1 over the brightest part of the plate. */}
       <div aria-hidden="true" className="absolute inset-0 bg-navy-900/85" />
-      <Container className="relative flex min-h-[90vh] flex-col justify-center gap-12 py-24">
-        <h2 id="facts-title" data-reveal className="text-4xl font-bold text-white">
+      <Container className="relative flex min-h-[90vh] flex-col justify-center gap-12 py-24 max-md:min-h-0 max-md:gap-8 max-md:py-16">
+        <h2 id="facts-title" data-reveal className="text-4xl font-bold text-white max-md:text-[clamp(1.75rem,7.5vw,2.25rem)]">
           {t("title")}
         </h2>
-        <ul className="grid grid-cols-1 gap-10 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-10 lg:grid-cols-3 max-md:gap-8">
           {FACTS.map(({ key, url }) => (
             <li key={key} data-reveal className="space-y-4 border-t-2 border-peach-300 pt-6">
-              <p className="font-heading text-6xl font-bold text-peach-300">{t(`${key}.value`)}</p>
+              <p className="font-heading text-6xl font-bold text-peach-300 max-md:text-[clamp(2.5rem,12vw,3.25rem)]">{t(`${key}.value`)}</p>
               <p className="text-lg">{t(`${key}.label`)}</p>
               <p className="text-sm">
                 {t("sourceLabel")}:{" "}
@@ -482,15 +484,15 @@ export async function NetworkScene({ locale, sources }: P) {
       data-scene="network"
       tabIndex={-1}
       aria-labelledby="network-title"
-      className={cn(sectionBase, "overflow-hidden")}
+      className={cn(sectionBase, "overflow-hidden max-md:touch-pan-y")}
     >
       <div aria-hidden="true" className="absolute inset-0 anim:hidden">
         <Still sources={sources} plate="s08" frame="last" />
       </div>
-      <Container className="relative grid min-h-screen grid-cols-12 items-center gap-y-8 py-20 lg:gap-x-8">
-        <div data-network-reveal="2" className="col-span-12 space-y-6 rounded-lg bg-white/95 p-8 shadow-lift lg:col-span-5">
+      <Container className="relative grid min-h-screen grid-cols-12 items-center gap-y-8 py-20 lg:gap-x-8 max-md:min-h-svh max-md:content-start max-md:gap-y-4 max-md:pt-24 max-md:pb-6">
+        <div data-network-reveal="2" className="col-span-12 space-y-6 rounded-lg bg-white/95 p-8 shadow-lift lg:col-span-5 max-md:space-y-4 max-md:p-5">
           <div className="space-y-2">
-            <h2 id="network-title" className="text-4xl font-bold text-blue-800">
+            <h2 id="network-title" className="text-4xl font-bold text-blue-800 max-md:text-[clamp(1.75rem,7.5vw,2.25rem)]">
               {t("title")}
             </h2>
             <p className="text-lg">{t("lead")}</p>
@@ -509,7 +511,7 @@ export async function NetworkScene({ locale, sources }: P) {
             ))}
           </ul>
         </div>
-        <div data-network-reveal="1" className="col-span-12 lg:col-span-7">
+        <div data-network-reveal="1" className="col-span-12 lg:col-span-7 max-md:order-first max-md:[--hfa-map-h:min(38svh,320px)]">
           <NetworkPreview spots={previewSpots} label={tn("previewLabel")} cta={tn("openMap")} />
         </div>
       </Container>
@@ -578,11 +580,11 @@ export async function FinalScene({ locale, sources }: P) {
         <Still sources={sources} plate={still.plate} frame={still.frame} />
       </div>
       <div aria-hidden="true" className="absolute inset-0 bg-linear-to-b from-cream-50/95 via-cream-50/75 to-transparent" />
-      <Container className="relative flex min-h-screen flex-col items-center gap-8 pt-24 pb-16 text-center">
-        <h2 id="final-title" data-reveal className="max-w-3xl text-5xl font-bold text-blue-800">
+      <Container className="relative flex min-h-screen flex-col items-center gap-8 pt-24 pb-16 text-center max-md:min-h-svh max-md:gap-6 max-md:pt-16">
+        <h2 id="final-title" data-reveal className="max-w-3xl text-5xl font-bold text-blue-800 max-md:text-[clamp(2rem,8.5vw,2.5rem)]">
           {t("title")}
         </h2>
-        <div data-reveal className="flex flex-wrap justify-center gap-4">
+        <div data-reveal className="flex flex-wrap justify-center gap-4 max-md:w-full max-md:flex-col max-md:gap-3">
           <Button asChild size="lg">
             <Link href="/pets">
               <House aria-hidden="true" />

@@ -41,7 +41,7 @@ export async function SceneHeader({
       {world.backToStory && (
         <Link
           href={world.backToStory}
-          className="inline-flex min-h-10 items-center gap-1.5 rounded-full bg-white/95 px-4 text-sm font-bold no-underline shadow-soft"
+          className="inline-flex min-h-10 items-center gap-1.5 rounded-full bg-white/95 px-4 text-sm font-bold no-underline shadow-soft max-md:min-h-11"
         >
           <ArrowLeft aria-hidden="true" className="size-4" />
           {t("backToStory")}
@@ -107,7 +107,7 @@ export async function RouteMeta({ route, locale }: { route: keyof typeof ROUTES;
       {world.backToStory && (
         <Link
           href={world.backToStory}
-          className="inline-flex min-h-10 items-center gap-1.5 text-sm font-bold"
+          className="inline-flex min-h-10 items-center gap-1.5 text-sm font-bold max-md:min-h-11"
         >
           <ArrowLeft aria-hidden="true" className="size-4" />
           {t("backToStory")}

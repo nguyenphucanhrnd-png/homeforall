@@ -5,7 +5,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { CityMap, type MapLabels, type MapSpot } from "./city-map";
 
-const PREVIEW_HEIGHT = 460;
+/** Desktop height 460px; phones set --hfa-map-h on the wrapper. */
+const PREVIEW_HEIGHT = "var(--hfa-map-h, 460px)";
 
 /**
  * Landing preview of the network map: not interactive, the whole card is one

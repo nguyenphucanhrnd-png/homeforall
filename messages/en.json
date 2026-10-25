@@ -20,7 +20,8 @@
     "dashboard": "Dashboard",
     "logout": "Log out",
     "menu": "Menu",
-    "report": "Found a stray?"
+    "report": "Found a stray?",
+    "reportShort": "Found a stray?"
   },
   "footer": {
     "tagline": "Bringing every pet home, together.",
@@ -931,5 +932,18 @@
       "bad_transition": "That status change is not allowed.",
       "invalid": "Please check the input."
     }
+  },
+  "mobile": {
+    "menuClose": "Close menu",
+    "onThisPage": "On this page",
+    "ctaBar": "Found a stray?",
+    "mapShow": "Show map",
+    "mapHide": "Hide map",
+    "mapInteract": "Tap to interact with the map",
+    "filters": "Filter",
+    "filtersApply": "Show results",
+    "filtersClose": "Close filters",
+    "sheetClose": "Close",
+    "footerLinks": "Links"
   }
 }

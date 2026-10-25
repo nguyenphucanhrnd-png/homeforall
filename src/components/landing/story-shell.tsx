@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { Sparkles } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode, type RefObject } from "react";
+import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 import { PlateEngine, type Layer } from "@/world/plate-engine";
 import type { PlateSources } from "@/world/plate-types";
@@ -15,11 +16,13 @@ import {
   JOURNEY_CROSSFADE_VH,
   JOURNEY_HOLD_VH,
   JOURNEY_PIN_VH,
+  JOURNEY_PIN_VH_MOBILE,
   JOURNEY_TRACK,
   LANDING_TRACK,
   NETWORK_HOLD_VH,
   NETWORK_PLAY_VH,
   NETWORK_REVEAL_VH,
+  PHONE_QUERY,
   PLATE_DRIFT,
   PLATES,
   type Localized,
@@ -49,7 +52,7 @@ export function StoryShell({ children, sources, locale, sceneLabels, navLabel, r
 
   // Lenis drives scroll; GSAP's ticker drives Lenis (v4 §6 sync recipe).
   useEffect(() => {
-    if (!animated) return;
+    if (!animated || matchMedia(PHONE_QUERY).matches) return; // phones: native touch scrolling
     const instance = new Lenis({ autoRaf: false, lerp: 0.11 });
     lenis.current = instance;
     instance.on("scroll", ScrollTrigger.update);
@@ -65,9 +68,9 @@ export function StoryShell({ children, sources, locale, sceneLabels, navLabel, r
   }, [animated]);
 
   useGSAP(
-    () => {
+    (_context, contextSafe) => {
       if (!animated || !root.current || !canvas.current) return;
-      return setupStory({
+      const args = {
         root: root.current,
         canvas: canvas.current,
         sources,
@@ -75,7 +78,29 @@ export function StoryShell({ children, sources, locale, sceneLabels, navLabel, r
         lite: mode === "lite",
         lenis,
         onReady: () => setReady(true),
+      };
+      if (!matchMedia(PHONE_QUERY).matches) return setupStory(args);
+      // Phones: start the scroll story only after load, when the browser is idle,
+      // so the hero (LCP) never competes with plate frames for bandwidth or CPU.
+      let cleanup: (() => void) | undefined;
+      let idle = 0;
+      const run = contextSafe!(() => {
+        cleanup = setupStory(args);
       });
+      const schedule = () => {
+        idle =
+          "requestIdleCallback" in window
+            ? window.requestIdleCallback(run, { timeout: 2500 })
+            : (globalThis.setTimeout(run, 1200) as unknown as number);
+      };
+      if (document.readyState === "complete") schedule();
+      else window.addEventListener("load", schedule, { once: true });
+      return () => {
+        window.removeEventListener("load", schedule);
+        if ("cancelIdleCallback" in window) window.cancelIdleCallback(idle);
+        window.clearTimeout(idle);
+        cleanup?.();
+      };
     },
     { scope: root, dependencies: [animated], revertOnUpdate: true },
   );
@@ -105,7 +130,8 @@ export function StoryShell({ children, sources, locale, sceneLabels, navLabel, r
       if (!abs && !rel) return;
       e.preventDefault();
       if (abs) return goToStep(Number(abs.dataset.journeyGo), lenis);
-      const current = Number(el.querySelector<HTMLElement>("[data-step][data-active]")?.dataset.index ?? 0) + 1;
+      const current =
+        Number(el.querySelector<HTMLElement>("[data-step][data-active]")?.dataset.index ?? 0) + 1;
       goToStep(current + Number(rel!.dataset.journeyStepRel), lenis);
     };
     el.addEventListener("click", onClick);
@@ -136,7 +162,7 @@ export function StoryShell({ children, sources, locale, sceneLabels, navLabel, r
           role="img"
           aria-label={PLATES.s01.caption[locale]}
           className={cn(
-            "pointer-events-none fixed inset-0 -z-10 h-screen w-screen transition-opacity duration-700",
+            "pointer-events-none fixed inset-0 -z-10 h-screen w-screen transition-opacity duration-700 max-md:h-lvh",
             ready ? "opacity-100" : "opacity-0",
           )}
         />
@@ -147,10 +173,10 @@ export function StoryShell({ children, sources, locale, sceneLabels, navLabel, r
         type="button"
         onClick={toggleReduced}
         aria-pressed={reduced}
-        className="fixed bottom-5 left-5 z-30 inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full bg-white px-4 text-sm font-bold text-ink shadow-lift hover:bg-cream-50"
+        className="fixed bottom-5 left-5 z-30 inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full bg-white px-4 text-sm font-bold text-ink shadow-lift hover:bg-cream-50 max-md:bottom-[calc(var(--mobile-cta-h,0px)+env(safe-area-inset-bottom)+0.75rem)] max-md:left-4 max-md:w-12 max-md:justify-center max-md:px-0"
       >
         <Sparkles aria-hidden="true" className="size-4 text-orange-700" />
-        {reduceLabel}
+        <span className="max-md:sr-only">{reduceLabel}</span>
       </button>
     </div>
   );
@@ -167,7 +193,9 @@ function goToStep(n: number, lenis: RefObject<Lenis | null>, instant = false) {
   } else {
     document.getElementById(`journey-${step}`)?.scrollIntoView({ block: "start" });
   }
-  document.querySelector<HTMLElement>(`[data-step][data-index="${step - 1}"] h3`)?.focus({ preventScroll: true });
+  document
+    .querySelector<HTMLElement>(`[data-step][data-index="${step - 1}"] h3`)
+    ?.focus({ preventScroll: true });
   history.replaceState(null, "", `#journey-${step}`);
 }
 
@@ -184,7 +212,9 @@ function SceneDots({
   const [active, setActive] = useState<SceneId>("hero");
 
   useEffect(() => {
-    const sections = SCENES.map((id) => document.getElementById(`scene-${id}`)).filter(Boolean) as HTMLElement[];
+    const sections = SCENES.map((id) => document.getElementById(`scene-${id}`)).filter(
+      Boolean,
+    ) as HTMLElement[];
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -206,32 +236,70 @@ function SceneDots({
     el.focus({ preventScroll: true });
   }
 
-  return (
-    <nav aria-label={navLabel} className="fixed top-1/2 right-5 z-30 -translate-y-1/2">
-      <ol className="flex flex-col gap-1">
-        {SCENES.map((id) => (
-          <li key={id}>
-            <button
-              type="button"
-              onClick={() => go(id)}
-              aria-current={active === id ? "step" : undefined}
-              className="group/dot flex min-h-8 cursor-pointer items-center justify-end gap-3"
-            >
-              <span className="rounded-sm bg-white px-2 py-1 text-sm font-bold whitespace-nowrap text-ink opacity-0 shadow-soft transition-opacity group-hover/dot:opacity-100 group-focus-visible/dot:opacity-100">
+  // Phones: the page index lives in the header menu ("Trên trang này").
+  const [slot, setSlot] = useState<HTMLElement | null>(null);
+  useEffect(() => {
+    const media = matchMedia(PHONE_QUERY);
+    const sync = () => setSlot(media.matches ? document.getElementById("menu-page-index") : null);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+
+  const phoneIndex =
+    slot &&
+    createPortal(
+      <nav aria-label={navLabel}>
+        <ol className="grid grid-cols-2 gap-x-4">
+          {SCENES.map((id) => (
+            <li key={id}>
+              <button
+                type="button"
+                onClick={() => {
+                  slot.closest("details")?.removeAttribute("open");
+                  go(id);
+                }}
+                aria-current={active === id ? "step" : undefined}
+                className="inline-flex min-h-11 w-full cursor-pointer items-center text-left font-semibold aria-[current=step]:text-blue-800 aria-[current=step]:underline"
+              >
                 {labels[id]}
-              </span>
-              <span
-                aria-hidden="true"
-                className={cn(
-                  "block rounded-full border-2 border-blue-800 transition-all duration-200",
-                  active === id ? "size-3.5 bg-blue-800" : "size-2.5 bg-white",
-                )}
-              />
-            </button>
-          </li>
-        ))}
-      </ol>
-    </nav>
+              </button>
+            </li>
+          ))}
+        </ol>
+      </nav>,
+      slot,
+    );
+
+  return (
+    <>
+      {phoneIndex}
+      <nav aria-label={navLabel} className="fixed top-1/2 right-5 z-30 -translate-y-1/2 max-md:hidden">
+        <ol className="flex flex-col gap-1">
+          {SCENES.map((id) => (
+            <li key={id}>
+              <button
+                type="button"
+                onClick={() => go(id)}
+                aria-current={active === id ? "step" : undefined}
+                className="group/dot flex min-h-8 cursor-pointer items-center justify-end gap-3"
+              >
+                <span className="rounded-sm bg-white px-2 py-1 text-sm font-bold whitespace-nowrap text-ink opacity-0 shadow-soft transition-opacity group-hover/dot:opacity-100 group-focus-visible/dot:opacity-100">
+                  {labels[id]}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "block rounded-full border-2 border-blue-800 transition-all duration-200",
+                    active === id ? "size-3.5 bg-blue-800" : "size-2.5 bg-white",
+                  )}
+                />
+              </button>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </>
   );
 }
 
@@ -263,11 +331,23 @@ type SetupArgs = {
 /** Everything scroll-driven. Runs inside useGSAP, so triggers/tweens revert on cleanup. */
 function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: SetupArgs) {
   const q = gsap.utils.selector(root);
-  const engine = new PlateEngine(canvas, sources, { maxBytes: (lite ? 120 : 200) * 1048576, maxDpr: lite ? 1 : 1.5 });
+  const phone = matchMedia(PHONE_QUERY).matches;
+  const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
+  const engine = new PlateEngine(
+    canvas,
+    sources,
+    phone
+      ? // Phones: ≈ 100 MB decode budget (less on ≤ 2 GB devices), DPR ≤ 2, a short prefetch window.
+        { maxBytes: (memory && memory <= 2 ? 64 : 100) * 1048576, maxDpr: 2, ahead: 8, behind: 2 }
+      : { maxBytes: (lite ? 120 : 200) * 1048576, maxDpr: lite ? 1 : 1.5 },
+  );
+  // Phones: the URL bar showing/hiding must not re-layout the pins.
+  if (phone) ScrollTrigger.config({ ignoreMobileResize: true });
   engine.onFirstFrame = onReady;
-  engine.warm("s01");
+  if (!phone) engine.warm("s01"); // phones fetch frames on demand (render's small window)
   // Dev/test hook: lets /dev/plates and Playwright read decode/memory stats.
-  if (process.env.NODE_ENV !== "production") (window as unknown as { __plateEngine?: PlateEngine }).__plateEngine = engine;
+  if (process.env.NODE_ENV !== "production")
+    (window as unknown as { __plateEngine?: PlateEngine }).__plateEngine = engine;
 
   // Hero intro.
   gsap.from(q("[data-hero-line]"), { y: 24, autoAlpha: 0, stagger: 0.08, duration: 0.7, ease: "power3.out" });
@@ -284,7 +364,8 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
   if (jpin) {
     const p = { t: 0 };
     let current = -1;
-    const pinEnd = () => `+=${JOURNEY_PIN_VH * window.innerHeight}`;
+    const pinVh = phone ? JOURNEY_PIN_VH_MOBILE : JOURNEY_PIN_VH;
+    const pinEnd = () => `+=${pinVh * window.innerHeight}`;
     const st = ScrollTrigger.create({
       id: "journey-pin",
       trigger: jpin,
@@ -302,7 +383,11 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
         );
       },
     });
-    gsap.to(p, { t: 1, ease: "none", scrollTrigger: { trigger: jpin, start: "top top", end: pinEnd, scrub: 1, invalidateOnRefresh: true } });
+    gsap.to(p, {
+      t: 1,
+      ease: "none",
+      scrollTrigger: { trigger: jpin, start: "top top", end: pinEnd, scrub: 1, invalidateOnRefresh: true },
+    });
     journeyItem = { kind: "journey", p, st };
   }
 
@@ -326,14 +411,29 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
       shown = true;
       loadNetworkMap(); // the map library loads only now
       setInert(false);
-      gsap.to(revealEls, { autoAlpha: 1, y: 0, pointerEvents: "auto", duration: 0.6, stagger: 0.15, ease: "power2.out", overwrite: true });
+      gsap.to(revealEls, {
+        autoAlpha: 1,
+        y: 0,
+        pointerEvents: "auto",
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "power2.out",
+        overwrite: true,
+      });
     };
     const hide = () => {
       if (!shown) return;
       shown = false;
       setInert(true);
       // Exits are faster than entries.
-      gsap.to(revealEls, { autoAlpha: 0, y: 28, pointerEvents: "none", duration: 0.25, ease: "power1.in", overwrite: true });
+      gsap.to(revealEls, {
+        autoAlpha: 0,
+        y: 28,
+        pointerEvents: "none",
+        duration: 0.25,
+        ease: "power1.in",
+        overwrite: true,
+      });
     };
     ScrollTrigger.create({
       id: "network-pin",
@@ -364,7 +464,7 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
     const el = document.getElementById(seg.section);
     if (!el) continue;
     const p = { t: 0 };
-    const endTrigger = seg.endSection ? document.getElementById(seg.endSection) ?? el : el;
+    const endTrigger = seg.endSection ? (document.getElementById(seg.endSection) ?? el) : el;
     const vh = (n: number) => () => `+=${n * window.innerHeight}`;
     const tween = gsap.to(p, {
       t: 1,
@@ -379,10 +479,25 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
       gsap.to(drift, {
         t: 1,
         ease: "none",
-        scrollTrigger: { trigger: el, start: seg.start, end: vh(seg.driftVh), scrub: 1, invalidateOnRefresh: true },
+        scrollTrigger: {
+          trigger: el,
+          start: seg.start,
+          end: vh(seg.driftVh),
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
       });
     }
-    items.push({ kind: "segment", id: seg.id, plate: seg.plate, hold: seg.hold, dim: seg.dim, drift, p, st: tween.scrollTrigger! });
+    items.push({
+      kind: "segment",
+      id: seg.id,
+      plate: seg.plate,
+      hold: seg.hold,
+      dim: seg.dim,
+      drift,
+      p,
+      st: tween.scrollTrigger!,
+    });
     if (seg.id === "journey-enter" && journeyItem) items.push(journeyItem);
   }
 
@@ -390,8 +505,15 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
   let label = "";
   let lastWarm = 0;
   const lastLayer = (item: Item): Layer => {
-    if (item.kind === "journey") return { plate: JOURNEY_TRACK[JOURNEY_TRACK.length - 1].plate, t: 1, alpha: 1, zoom: 1 + PLATE_DRIFT };
-    return { plate: item.plate, t: item.hold ?? 1, alpha: 1, dim: item.dim?.alpha, zoom: item.drift ? 1 + PLATE_DRIFT * item.drift.t : undefined };
+    if (item.kind === "journey")
+      return { plate: JOURNEY_TRACK[JOURNEY_TRACK.length - 1].plate, t: 1, alpha: 1, zoom: 1 + PLATE_DRIFT };
+    return {
+      plate: item.plate,
+      t: item.hold ?? 1,
+      alpha: 1,
+      dim: item.dim?.alpha,
+      zoom: item.drift ? 1 + PLATE_DRIFT * item.drift.t : undefined,
+    };
   };
   const endsStep = (to: number) => Math.abs(to * 6 - Math.round(to * 6)) < 1e-6;
 
@@ -423,20 +545,28 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
       if (k > 0 && into < journeyFadePx) {
         const prev = JOURNEY_TRACK[k - 1];
         const prevZoom = endsStep(prev.to) ? 1 + PLATE_DRIFT : zoom;
-        layers = [{ plate: prev.plate, t: 1, alpha: 1, zoom: prevZoom }, { ...cur, alpha: into / journeyFadePx }];
+        layers = [
+          { plate: prev.plate, t: 1, alpha: 1, zoom: prevZoom },
+          { ...cur, alpha: into / journeyFadePx },
+        ];
       } else {
         layers = [cur];
       }
     } else {
       const t = item.p.t;
-      const dim = item.dim ? gsap.utils.clamp(0, 1, (t - item.dim.from) / (item.dim.to - item.dim.from)) * item.dim.alpha : 0;
+      const dim = item.dim
+        ? gsap.utils.clamp(0, 1, (t - item.dim.from) / (item.dim.to - item.dim.from)) * item.dim.alpha
+        : 0;
       const zoom = item.drift ? 1 + PLATE_DRIFT * item.drift.t : undefined;
       const cur: Layer = { plate: item.plate, t: item.hold ?? t, alpha: 1, dim, zoom };
       const into = t * (item.st.end - item.st.start);
       const prev = idx > 0 ? items[idx - 1] : null;
       if (prev && into < fadePx) {
         const mix = into / fadePx;
-        layers = [{ ...lastLayer(prev), alpha: item.plate ? 1 : 1 - mix }, ...(item.plate ? [{ ...cur, alpha: mix }] : [])];
+        layers = [
+          { ...lastLayer(prev), alpha: item.plate ? 1 : 1 - mix },
+          ...(item.plate ? [{ ...cur, alpha: mix }] : []),
+        ];
       } else {
         layers = [cur];
       }
@@ -454,9 +584,10 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
 
     // Fetch compressed frames for plates within ~3 viewports ahead (longer pins).
     const now = performance.now();
-    if (now - lastWarm > 300) {
+    // Phones: no bulk prefetch until the visitor scrolls, and only ~1.5 viewports ahead.
+    if (now - lastWarm > 300 && (!phone || window.scrollY > 0)) {
       lastWarm = now;
-      const horizon = window.scrollY + window.innerHeight * 4;
+      const horizon = window.scrollY + window.innerHeight * (phone ? 1.5 : 4);
       for (const it of items) {
         if (it.st.start > horizon) continue;
         if (it.kind === "journey") JOURNEY.forEach((s) => s.plates.forEach((pl) => engine.warm(pl)));
@@ -465,7 +596,13 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
     }
   };
   gsap.ticker.add(tick);
-  const onResize = () => engine.resize();
+  let lastWidth = window.innerWidth;
+  const onResize = () => {
+    // Phones: a height-only change is the URL bar; the canvas is sized to the large viewport.
+    if (phone && window.innerWidth === lastWidth) return;
+    lastWidth = window.innerWidth;
+    engine.resize();
+  };
   window.addEventListener("resize", onResize);
 
   // ── Reveals, masks, parallax ──
@@ -474,7 +611,15 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
   ScrollTrigger.batch(reveals, {
     start: "top 88%",
     once: true,
-    onEnter: (els) => gsap.to(els, { autoAlpha: 1, y: 0, stagger: 0.07, duration: 0.55, ease: "power2.out", overwrite: true }),
+    onEnter: (els) =>
+      gsap.to(els, {
+        autoAlpha: 1,
+        y: 0,
+        stagger: 0.07,
+        duration: 0.55,
+        ease: "power2.out",
+        overwrite: true,
+      }),
   });
   q("[data-mask]").forEach((el) => {
     const arch = (el as HTMLElement).dataset.mask === "arch";
@@ -497,7 +642,12 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
       {
         yPercent: depth * 50,
         ease: "none",
-        scrollTrigger: { trigger: el.closest("section") ?? el, start: "top bottom", end: "bottom top", scrub: 1 },
+        scrollTrigger: {
+          trigger: el.closest("section") ?? el,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
       },
     );
   });

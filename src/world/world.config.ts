@@ -24,6 +24,11 @@ export type PlateSpec = {
   mood: Mood;
   /** Cover-crop focal point, 0–1 in image space (0.5, 0.5 = centre). */
   focal: [number, number];
+  /**
+   * Portrait phones (≤ 767 px) only: a 16:9 plate shows just ~26 % of its width,
+   * so pick where that slice sits (same 0–1 object-position semantics as `focal`).
+   */
+  focalMobile?: [number, number];
   /** Used as the canvas aria-label and as alt text for still frames. */
   caption: Localized;
   /** If this plate is missing: show another plate's still, or a flat mood colour (null). */
@@ -34,6 +39,7 @@ export const PLATES: Record<PlateId, PlateSpec> = {
   s01: {
     mood: "cream",
     focal: [0.55, 0.55],
+    focalMobile: [0.3, 0.55], // the cat (poster); the house sits near the centre later
     caption: {
       vi: "Minh hoạ đất sét: ngôi nhà mái cam, chú chó và mèo Miu ngồi trước cửa",
       en: "Clay illustration: an orange-roofed house with the dog and Miu the cat at the door",
@@ -43,6 +49,7 @@ export const PLATES: Record<PlateId, PlateSpec> = {
   s02: {
     mood: "night",
     focal: [0.4, 0.6],
+    focalMobile: [0.43, 0.6],
     caption: {
       vi: "Minh hoạ đất sét: Miu co ro dưới mái tôn trong con hẻm mưa đêm",
       en: "Clay illustration: Miu huddled under a tin awning in a rainy night alley",
@@ -52,6 +59,7 @@ export const PLATES: Record<PlateId, PlateSpec> = {
   s03: {
     mood: "night",
     focal: [0.5, 0.6],
+    focalMobile: [0.5, 0.6],
     caption: {
       vi: "Minh hoạ đất sét: một tình nguyện viên mang lồng đến, dấu chân sáng dần",
       en: "Clay illustration: a volunteer arrives with a carrier as paw prints light up",
@@ -61,6 +69,7 @@ export const PLATES: Record<PlateId, PlateSpec> = {
   s04: {
     mood: "blue",
     focal: [0.5, 0.5],
+    focalMobile: [0.5, 0.5],
     caption: {
       vi: "Minh hoạ đất sét: Miu ngồi trên bàn khám ở phòng khám thú y",
       en: "Clay illustration: Miu sits on the exam table at a vet clinic",
@@ -70,6 +79,7 @@ export const PLATES: Record<PlateId, PlateSpec> = {
   s05: {
     mood: "amber",
     focal: [0.55, 0.55],
+    focalMobile: [0.36, 0.55],
     caption: {
       vi: "Minh hoạ đất sét: Miu ngủ yên trên ổ nệm ở nhà nuôi tạm",
       en: "Clay illustration: Miu asleep on a cushion bed in a foster home",
@@ -79,6 +89,7 @@ export const PLATES: Record<PlateId, PlateSpec> = {
   s06: {
     mood: "peach",
     focal: [0.5, 0.5],
+    focalMobile: [0.53, 0.5],
     caption: {
       vi: "Minh hoạ đất sét: hoàng hôn màu đào, dải trái tim và dấu chân bay trên mái nhà",
       en: "Clay illustration: a peach dusk with a ribbon of hearts and paw prints over the rooftops",
@@ -88,6 +99,7 @@ export const PLATES: Record<PlateId, PlateSpec> = {
   s07: {
     mood: "golden",
     focal: [0.5, 0.55],
+    focalMobile: [0.55, 0.55],
     caption: {
       vi: "Minh hoạ đất sét: cánh cửa mở ra ánh sáng ấm, Miu bước vào nhà mới",
       en: "Clay illustration: a door opens onto warm light as Miu walks into a new home",
@@ -97,6 +109,7 @@ export const PLATES: Record<PlateId, PlateSpec> = {
   s08: {
     mood: "night",
     focal: [0.5, 0.5],
+    focalMobile: [0.5, 0.5],
     caption: {
       vi: "Minh hoạ đất sét: khu phố lúc hoàng hôn, những vòng cung vàng bắt đầu nối các ngôi nhà",
       en: "Clay illustration: the neighbourhood at dusk as golden arcs begin to connect the houses",
@@ -106,6 +119,7 @@ export const PLATES: Record<PlateId, PlateSpec> = {
   s09: {
     mood: "morning",
     focal: [0.5, 0.5],
+    focalMobile: [0.53, 0.5],
     caption: {
       vi: "Minh hoạ đất sét: buổi sáng ở nhà mới, Miu ngồi bên cửa sổ cạnh tấm lịch ba trái tim",
       en: "Clay illustration: morning in the new home, Miu on the windowsill beside a three-heart calendar",
@@ -138,8 +152,13 @@ export const JOURNEY: JourneyStep[] = [
 
 /** Tune the journey's length here: every journey length below scales with it. */
 export const JOURNEY_SCROLL_MULTIPLIER = 2;
+/** Phones (≤ 767 px) may override the journey length; defaults to the desktop value. */
+export const JOURNEY_SCROLL_MULTIPLIER_MOBILE = JOURNEY_SCROLL_MULTIPLIER;
+/** The only breakpoint phone-specific behaviour may use (Tailwind `max-md:`). */
+export const PHONE_QUERY = "(max-width: 767px)";
 /** Pinned journey length in viewport heights (base 5 vh, v4 §5.2) × multiplier. */
 export const JOURNEY_PIN_VH = 5 * JOURNEY_SCROLL_MULTIPLIER;
+export const JOURNEY_PIN_VH_MOBILE = 5 * JOURNEY_SCROLL_MULTIPLIER_MOBILE;
 /** Crossfade between plates outside the journey, in viewport heights of scroll (≈ 400–600 ms). */
 export const CROSSFADE_VH = 0.45;
 /** Crossfade between journey plates (scaled, so the transition is actually visible). */

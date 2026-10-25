@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { FanhChat } from "@/components/fanh/fanh-chat";
 import { RouteFocus } from "@/components/layout/route-focus";
+import { MobileCtaBar } from "@/components/layout/mobile-cta-bar";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { routing } from "@/i18n/routing";
@@ -69,6 +70,9 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
           {/* usePathname() inside: request data on dynamic routes (cacheComponents). */}
           <Suspense fallback={null}>
             <FanhChat />
+          </Suspense>
+          <Suspense fallback={null}>
+            <MobileCtaBar />
           </Suspense>
         </NextIntlClientProvider>
       </body>

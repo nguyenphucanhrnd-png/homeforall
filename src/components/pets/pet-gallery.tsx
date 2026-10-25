@@ -58,9 +58,9 @@ export function PetGallery({ name, species, look, photos }: Props) {
       </button>
 
       {frames > 1 && (
-        <ul className="grid grid-cols-3 gap-3">
+        <ul className="grid grid-cols-3 gap-3 max-md:flex max-md:snap-x max-md:snap-mandatory max-md:overflow-x-auto max-md:pb-1">
           {Array.from({ length: frames }, (_, n) => (
-            <li key={n}>
+            <li key={n} className="max-md:w-[42%] max-md:shrink-0 max-md:snap-start">
               <button
                 type="button"
                 onClick={() => setActive(n)}

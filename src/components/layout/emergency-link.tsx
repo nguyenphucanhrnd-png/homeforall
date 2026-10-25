@@ -18,7 +18,8 @@ export async function ReportLink({ locale, className }: { locale: Locale; classN
       className={cn(buttonVariants({ variant: "primary", size: "sm" }), "whitespace-nowrap", className)}
     >
       <PawPrint aria-hidden="true" />
-      {t("report")}
+      <span className="max-[400px]:hidden">{t("report")}</span>
+      <span className="hidden max-[400px]:inline">{t("reportShort")}</span>
     </Link>
   );
 }

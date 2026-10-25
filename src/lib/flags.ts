@@ -11,3 +11,6 @@ export const FEATURE_PUBLIC_REPORT = false;
  * some pet profiles, map points, contacts and partner content are sample data or proposals.
  */
 export const SHOW_PROTOTYPE_NOTICE = true;
+
+/** Phones only (≤ 767 px): a slim bottom bar "Phát hiện 1 bé đi lạc" (hidden on /report and while the menu is open). */
+export const MOBILE_STICKY_CTA = true;

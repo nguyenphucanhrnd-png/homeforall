@@ -20,7 +20,8 @@
     "dashboard": "Bảng điều khiển",
     "logout": "Đăng xuất",
     "menu": "Menu",
-    "report": "Phát hiện 1 bé đi lạc"
+    "report": "Phát hiện 1 bé đi lạc",
+    "reportShort": "Báo thú lạc"
   },
   "footer": {
     "tagline": "Chung tay đưa thú cưng về mái ấm.",
@@ -931,5 +932,18 @@
       "bad_transition": "Không thể chuyển sang trạng thái này.",
       "invalid": "Dữ liệu chưa hợp lệ."
     }
+  },
+  "mobile": {
+    "menuClose": "Đóng menu",
+    "onThisPage": "Trên trang này",
+    "ctaBar": "Phát hiện 1 bé đi lạc",
+    "mapShow": "Xem bản đồ",
+    "mapHide": "Ẩn bản đồ",
+    "mapInteract": "Chạm để tương tác với bản đồ",
+    "filters": "Lọc",
+    "filtersApply": "Xem kết quả",
+    "filtersClose": "Đóng bộ lọc",
+    "sheetClose": "Đóng",
+    "footerLinks": "Liên kết"
   }
 }

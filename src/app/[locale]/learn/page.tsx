@@ -84,7 +84,7 @@ export default async function LearnPage({ params }: PageProps<"/[locale]/learn">
                       <a
                         href={source}
                         rel="noopener"
-                        className="inline-flex items-center gap-1 font-semibold"
+                        className="inline-flex items-center gap-1 font-semibold max-md:min-h-11"
                       >
                         WHO
                         <ExternalLink aria-hidden="true" className="size-3.5" />
