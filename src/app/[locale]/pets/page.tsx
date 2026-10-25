@@ -45,10 +45,14 @@ async function Results({
   searchParams: PageProps<"/[locale]/pets">["searchParams"];
 }) {
   const filters = parsePetFilters(await searchParams);
-  const [{ pets, partners, now }, t] = await Promise.all([
+  const [{ pets, partners, now }, { pets: ignoringWard }, t] = await Promise.all([
     listPets(filters),
+    // Ward counts reflect every other active filter (AND across groups).
+    listPets({ ...filters, ward: [] }),
     getTranslations({ locale, namespace: "pets" }),
   ]);
+  const wardCounts: Record<string, number> = {};
+  for (const p of ignoringWard) wardCounts[p.ward] = (wardCounts[p.ward] ?? 0) + 1;
 
   return (
     <div className="grid grid-cols-12 gap-y-8 lg:gap-x-8">
@@ -56,12 +60,20 @@ async function Results({
         <FilterPanel
           partners={partners.map((p) => ({ value: p.slug, label: p.name }))}
           activeCount={countActiveFilters(filters)}
+          wardCounts={wardCounts}
         />
       </aside>
       <section aria-labelledby="results-heading" className="col-span-12 space-y-6 lg:col-span-9">
         <div className="flex flex-wrap items-center justify-between gap-4">
-          <h2 id="results-heading" aria-live="polite" className="text-2xl font-bold" data-testid="result-count">
-            {t("resultCount", { count: pets.length })}
+          <h2
+            id="results-heading"
+            aria-live="polite"
+            className="text-2xl font-bold"
+            data-testid="result-count"
+          >
+            {filters.ward.length > 0
+              ? t("resultCountWards", { count: pets.length, wards: filters.ward.length })
+              : t("resultCount", { count: pets.length })}
           </h2>
           <SortSelect />
         </div>

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { WARD_SLUGS } from "@/data/wards";
 import {
   AGE_RANGES,
   CORE_CARE,
@@ -31,10 +32,15 @@ const flag = z
 /** Every filter lives in the URL (deep-linkable, prompt §8). Unknown values are dropped, not errors. */
 export const petFiltersSchema = z.object({
   species: many(SPECIES),
+  // `?ward=an-khanh,an-phu` (shareable); repeated `ward=` (no-JS form) also works.
+  // OR within the group; unknown slugs are dropped.
   ward: z
     .union([z.string(), z.array(z.string())])
     .optional()
-    .transform((v) => (v === undefined ? [] : Array.isArray(v) ? v : [v])),
+    .transform((v) => (v === undefined ? [] : Array.isArray(v) ? v : [v]))
+    .transform((list) =>
+      [...new Set(list.flatMap((x) => x.split(",")).map((x) => x.trim()))].filter((x) => WARD_SLUGS.has(x)),
+    ),
   age: many(AGE_RANGES),
   size: many(SIZES),
   sex: many(SEXES),
@@ -48,7 +54,9 @@ export const petFiltersSchema = z.object({
   sort: z
     .union([z.string(), z.array(z.string())])
     .optional()
-    .transform((v) => ((Array.isArray(v) ? v[0] : v) === "newest" ? "newest" : "updated") as "newest" | "updated"),
+    .transform(
+      (v) => ((Array.isArray(v) ? v[0] : v) === "newest" ? "newest" : "updated") as "newest" | "updated",
+    ),
 });
 
 export type PetFilters = z.output<typeof petFiltersSchema>;
@@ -88,7 +96,7 @@ export function isStale(pet: Pet, now: Date) {
 }
 
 function matches(pet: Pet, f: PetFilters) {
-  const inList = <T,>(list: readonly T[], value: T) => list.length === 0 || list.includes(value);
+  const inList = <T>(list: readonly T[], value: T) => list.length === 0 || list.includes(value);
   return (
     LISTED_STATUSES.includes(pet.status) &&
     inList(f.species, pet.species) &&
