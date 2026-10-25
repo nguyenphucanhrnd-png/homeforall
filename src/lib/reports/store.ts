@@ -2,7 +2,6 @@ import "server-only";
 import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import sharp from "sharp";
 import { haversine, nearest } from "@/lib/geo/geo";
 import { reportTargets } from "@/lib/spots/repository";
 import {
@@ -76,6 +75,8 @@ export async function processPhoto(file: File) {
   const input = Buffer.from(await file.arrayBuffer());
   try {
     // .rotate() applies the EXIF orientation; sharp drops all metadata unless asked to keep it.
+    // Loaded lazily: pages never depend on the native binary, only photo uploads do.
+    const { default: sharp } = await import("sharp");
     return await sharp(input, { failOn: "error" })
       .rotate()
       .resize({ width: PHOTO_LIMITS.maxEdge, height: PHOTO_LIMITS.maxEdge, fit: "inside", withoutEnlargement: true })

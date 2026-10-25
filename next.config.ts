@@ -13,8 +13,16 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
-  partialPrefetching: true,
+  // partialPrefetching off: Vercel output fails on its per-segment .rsc files (ENOENT on *.segment.rsc.func).
+  partialPrefetching: false,
   poweredByHeader: false,
+  // Files read with fs at runtime (spots, wards, vet list, plate/still manifests).
+  outputFileTracingIncludes: {
+    "/*": ["./design-refs/data/*.csv", "./src/data/*.json", "./public/assets/**/manifest.json", "./public/assets/stills/*.webp"],
+    // Linux sharp binaries for builds made on Windows and deployed with --prebuilt.
+    "/[locale]/report": ["./node_modules/@img/sharp-linux-x64/**", "./node_modules/@img/sharp-libvips-linux-x64/**"],
+    "/[locale]/report/track/[token]": ["./node_modules/@img/sharp-linux-x64/**", "./node_modules/@img/sharp-libvips-linux-x64/**"],
+  },
   images: {
     formats: ["image/avif", "image/webp"],
   },

@@ -136,10 +136,28 @@ export const JOURNEY: JourneyStep[] = [
   { n: 6, id: "follow", plates: ["s09"], hash: "journey-6", feature: { href: "/learn#first-week", ctaKey: "follow" } },
 ];
 
-/** Pinned journey length in viewport heights (v4 §5.2: ≈ 5–6). */
-export const JOURNEY_PIN_VH = 5;
-/** Crossfade between plates, in viewport heights of scroll (≈ 400–600 ms). */
+/** Tune the journey's length here: every journey length below scales with it. */
+export const JOURNEY_SCROLL_MULTIPLIER = 2;
+/** Pinned journey length in viewport heights (base 5 vh, v4 §5.2) × multiplier. */
+export const JOURNEY_PIN_VH = 5 * JOURNEY_SCROLL_MULTIPLIER;
+/** Crossfade between plates outside the journey, in viewport heights of scroll (≈ 400–600 ms). */
 export const CROSSFADE_VH = 0.45;
+/** Crossfade between journey plates (scaled, so the transition is actually visible). */
+export const JOURNEY_CROSSFADE_VH = CROSSFADE_VH * JOURNEY_SCROLL_MULTIPLIER;
+/** Each journey step rests on its last frame for this much scroll before moving on. */
+export const JOURNEY_HOLD_VH = 0.3;
+
+/** Subtle camera drift on plates (canvas scale 1 → 1 + this), so holds stay alive. */
+export const PLATE_DRIFT = 0.03;
+
+/**
+ * "One network" (pinned): phase 1 scrubs s08 with the box and map hidden, then the
+ * finished picture holds, then map + box reveal and the pin releases.
+ */
+export const NETWORK_PLAY_VH = 2.5;
+export const NETWORK_HOLD_VH = 0.5;
+/** Pinned scroll after the reveal starts (content visible) before the page continues. */
+export const NETWORK_REVEAL_VH = 0.8;
 
 /**
  * Plate ranges inside the pinned journey, as fractions of the pin (storyboard.md).
@@ -170,6 +188,10 @@ export type LandingSegment = {
   hold?: number;
   /** Dim the plate with its mood colour as t goes from a → b (max alpha). */
   dim?: { from: number; to: number; alpha: number };
+  /** Instead of `end`: scrub over this many viewport heights after `start` (inside a pin). */
+  scrubVh?: number;
+  /** Camera drift runs over this many viewport heights after `start` (scrub + hold). */
+  driftVh?: number;
 };
 
 export const LANDING_TRACK: LandingSegment[] = [
@@ -186,7 +208,17 @@ export const LANDING_TRACK: LandingSegment[] = [
   { id: "journey-enter", section: "scene-journey", plate: "s02", start: "top bottom", end: "top top", hold: 0 },
   // The pinned journey itself is driven by JOURNEY_TRACK.
   { id: "trust", section: "scene-trust", plate: null, start: "top top", end: "bottom top" },
-  { id: "network", section: "scene-network", plate: "s08", start: "top bottom", end: "bottom top" },
+  // "One network" is pinned: first frame while it slides in, then phase 1 scrubs s08.
+  { id: "network-enter", section: "scene-network", plate: "s08", start: "top bottom", end: "top top", hold: 0 },
+  {
+    id: "network",
+    section: "scene-network",
+    plate: "s08",
+    start: "top top",
+    end: "bottom top",
+    scrubVh: NETWORK_PLAY_VH,
+    driftVh: NETWORK_PLAY_VH + NETWORK_HOLD_VH,
+  },
   { id: "stories", section: "scene-stories", plate: null, start: "top top", end: "bottom top" },
 ];
 

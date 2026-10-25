@@ -12,9 +12,15 @@ import type { PlateSources } from "@/world/plate-types";
 import {
   CROSSFADE_VH,
   JOURNEY,
+  JOURNEY_CROSSFADE_VH,
+  JOURNEY_HOLD_VH,
   JOURNEY_PIN_VH,
   JOURNEY_TRACK,
   LANDING_TRACK,
+  NETWORK_HOLD_VH,
+  NETWORK_PLAY_VH,
+  NETWORK_REVEAL_VH,
+  PLATE_DRIFT,
   PLATES,
   type Localized,
   type PlateId,
@@ -74,6 +80,11 @@ export function StoryShell({ children, sources, locale, sceneLabels, navLabel, r
     { scope: root, dependencies: [animated], revertOnUpdate: true },
   );
 
+  // Static mode shows picture + box + map together: load the map preview now.
+  useEffect(() => {
+    if (mode === "static") loadNetworkMap(); // not while "pending": it may still become animated
+  }, [mode]);
+
   // Recalculate pin positions once fonts and images have settled.
   useEffect(() => {
     if (!animated) return;
@@ -101,6 +112,7 @@ export function StoryShell({ children, sources, locale, sceneLabels, navLabel, r
     const fromHash = () => {
       const m = location.hash.match(/^#journey-([1-6])$/);
       if (m) goToStep(Number(m[1]), lenis, true);
+      if (location.hash === "#scene-network") goToNetworkEnd(lenis, true);
     };
     const t = setTimeout(fromHash, animated ? 400 : 0); // after pins exist
     window.addEventListener("hashchange", fromHash);
@@ -144,7 +156,7 @@ export function StoryShell({ children, sources, locale, sceneLabels, navLabel, r
   );
 }
 
-/** Scroll to the middle of journey step n (pinned) or to its card (static). */
+/** Scroll to the middle of journey step n (pinned: uses the current pin length) or to its card (static). */
 function goToStep(n: number, lenis: RefObject<Lenis | null>, instant = false) {
   const step = Math.min(6, Math.max(1, n));
   const pin = ScrollTrigger.getById("journey-pin");
@@ -188,6 +200,7 @@ function SceneDots({
   function go(id: SceneId) {
     const el = document.getElementById(`scene-${id}`);
     if (!el) return;
+    if (id === "network" && goToNetworkEnd(lenis)) return el.focus({ preventScroll: true });
     if (lenis.current) lenis.current.scrollTo(el, { offset: -72, duration: 1.2 });
     else el.scrollIntoView({ block: "start" });
     el.focus({ preventScroll: true });
@@ -225,7 +238,16 @@ function SceneDots({
 // ─── The scroll story ─────────────────────────────────────────────────────────
 
 type Item =
-  | { kind: "segment"; id: string; plate: PlateId | null; hold?: number; dim?: { from: number; to: number; alpha: number }; p: { t: number }; st: ScrollTrigger }
+  | {
+      kind: "segment";
+      id: string;
+      plate: PlateId | null;
+      hold?: number;
+      dim?: { from: number; to: number; alpha: number };
+      drift?: { t: number };
+      p: { t: number };
+      st: ScrollTrigger;
+    }
   | { kind: "journey"; p: { t: number }; st: ScrollTrigger };
 
 type SetupArgs = {
@@ -250,40 +272,10 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
   // Hero intro.
   gsap.from(q("[data-hero-line]"), { y: 24, autoAlpha: 0, stagger: 0.08, duration: 0.7, ease: "power3.out" });
 
-  // ── Pin 1: horizontal pet row ──
-  const track = q("[data-hscroll-track]")[0] as HTMLElement | undefined;
-  const hpin = q("[data-hscroll]")[0] as HTMLElement | undefined;
-  if (track && hpin) {
-    const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
-    const tween = gsap.to(track, {
-      x: () => -distance(),
-      ease: "none",
-      scrollTrigger: { trigger: hpin, start: "top top", end: () => `+=${distance()}`, pin: true, scrub: 1, invalidateOnRefresh: true },
-    });
-    q("[data-hcard]").forEach((card) => {
-      gsap.fromTo(
-        card,
-        { rotateY: -14, scale: 0.92 },
-        {
-          rotateY: 0,
-          scale: 1,
-          ease: "none",
-          scrollTrigger: { trigger: card, containerAnimation: tween, start: "left right", end: "left 60%", scrub: true },
-        },
-      );
-    });
-    track.addEventListener("focusin", (e) => {
-      const card = (e.target as HTMLElement).closest<HTMLElement>("[data-hcard]");
-      const st = tween.scrollTrigger;
-      if (!card || !st || distance() === 0) return;
-      const x = gsap.utils.clamp(0, distance(), card.offsetLeft - (window.innerWidth - card.offsetWidth) / 2);
-      const y = st.start + (x / distance()) * (st.end - st.start);
-      if (lenis.current) lenis.current.scrollTo(y, { immediate: true });
-      else window.scrollTo(0, y);
-    });
-  }
+  // The pet row is a plain horizontal scroller (no pin): the page keeps at most
+  // two pins, the journey and "One network".
 
-  // ── Pin 2: the journey ──
+  // ── Pin 1: the journey ──
   const jpin = q("[data-journey]")[0] as HTMLElement | undefined;
   const steps = q("[data-step]");
   const spine = q("[data-spine-step]");
@@ -292,12 +284,14 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
   if (jpin) {
     const p = { t: 0 };
     let current = -1;
+    const pinEnd = () => `+=${JOURNEY_PIN_VH * window.innerHeight}`;
     const st = ScrollTrigger.create({
       id: "journey-pin",
       trigger: jpin,
       start: "top top",
-      end: `+=${JOURNEY_PIN_VH * 100}%`,
+      end: pinEnd,
       pin: true,
+      invalidateOnRefresh: true,
       onUpdate: (self) => {
         const step = Math.min(5, Math.floor(self.progress * 6));
         if (bar) bar.style.transform = `scaleX(${self.progress})`;
@@ -308,8 +302,60 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
         );
       },
     });
-    gsap.to(p, { t: 1, ease: "none", scrollTrigger: { trigger: jpin, start: "top top", end: `+=${JOURNEY_PIN_VH * 100}%`, scrub: 1 } });
+    gsap.to(p, { t: 1, ease: "none", scrollTrigger: { trigger: jpin, start: "top top", end: pinEnd, scrub: 1, invalidateOnRefresh: true } });
     journeyItem = { kind: "journey", p, st };
+  }
+
+  // ── Pin 2: "One network" ──
+  // Phase 1: scroll scrubs s08 while the box and the map are hidden (inert).
+  // Hold on the finished picture, then reveal map → box; then the pin releases.
+  const npin = document.getElementById("scene-network");
+  const revealEls = (q("[data-network-reveal]") as HTMLElement[]).sort(
+    (a, b) => Number(a.dataset.networkReveal) - Number(b.dataset.networkReveal),
+  );
+  const cleanups: Array<() => void> = [];
+  if (npin && revealEls.length) {
+    const total = NETWORK_PLAY_VH + NETWORK_HOLD_VH + NETWORK_REVEAL_VH;
+    const revealAt = (NETWORK_PLAY_VH + NETWORK_HOLD_VH) / total;
+    let shown = false;
+    const setInert = (v: boolean) => revealEls.forEach((el) => (el.inert = v));
+    gsap.set(revealEls, { autoAlpha: 0, y: 28, pointerEvents: "none" });
+    setInert(true);
+    const show = () => {
+      if (shown) return;
+      shown = true;
+      loadNetworkMap(); // the map library loads only now
+      setInert(false);
+      gsap.to(revealEls, { autoAlpha: 1, y: 0, pointerEvents: "auto", duration: 0.6, stagger: 0.15, ease: "power2.out", overwrite: true });
+    };
+    const hide = () => {
+      if (!shown) return;
+      shown = false;
+      setInert(true);
+      // Exits are faster than entries.
+      gsap.to(revealEls, { autoAlpha: 0, y: 28, pointerEvents: "none", duration: 0.25, ease: "power1.in", overwrite: true });
+    };
+    ScrollTrigger.create({
+      id: "network-pin",
+      trigger: npin,
+      start: "top top",
+      end: () => `+=${total * window.innerHeight}`,
+      pin: true,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => (self.progress >= revealAt ? show() : hide()),
+      onRefresh: (self) => (self.progress >= revealAt ? show() : hide()),
+    });
+    // Focus landing inside the section (jump links, programmatic focus): go to the end state.
+    const onFocus = () => {
+      if (!shown) goToNetworkEnd(lenis, true);
+    };
+    npin.addEventListener("focusin", onFocus);
+    cleanups.push(() => {
+      npin.removeEventListener("focusin", onFocus);
+      setInert(false);
+    });
+  } else {
+    loadNetworkMap();
   }
 
   // ── Plate segments (each with scrub: 1) ──
@@ -319,12 +365,24 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
     if (!el) continue;
     const p = { t: 0 };
     const endTrigger = seg.endSection ? document.getElementById(seg.endSection) ?? el : el;
+    const vh = (n: number) => () => `+=${n * window.innerHeight}`;
     const tween = gsap.to(p, {
       t: 1,
       ease: "none",
-      scrollTrigger: { trigger: el, start: seg.start, endTrigger, end: seg.end, scrub: 1, invalidateOnRefresh: true },
+      scrollTrigger: seg.scrubVh
+        ? { trigger: el, start: seg.start, end: vh(seg.scrubVh), scrub: 1, invalidateOnRefresh: true }
+        : { trigger: el, start: seg.start, endTrigger, end: seg.end, scrub: 1, invalidateOnRefresh: true },
     });
-    items.push({ kind: "segment", id: seg.id, plate: seg.plate, hold: seg.hold, dim: seg.dim, p, st: tween.scrollTrigger! });
+    let drift: { t: number } | undefined;
+    if (seg.driftVh) {
+      drift = { t: 0 };
+      gsap.to(drift, {
+        t: 1,
+        ease: "none",
+        scrollTrigger: { trigger: el, start: seg.start, end: vh(seg.driftVh), scrub: 1, invalidateOnRefresh: true },
+      });
+    }
+    items.push({ kind: "segment", id: seg.id, plate: seg.plate, hold: seg.hold, dim: seg.dim, drift, p, st: tween.scrollTrigger! });
     if (seg.id === "journey-enter" && journeyItem) items.push(journeyItem);
   }
 
@@ -332,9 +390,10 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
   let label = "";
   let lastWarm = 0;
   const lastLayer = (item: Item): Layer => {
-    if (item.kind === "journey") return { plate: JOURNEY_TRACK[JOURNEY_TRACK.length - 1].plate, t: 1, alpha: 1 };
-    return { plate: item.plate, t: item.hold ?? 1, alpha: 1, dim: item.dim?.alpha };
+    if (item.kind === "journey") return { plate: JOURNEY_TRACK[JOURNEY_TRACK.length - 1].plate, t: 1, alpha: 1, zoom: 1 + PLATE_DRIFT };
+    return { plate: item.plate, t: item.hold ?? 1, alpha: 1, dim: item.dim?.alpha, zoom: item.drift ? 1 + PLATE_DRIFT * item.drift.t : undefined };
   };
+  const endsStep = (to: number) => Math.abs(to * 6 - Math.round(to * 6)) < 1e-6;
 
   const tick = () => {
     const fadePx = CROSSFADE_VH * window.innerHeight;
@@ -350,15 +409,29 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
       const found = JOURNEY_TRACK.findIndex((s) => t >= s.from && t < s.to);
       const k = found === -1 ? JOURNEY_TRACK.length - 1 : found;
       const seg = JOURNEY_TRACK[k];
-      const local = (t - seg.from) / (seg.to - seg.from);
       const pinLen = item.st.end - item.st.start;
+      const segLen = (seg.to - seg.from) * pinLen;
       const into = (t - seg.from) * pinLen;
-      const cur: Layer = { plate: seg.plate, t: local, alpha: 1 };
-      layers = k > 0 && into < fadePx ? [{ plate: JOURNEY_TRACK[k - 1].plate, t: 1, alpha: 1 }, { ...cur, alpha: into / fadePx }] : [cur];
+      // The last plate of each step finishes early and rests on its last frame (hold).
+      const holdPx = endsStep(seg.to) ? Math.min(JOURNEY_HOLD_VH * window.innerHeight, segLen * 0.4) : 0;
+      const local = gsap.utils.clamp(0, 1, into / Math.max(1, segLen - holdPx));
+      // Camera drift across each step keeps the picture alive during the hold.
+      const stepT = gsap.utils.clamp(0, 1, t * 6 - Math.min(5, Math.floor(t * 6)));
+      const zoom = 1 + PLATE_DRIFT * stepT;
+      const cur: Layer = { plate: seg.plate, t: local, alpha: 1, zoom };
+      const journeyFadePx = JOURNEY_CROSSFADE_VH * window.innerHeight;
+      if (k > 0 && into < journeyFadePx) {
+        const prev = JOURNEY_TRACK[k - 1];
+        const prevZoom = endsStep(prev.to) ? 1 + PLATE_DRIFT : zoom;
+        layers = [{ plate: prev.plate, t: 1, alpha: 1, zoom: prevZoom }, { ...cur, alpha: into / journeyFadePx }];
+      } else {
+        layers = [cur];
+      }
     } else {
       const t = item.p.t;
       const dim = item.dim ? gsap.utils.clamp(0, 1, (t - item.dim.from) / (item.dim.to - item.dim.from)) * item.dim.alpha : 0;
-      const cur: Layer = { plate: item.plate, t: item.hold ?? t, alpha: 1, dim };
+      const zoom = item.drift ? 1 + PLATE_DRIFT * item.drift.t : undefined;
+      const cur: Layer = { plate: item.plate, t: item.hold ?? t, alpha: 1, dim, zoom };
       const into = t * (item.st.end - item.st.start);
       const prev = idx > 0 ? items[idx - 1] : null;
       if (prev && into < fadePx) {
@@ -379,11 +452,11 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
       canvas.setAttribute("aria-label", next);
     }
 
-    // Fetch compressed frames for plates within ~1.5 viewports.
+    // Fetch compressed frames for plates within ~3 viewports ahead (longer pins).
     const now = performance.now();
     if (now - lastWarm > 300) {
       lastWarm = now;
-      const horizon = window.scrollY + window.innerHeight * 2.5;
+      const horizon = window.scrollY + window.innerHeight * 4;
       for (const it of items) {
         if (it.st.start > horizon) continue;
         if (it.kind === "journey") JOURNEY.forEach((s) => s.plates.forEach((pl) => engine.warm(pl)));
@@ -434,6 +507,23 @@ function setupStory({ root, canvas, sources, locale, lite, lenis, onReady }: Set
   return () => {
     gsap.ticker.remove(tick);
     window.removeEventListener("resize", onResize);
+    cleanups.forEach((c) => c());
     engine.destroy();
   };
+}
+
+/** The landing map preview mounts Leaflet only after this (phase 2, or static mode). */
+function loadNetworkMap() {
+  (window as unknown as { __hfaNetworkMap?: boolean }).__hfaNetworkMap = true;
+  window.dispatchEvent(new Event("hfa:network-map"));
+}
+
+/** Jump to the end state of "One network" (box + map visible). False when it is not pinned. */
+function goToNetworkEnd(lenis: RefObject<Lenis | null>, instant = false) {
+  const pin = ScrollTrigger.getById("network-pin");
+  if (!pin) return false;
+  const y = pin.end - 2;
+  if (lenis.current) lenis.current.scrollTo(y, { immediate: instant, duration: 1.2 });
+  else window.scrollTo({ top: y });
+  return true;
 }

@@ -6,9 +6,9 @@ Every factual claim shown on the site needs a source here. **Partners**: only an
 
 | Brand | Status | Logo permission | Copy source(s) | Confirmed (date + proof) |
 |---|---|---|---|---|
-| Cocoon | proposed | none | https://www.rmit.edu.vn/about-us/who-we-are/our-commitments/vietnam-country-commitment/strategic-innovation-challenge/sustainability-hub-for-educators/case-studies/cocoon | — |
-| Farmina Pet Foods | proposed | none | https://london.vetshow.com/press-release/farmina-pet-foods | — |
-| MSD Animal Health | proposed | none | https://www.msd-animal-health.com/about-us/ · https://www.merck.com/news/merck-announces-new-name-for-its-animal-health-division/ | — |
+| Cocoon | proposed | confirmed 2026-10-25 (project owner) | https://www.rmit.edu.vn/about-us/who-we-are/our-commitments/vietnam-country-commitment/strategic-innovation-challenge/sustainability-hub-for-educators/case-studies/cocoon | — |
+| Farmina Pet Foods | proposed | confirmed 2026-10-25 (project owner) | https://london.vetshow.com/press-release/farmina-pet-foods | — |
+| MSD Animal Health | proposed | confirmed 2026-10-25 (project owner) | https://www.msd-animal-health.com/about-us/ · https://www.merck.com/news/merck-announces-new-name-for-its-animal-health-division/ | — |
 
 The two-sentence descriptions were supplied by the project team with these sources; they have not been re-checked against the pages by the developer.
 

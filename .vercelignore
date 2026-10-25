@@ -1,0 +1,14 @@
+# Never upload: private or unlicensed material (same rules as .gitignore)
+.git
+node_modules
+.next
+.data
+.env*
+!.env.example
+animal_picture
+partner_logo
+design-refs/real-photos
+design-refs/video/*.mp4
+test-results
+playwright-report
+*.tsbuildinfo

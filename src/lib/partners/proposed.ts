@@ -7,8 +7,9 @@ export type ProposedPartner = {
   slug: "cocoon" | "farmina-pet-foods" | "msd-animal-health";
   name: string;
   status: "proposed" | "confirmed";
-  /** A logo may be shown in production only when this AND status are "confirmed". */
+  /** A logo may be shown in production only when this is "confirmed" (status stays "proposed" until an agreement exists). */
   logoPermission: "none" | "confirmed";
+  logoPermissionAt?: string;
   confirmedAt?: string;
   proofUrl?: string;
   sources: Array<{ label: string; url: string }>;
@@ -19,7 +20,8 @@ export const PROPOSED_PARTNERS: ProposedPartner[] = [
     slug: "cocoon",
     name: "Cocoon",
     status: "proposed",
-    logoPermission: "none",
+    logoPermission: "confirmed",
+    logoPermissionAt: "2026-10-25", // approved by the project owner
     sources: [
       {
         label: "RMIT Vietnam case study",
@@ -31,7 +33,8 @@ export const PROPOSED_PARTNERS: ProposedPartner[] = [
     slug: "farmina-pet-foods",
     name: "Farmina Pet Foods",
     status: "proposed",
-    logoPermission: "none",
+    logoPermission: "confirmed",
+    logoPermissionAt: "2026-10-25", // approved by the project owner
     sources: [
       {
         label: "London Vet Show press release",
@@ -43,7 +46,8 @@ export const PROPOSED_PARTNERS: ProposedPartner[] = [
     slug: "msd-animal-health",
     name: "MSD Animal Health",
     status: "proposed",
-    logoPermission: "none",
+    logoPermission: "confirmed",
+    logoPermissionAt: "2026-10-25", // approved by the project owner
     sources: [
       { label: "MSD Animal Health: About us", url: "https://www.msd-animal-health.com/about-us/" },
       {
@@ -54,9 +58,7 @@ export const PROPOSED_PARTNERS: ProposedPartner[] = [
   },
 ];
 
-/** Production shows a logo only for confirmed partners with confirmed permission; dev always shows it. */
+/** Production shows a logo only with confirmed logo permission; dev always shows it. */
 export function mayShowLogo(p: ProposedPartner) {
-  return (
-    process.env.NODE_ENV !== "production" || (p.status === "confirmed" && p.logoPermission === "confirmed")
-  );
+  return process.env.NODE_ENV !== "production" || p.logoPermission === "confirmed";
 }

@@ -200,7 +200,7 @@ export async function PetsScene({ locale }: { locale: Locale }) {
 
   return (
     <section id="scene-pets" data-scene="pets" tabIndex={-1} aria-labelledby="pets-title" className={cn(sectionBase, "bg-white")}>
-      <div data-hscroll className="flex flex-col justify-center gap-8 overflow-hidden bg-white py-16 anim:h-screen">
+      <div data-hscroll className="flex flex-col justify-center gap-8 overflow-hidden bg-white py-16">
         <Container className="space-y-2">
           <h2 id="pets-title" className="text-4xl font-bold text-blue-800">
             {t("title")}
@@ -210,10 +210,10 @@ export async function PetsScene({ locale }: { locale: Locale }) {
         <div className="[perspective:1400px]">
           <ul
             data-hscroll-track
-            className="flex gap-6 px-[max(24px,calc((100vw-1280px)/2+24px))] still:flex-wrap still:justify-center anim:w-max anim:will-change-transform"
+            className="flex gap-6 px-[max(24px,calc((100vw-1280px)/2+24px))] still:flex-wrap still:justify-center anim:snap-x anim:scroll-px-6 anim:overflow-x-auto anim:pb-4"
           >
             {featured.map((pet) => (
-              <li key={pet.code} data-hcard className="w-[300px] shrink-0">
+              <li key={pet.code} data-hcard className="w-[300px] shrink-0 anim:snap-start">
                 <Link
                   href={`/pets/${pet.code}`}
                   className="group/card block overflow-hidden rounded-lg bg-cream-50 text-ink no-underline shadow-soft transition-shadow hover:shadow-lift"
@@ -235,7 +235,7 @@ export async function PetsScene({ locale }: { locale: Locale }) {
                 </Link>
               </li>
             ))}
-            <li data-hcard className="w-[300px] shrink-0">
+            <li data-hcard className="w-[300px] shrink-0 anim:snap-start">
               <Link
                 href="/pets"
                 className="flex h-full min-h-[300px] flex-col justify-center gap-3 rounded-lg bg-blue-600 p-8 text-white no-underline shadow-soft hover:bg-blue-800"
@@ -318,7 +318,7 @@ export async function JourneyScene({ locale, sources }: P) {
                     data-step
                     data-index={i}
                     data-active={i === 0 ? "" : undefined}
-                    className="scroll-mt-24 space-y-3 still:overflow-hidden still:rounded-lg still:bg-white still:shadow-soft anim:absolute anim:inset-0 anim:translate-y-3 anim:opacity-0 anim:transition-[opacity,transform] anim:duration-500 anim:data-active:translate-y-0 anim:data-active:opacity-100"
+                    className="scroll-mt-24 space-y-3 still:overflow-hidden still:rounded-lg still:bg-white still:shadow-soft anim:absolute anim:inset-0 anim:translate-y-3 anim:opacity-0 anim:transition-[opacity,transform] anim:duration-300 anim:data-active:translate-y-0 anim:data-active:opacity-100 anim:data-active:duration-700"
                   >
                     {/* Static mode: the step's scene as a still. */}
                     <div className="relative aspect-video anim:hidden">
@@ -488,8 +488,8 @@ export async function NetworkScene({ locale, sources }: P) {
         <Still sources={sources} plate="s08" frame="last" />
       </div>
       <Container className="relative grid min-h-screen grid-cols-12 items-center gap-y-8 py-20 lg:gap-x-8">
-        <div className="col-span-12 space-y-6 rounded-lg bg-white/95 p-8 shadow-lift lg:col-span-5">
-          <div data-reveal className="space-y-2">
+        <div data-network-reveal="2" className="col-span-12 space-y-6 rounded-lg bg-white/95 p-8 shadow-lift lg:col-span-5">
+          <div className="space-y-2">
             <h2 id="network-title" className="text-4xl font-bold text-blue-800">
               {t("title")}
             </h2>
@@ -497,7 +497,7 @@ export async function NetworkScene({ locale, sources }: P) {
           </div>
           <ul className="space-y-1">
             {ROLES.map(({ key, icon: Icon, href }) => (
-              <li key={key} data-reveal>
+              <li key={key}>
                 <Link href={href} className="flex items-start gap-4 rounded-md p-3 text-ink no-underline hover:bg-cream-50">
                   <Icon aria-hidden="true" className="mt-1 size-6 shrink-0 text-blue-800" />
                   <span>
@@ -509,7 +509,7 @@ export async function NetworkScene({ locale, sources }: P) {
             ))}
           </ul>
         </div>
-        <div data-reveal className="col-span-12 lg:col-span-7">
+        <div data-network-reveal="1" className="col-span-12 lg:col-span-7">
           <NetworkPreview spots={previewSpots} label={tn("previewLabel")} cta={tn("openMap")} />
         </div>
       </Container>

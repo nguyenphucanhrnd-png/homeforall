@@ -68,3 +68,5 @@ next-env.d.ts
 
 # Real reference photos: never commit (folder contract)
 /design-refs/real-photos/
+
+.vercel

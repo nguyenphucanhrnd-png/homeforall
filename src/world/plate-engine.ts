@@ -8,6 +8,10 @@ import { MOODS, PLATES, type PlateId } from "./world.config";
 // 200 MB ≈ 24 frames at 1080p, ≈ 6 at 4K, ≈ 54 at today's 720p plates).
 // Compressed blobs are cached separately (tens of KB each). Missing frames fall
 // back to the nearest decoded frame of the same plate, then to the mood colour.
+//
+// Plates are ~12 fps, so a slow scrub would look stepped: at a fractional frame
+// position the two neighbouring frames are blended (frame i, then i+1 with
+// alpha = fraction). An optional zoom gives a subtle camera drift during holds.
 
 export type Layer = {
   plate: PlateId | null;
@@ -17,9 +21,11 @@ export type Layer = {
   alpha: number;
   /** Mood-colour veil drawn over this layer (0–1). */
   dim?: number;
+  /** Camera drift: draw scale ≥ 1 (e.g. 1 → 1.03), anchored on the plate's focal point. */
+  zoom?: number;
 };
 
-type Resolved = { kind: "frame"; src: PlateSource; index: number } | { kind: "colour"; colour: string };
+type Resolved = { kind: "frame"; src: PlateSource; index: number; frac: number } | { kind: "colour"; colour: string };
 
 export type EngineStats = {
   decoded: number;
@@ -65,7 +71,11 @@ export class PlateEngine {
   // ─── Resolution: plate + playhead → concrete frame or colour ────────────────
   private resolve(plate: PlateId, t: number): Resolved {
     const src = this.sources[plate];
-    if (src) return { kind: "frame", src, index: Math.round(Math.min(1, Math.max(0, t)) * (src.frames - 1)) };
+    if (src) {
+      const pos = Math.min(1, Math.max(0, t)) * (src.frames - 1);
+      const index = Math.min(src.frames - 1, Math.floor(pos));
+      return { kind: "frame", src, index, frac: index >= src.frames - 1 ? 0 : pos - index };
+    }
     const fb = PLATES[plate].fallback;
     if (fb) return this.resolve(fb.plate, fb.frame === "last" ? 1 : 0);
     return { kind: "colour", colour: MOODS[PLATES[plate].mood] };
@@ -96,9 +106,10 @@ export class PlateEngine {
   }
 
   private want(src: PlateSource, center: number, direction: number) {
-    // Ahead of the scroll direction gets most of the window.
-    const ahead = 10;
-    const behind = 3;
+    // Ahead of the scroll direction gets most of the window (the slower journey
+    // scrub dwells longer per frame, so look farther ahead than behind).
+    const ahead = 16;
+    const behind = 4;
     const keys: Array<{ key: string; url: string }> = [];
     for (let d = 0; d <= ahead; d++) {
       const i = center + d * (direction >= 0 ? 1 : -1);
@@ -177,7 +188,11 @@ export class PlateEngine {
     const resolved = layers.map((l) => ({ l, r: l.plate ? this.resolve(l.plate, l.t) : null }));
     const signature = resolved
       .map(({ l, r }) =>
-        r?.kind === "frame" ? `${r.src.id}:${r.index}:${l.alpha.toFixed(2)}:${(l.dim ?? 0).toFixed(2)}` : r ? `${r.colour}:${l.alpha.toFixed(2)}` : "-",
+        r?.kind === "frame"
+          ? `${r.src.id}:${r.index}:${r.frac.toFixed(2)}:${l.alpha.toFixed(2)}:${(l.dim ?? 0).toFixed(2)}:${(l.zoom ?? 1).toFixed(4)}`
+          : r
+            ? `${r.colour}:${l.alpha.toFixed(2)}`
+            : "-",
       )
       .join("|");
 
@@ -209,7 +224,14 @@ export class PlateEngine {
       } else {
         const bmp = this.get(`${r.src.id}:${r.index}`) ?? this.nearest(r.src, r.index);
         if (bmp) {
-          this.cover(bmp, PLATES[r.src.id].focal);
+          const { focal } = PLATES[r.src.id];
+          this.cover(bmp, focal, l.zoom);
+          // Blend toward the next frame at fractional positions (only if it is decoded).
+          const next = r.frac > 0.02 ? this.get(`${r.src.id}:${r.index + 1}`) : undefined;
+          if (next) {
+            ctx.globalAlpha = Math.min(1, l.alpha) * r.frac;
+            this.cover(next, focal, l.zoom);
+          }
           drewFrame = true;
         } else {
           ctx.fillStyle = MOODS[PLATES[r.src.id].mood];
@@ -230,10 +252,10 @@ export class PlateEngine {
     }
   }
 
-  /** object-fit: cover with a focal point. */
-  private cover(img: ImageBitmap, [fx, fy]: [number, number]) {
+  /** object-fit: cover with a focal point; `zoom` scales around that point. */
+  private cover(img: ImageBitmap, [fx, fy]: [number, number], zoom = 1) {
     const { width: cw, height: ch } = this.canvas;
-    const scale = Math.max(cw / img.width, ch / img.height);
+    const scale = Math.max(cw / img.width, ch / img.height) * Math.max(1, zoom);
     const dw = img.width * scale;
     const dh = img.height * scale;
     this.ctx.drawImage(img, (cw - dw) * fx, (ch - dh) * fy, dw, dh);
