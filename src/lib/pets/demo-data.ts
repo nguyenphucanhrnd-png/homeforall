@@ -136,12 +136,12 @@ const SPECS: Spec[] = [
     look: { coat: "#2E2E33", accent: "#C8925A", pattern: "patch", ears: "floppy" },
   },
   {
-    code: "HFA-0010", name: "Tung Tung Meo Meo", species: "cat", sex: "male", ageRange: "young", size: "medium", ward: UNKNOWN_WARD,
+    code: "HFA-0010", name: "Phúc Vương", species: "cat", sex: "male", ageRange: "young", size: "medium", ward: UNKNOWN_WARD,
     temperament: [{ vi: "Lém lỉnh", en: "Mischievous" }, { vi: "Thích leo trèo", en: "Loves climbing" }],
     goodWith: ["cats"], status: "available", partnerSlug: "demo-cuu-ho-a", publishedDaysAgo: 15, confirmedDaysAgo: 6,
     story: {
-      vi: "Tung Tung Meo Meo là bé mèo thích leo lên tủ cao nhất nhà.",
-      en: "Tung Tung Meo Meo is a cat who climbs to the top of every cupboard.",
+      vi: "Phúc Vương là bé mèo thích leo lên tủ cao nhất nhà.",
+      en: "Phúc Vương is a cat who climbs to the top of every cupboard.",
     },
     idealHome: { vi: "Nhà có kệ leo trèo cho mèo.", en: "A home with cat shelves to climb." },
     health: { checkup: 20, vaccine_core: 18, rabies: 18, deworming: 18, sterilization: 16 },
