@@ -941,5 +941,21 @@
       "bad_transition": "That status change is not allowed.",
       "invalid": "Please check the input."
     }
+  },
+  "entryIntent": {
+    "title": "What do you need today?",
+    "subtitle": "Pick one and we'll take you straight there.",
+    "close": "Close",
+    "urgent": "Needs help now",
+    "others": "Or you'd like to",
+    "options": {
+      "report": "I see an animal that needs help",
+      "nearest": "I found an animal — where do I take it?",
+      "adopt": "I'd like to adopt a friend",
+      "help": "I want to help: volunteer, foster or give",
+      "partner": "I represent a rescue group, clinic or business"
+    },
+    "skip": "Just look around",
+    "reopen": "What do you need?"
   }
 }
