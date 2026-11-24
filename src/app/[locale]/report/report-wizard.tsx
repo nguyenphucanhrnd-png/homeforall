@@ -944,7 +944,7 @@ export function ReportExperience({ seeded, fallbackVets }: { seeded: boolean; fa
   return (
     <div className="grid grid-cols-12 items-start gap-y-6 lg:gap-x-8">
       {/* 1. Location bar */}
-      <section aria-labelledby="loc-title" className="col-span-12 flex flex-wrap items-end gap-4 rounded-lg bg-white p-5 shadow-soft" data-testid="location-bar">
+      <section id="nearest" aria-labelledby="loc-title" className="col-span-12 scroll-mt-24 flex flex-wrap items-end gap-4 rounded-lg bg-white p-5 shadow-soft" data-testid="location-bar">
         <h2 id="loc-title" className="sr-only">
           {t("locBar.title")}
         </h2>

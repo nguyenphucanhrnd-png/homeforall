@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { Sparkles } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode, type RefObject } from "react";
+import { isScrollLocked, SCROLL_LOCK_EVENT } from "@/lib/scroll-lock";
 import { cn } from "@/lib/utils";
 import { PlateEngine, type Layer } from "@/world/plate-engine";
 import type { PlateSources } from "@/world/plate-types";
@@ -53,6 +54,7 @@ export function StoryShell({ children, sources, locale, sceneLabels, navLabel, r
     const instance = new Lenis({ autoRaf: false, lerp: 0.11 });
     lenis.current = instance;
     instance.on("scroll", ScrollTrigger.update);
+    if (isScrollLocked()) instance.stop(); // a modal opened before Lenis started
     const tick = (time: number) => instance.raf(time * 1000);
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
@@ -63,6 +65,18 @@ export function StoryShell({ children, sources, locale, sceneLabels, navLabel, r
       lenis.current = null;
     };
   }, [animated]);
+
+  // Modals (entry dialog) pause smooth scroll while open.
+  useEffect(() => {
+    const onLock = (e: Event) => {
+      const l = lenis.current;
+      if (!l) return;
+      if ((e as CustomEvent<boolean>).detail) l.stop();
+      else l.start();
+    };
+    window.addEventListener(SCROLL_LOCK_EVENT, onLock);
+    return () => window.removeEventListener(SCROLL_LOCK_EVENT, onLock);
+  }, []);
 
   useGSAP(
     () => {

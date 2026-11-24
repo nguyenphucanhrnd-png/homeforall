@@ -1,14 +1,16 @@
 import { getTranslations } from "next-intl/server";
 import { LogoFull } from "@/components/brand/logo";
+import { EntryIntentTrigger } from "@/components/entry-intent/entry-intent-dialog";
 import { Link } from "@/i18n/navigation";
-import { SHOW_PROTOTYPE_NOTICE } from "@/lib/flags";
+import { FEATURE_ENTRY_INTENT, SHOW_PROTOTYPE_NOTICE } from "@/lib/flags";
 import type { Locale } from "@/i18n/routing";
 import { Container } from "./container";
 
 export async function SiteFooter({ locale }: { locale: Locale }) {
-  const [t, nav] = await Promise.all([
+  const [t, nav, intent] = await Promise.all([
     getTranslations({ locale, namespace: "footer" }),
     getTranslations({ locale, namespace: "nav" }),
+    getTranslations({ locale, namespace: "entryIntent" }),
   ]);
 
   const links = [
@@ -38,6 +40,11 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
               </Link>
             </li>
           ))}
+          {FEATURE_ENTRY_INTENT && (
+            <li>
+              <EntryIntentTrigger label={intent("reopen")} className="inline-flex min-h-11 items-center font-semibold" />
+            </li>
+          )}
         </ul>
         <div className="col-span-12 space-y-3 text-muted md:col-span-3">
           <p>{t("nonprofit")}</p>

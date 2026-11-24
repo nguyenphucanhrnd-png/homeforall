@@ -4,12 +4,14 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Baloo_2, Nunito } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { EntryIntentDialog } from "@/components/entry-intent/entry-intent-dialog";
 import { FanhChat } from "@/components/fanh/fanh-chat";
 import { RouteFocus } from "@/components/layout/route-focus";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { routing } from "@/i18n/routing";
 import { publicEnv } from "@/lib/env";
+import { FEATURE_ENTRY_INTENT } from "@/lib/flags";
 import "../globals.css";
 
 // Fredoka has no Vietnamese subset (tone-marked capitals fall back), so headings
@@ -70,6 +72,11 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
           <Suspense fallback={null}>
             <FanhChat />
           </Suspense>
+          {FEATURE_ENTRY_INTENT && (
+            <Suspense fallback={null}>
+              <EntryIntentDialog />
+            </Suspense>
+          )}
         </NextIntlClientProvider>
       </body>
     </html>

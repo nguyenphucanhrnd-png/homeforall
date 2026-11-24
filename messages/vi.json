@@ -941,5 +941,21 @@
       "bad_transition": "Không thể chuyển sang trạng thái này.",
       "invalid": "Dữ liệu chưa hợp lệ."
     }
+  },
+  "entryIntent": {
+    "title": "Hôm nay bạn cần gì?",
+    "subtitle": "Chọn một mục, mình đưa bạn tới đúng chỗ.",
+    "close": "Đóng",
+    "urgent": "Cần giúp ngay",
+    "others": "Hoặc bạn muốn",
+    "options": {
+      "report": "Mình thấy một bé thú cưng cần giúp",
+      "nearest": "Mình đang giữ một bé, mang đến đâu gần nhất?",
+      "adopt": "Mình muốn nhận nuôi một bé",
+      "help": "Mình muốn giúp: tình nguyện, nhận nuôi tạm, đóng góp",
+      "partner": "Mình đại diện nhóm cứu hộ, phòng khám hoặc doanh nghiệp"
+    },
+    "skip": "Xem trang trước đã",
+    "reopen": "Bạn cần gì?"
   }
 }
